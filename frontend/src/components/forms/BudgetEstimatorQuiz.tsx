@@ -211,7 +211,7 @@ export const BudgetEstimatorQuiz: React.FC<BudgetEstimatorProps> = ({ onComplete
       `💰 *Investimento estimado:* R$ ${estimate.min.toLocaleString("pt-BR")} a R$ ${estimate.max.toLocaleString("pt-BR")}\n` +
       `🔧 *Manutenção básica:* R$ 99/mês (para manter no ar, seguro e atualizado)\n\n` +
       `Gostaria de formalizar minha proposta personalizada!`;
-    return `https://wa.me/5511919072390?text=${encodeURIComponent(msg)}`;
+    return `https://wa.me/${COMPANY_INFO.rawPhone}?text=${encodeURIComponent(msg)}`;
   };
 
   return (

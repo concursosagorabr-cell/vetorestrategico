@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
 
   if (!limiter.success) {
     return NextResponse.json(
-      { detail: 'Limite de mensagens atingido. Por favor, aguarde um instante ou fale diretamente no WhatsApp (11) 91907-2390.' },
+      { detail: 'Limite de mensagens atingido. Por favor, aguarde um instante ou fale diretamente no WhatsApp (11) 95309-9049.' },
       { status: 429 }
     );
   }
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
 Persona: profissional, direto, confiante, acolhedor e orientado a resultados de negócios. Use linguagem clara e comercial em português brasileiro. Evite jargões técnicos excessivos. Emojis com moderação (máx. 1-2 por resposta, preferencialmente 🚀 🎯 ✅).
 
-Objetivo principal: tirar dúvidas sobre soluções digitais (sites de alta velocidade, automação no WhatsApp 24/7 e integrações) e direcionar o visitante de forma consultiva para o WhatsApp comercial (11) 91907-2390, Diagnóstico de IA (/diagnostico) ou Orçamento (/orcamento).
+Objetivo principal: tirar dúvidas sobre soluções digitais (sites de alta velocidade, automação no WhatsApp 24/7 e integrações) e direcionar o visitante de forma consultiva para o WhatsApp comercial (11) 95309-9049, Diagnóstico de IA (/diagnostico) ou Orçamento (/orcamento).
 
 Contexto de Horário em São Paulo: ${timeString} (${hour}h).
 ${isNightShift ? 'Status: 🌙 Plantão Noturno com IA (18h às 08h). Caso o cliente queira conversar com o time humano, informe que a equipe comercial responderá a partir das 08h00 no WhatsApp.' : 'Status: ☀️ Horário Comercial (08h às 18h).'}
@@ -61,7 +61,7 @@ ${isNightShift ? 'Status: 🌙 Plantão Noturno com IA (18h às 08h). Caso o cli
 ### Conhecimento Institucional Oficial:
 - Empresa: Vetor Estratégico &bull; Engenharia Web & Automação Inteligente para PMEs.
 - Foco: Sites ultra-rápidos (Next.js, <1s no celular, Lighthouse 90+), WhatsApp comercial integrado, SEO técnico e conformidade com a LGPD.
-- WhatsApp Comercial: (11) 91907-2390 | E-mail: contato.vetorestrategico@gmail.com
+- WhatsApp Comercial: (11) 95309-9049 | E-mail: contato.vetorestrategico@gmail.com
 `;
 
     const apiKey = process.env.GROQ_API_KEY;
@@ -69,7 +69,7 @@ ${isNightShift ? 'Status: 🌙 Plantão Noturno com IA (18h às 08h). Caso o cli
     if (!apiKey) {
       return NextResponse.json({
         role: 'assistant',
-        content: `Oi! Sou o **Comandante Vetor** 🚀.\n\nComo posso ajudar sua empresa hoje? Posso tirar dúvidas sobre nossos **sites de alta conversão**, **automações no WhatsApp 24/7** ou ajudar você a calcular o potencial de ganho no [Diagnóstico Gratuito](/diagnostico).\n\nWhatsApp comercial: **(11) 91907-2390**`,
+        content: `Oi! Sou o **Comandante Vetor** 🚀.\n\nComo posso ajudar sua empresa hoje? Posso tirar dúvidas sobre nossos **sites de alta conversão**, **automações no WhatsApp 24/7** ou ajudar você a calcular o potencial de ganho no [Diagnóstico Gratuito](/diagnostico).\n\nWhatsApp comercial: **(11) 95309-9049**`,
         isNightShift,
         timeString,
       });
@@ -106,7 +106,7 @@ ${isNightShift ? 'Status: 🌙 Plantão Noturno com IA (18h às 08h). Caso o cli
 
     const replyContent =
       completion.choices[0]?.message?.content ||
-      'Para detalhes personalizados sobre o seu projeto, nossa equipe está à disposição no WhatsApp comercial: (11) 91907-2390 🚀';
+      'Para detalhes personalizados sobre o seu projeto, nossa equipe está à disposição no WhatsApp comercial: (11) 95309-9049 🚀';
 
     return NextResponse.json({
       role: 'assistant',
@@ -117,7 +117,7 @@ ${isNightShift ? 'Status: 🌙 Plantão Noturno com IA (18h às 08h). Caso o cli
   } catch (error: any) {
     console.error('Erro interno na rota do chat IA:', error);
     return NextResponse.json(
-      { detail: 'Ocorreu um erro temporário ao comunicar com o assistente. Por favor, tente novamente ou fale no WhatsApp (11) 91907-2390.' },
+      { detail: 'Ocorreu um erro temporário ao comunicar com o assistente. Por favor, tente novamente ou fale no WhatsApp (11) 95309-9049.' },
       { status: 500 }
     );
   }

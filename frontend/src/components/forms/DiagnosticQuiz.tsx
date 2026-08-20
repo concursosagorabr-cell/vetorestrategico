@@ -212,12 +212,12 @@ export const DiagnosticQuiz: React.FC = () => {
           onPlay={(e) => {
             e.currentTarget.playbackRate = 1.35;
           }}
-          className="absolute inset-0 w-full h-full object-cover opacity-55 mix-blend-screen pointer-events-none z-0 rounded-3xl"
+          className="absolute inset-0 w-full h-full object-cover opacity-75 mix-blend-screen pointer-events-none z-0 rounded-3xl"
         >
           <source src="/Escaneamento-Quântico.mp4" type="video/mp4" />
           <source src="/Escaneamento-Qu%C3%A2ntico.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-slate-950/60 pointer-events-none z-0 rounded-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-slate-950/15 to-slate-950/45 pointer-events-none z-0 rounded-3xl" />
 
         <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-60 h-60 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -601,7 +601,7 @@ export const DiagnosticQuiz: React.FC = () => {
               />
               <Input
                 label="WhatsApp com DDD"
-                placeholder="(11) 91907-2390"
+                placeholder="(11) 95309-9049"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required

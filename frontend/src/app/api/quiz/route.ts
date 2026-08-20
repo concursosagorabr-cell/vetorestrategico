@@ -105,7 +105,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error('Erro interno ao processar diagnóstico de IA:', error);
     return NextResponse.json(
-      { detail: 'Ocorreu um erro ao calcular o diagnóstico. Por favor, tente novamente ou fale pelo WhatsApp (11) 91907-2390.' },
+      { detail: 'Ocorreu um erro ao calcular o diagnóstico. Por favor, tente novamente ou fale pelo WhatsApp (11) 95309-9049.' },
       { status: 500 }
     );
   }

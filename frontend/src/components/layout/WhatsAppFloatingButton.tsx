@@ -20,11 +20,11 @@ export const WhatsAppFloatingButton: React.FC = () => {
             transition={{ duration: 0.3 }}
             className="hidden sm:flex items-center gap-3 bg-white border border-emerald-200 text-slate-900 px-4 py-3 rounded-2xl shadow-2xl text-xs font-medium relative max-w-xs"
           >
-            <div className="w-11 h-11 rounded-full bg-emerald-50 border-2 border-emerald-400 shrink-0 shadow-sm flex items-center justify-center p-0.5 overflow-hidden">
+            <div className="w-11 h-11 rounded-full bg-emerald-50 border-2 border-emerald-400 shrink-0 shadow-sm flex items-center justify-center overflow-hidden">
               <img
-                src="/images/mascot/hero.png"
+                src="/images/mascot/avatar.png"
                 alt="Comandante Vetor"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
               />
             </div>
             <div className="flex flex-col">

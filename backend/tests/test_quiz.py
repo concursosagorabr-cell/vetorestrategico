@@ -6,7 +6,7 @@ def test_quiz_calculation_and_lead_generation(client):
         "digital_maturity": "Planilhas e processos manuais",
         "name": "Dra. Mariana Costa",
         "email": "mariana@clinicacosta.com.br",
-        "phone": "(11) 91907-2390",
+        "phone": "(11) 95309-9049",
         "company_name": "Clínica Costa Odontologia",
         "accepts_lgpd": True
     }

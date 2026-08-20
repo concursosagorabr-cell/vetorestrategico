@@ -14,7 +14,7 @@ services:
       - ENVIRONMENT=production
       - DATABASE_URL=sqlite:///./vetor_estrategico.db
       - COMMERCIAL_EMAIL=contato.vetorestrategico@gmail.com
-      - COMMERCIAL_PHONE=+5511919072390
+      - COMMERCIAL_PHONE=+5511953099049
     volumes:
       - backend_data:/app
     healthcheck:

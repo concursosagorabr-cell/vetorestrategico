@@ -179,7 +179,7 @@ export default function AboutPage() {
               className="bg-slate-900/80 border-slate-700 text-white hover:bg-slate-800"
               leftIcon={<MessageSquare className="w-5 h-5 text-emerald-400" />}
             >
-              Falar no WhatsApp: (11) 91907-2390
+              Falar no WhatsApp: {COMPANY_INFO.phone}
             </Button>
           </div>
         </div>

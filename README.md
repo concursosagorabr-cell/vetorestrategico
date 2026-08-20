@@ -174,7 +174,7 @@ O backend (`POST /api/quiz`) calcula uma pontuação de oportunidade (0 a 100), 
 - **Nome da Empresa:** Vetor Estratégico
 - **Posicionamento:** IA & Negócios para PMEs
 - **E-mail Comercial:** `contato.vetorestrategico@gmail.com`
-- **WhatsApp / Telefone Comercial:** `(11) 91907-2390`
+- **WhatsApp / Telefone Comercial:** `(11) 95309-9049`
 - **Região de Atuação:** Atendimento Online em todo o Brasil (Sede em São Paulo - SP)
 - **Cores Principais:** Dark Slate `#080C14`, Verde Esmeralda `#10B981`, Azul Ciano `#06B6D4`, Dourado `#F59E0B`.
 

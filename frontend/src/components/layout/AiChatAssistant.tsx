@@ -79,7 +79,7 @@ export const AiChatAssistant: React.FC = () => {
         {
           role: "assistant",
           content:
-            "Estou com uma instabilidade momentânea na conexão. Por favor, fale diretamente com nossa equipe pelo WhatsApp: **(11) 91907-2390**!",
+            `Estou com uma instabilidade momentânea na conexão. Por favor, fale diretamente com nossa equipe pelo WhatsApp: **${COMPANY_INFO.phone}**!`,
         },
       ]);
     } finally {
@@ -112,9 +112,9 @@ export const AiChatAssistant: React.FC = () => {
 
           <div className="relative w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center overflow-hidden shrink-0">
             <img
-              src="/images/mascot/hero.png"
+              src="/images/mascot/avatar.png"
               alt="Comandante Vetor"
-              className="w-full h-full object-contain"
+              className="w-full h-full object-cover"
             />
           </div>
 
@@ -154,9 +154,9 @@ export const AiChatAssistant: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div className="relative w-10 h-10 rounded-full bg-emerald-500/10 border-2 border-emerald-400/50 p-0.5 overflow-hidden">
                   <img
-                    src="/images/mascot/hero.png"
+                    src="/images/mascot/avatar.png"
                     alt="Comandante Vetor"
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                   />
                   <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 border-2 border-slate-950 rounded-full" />
                 </div>

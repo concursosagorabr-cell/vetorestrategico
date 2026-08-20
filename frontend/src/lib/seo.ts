@@ -13,7 +13,7 @@ export function generateOrganizationSchema() {
     "image": `${BASE_URL}/logo.png`,
     "description": COMPANY_INFO.subheadline,
     "email": COMPANY_INFO.email,
-    "telephone": "+55-11-91907-2390",
+    "telephone": "+55-11-95309-9049",
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",

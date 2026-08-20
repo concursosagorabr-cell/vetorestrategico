@@ -5,7 +5,12 @@ import { getClientIp, rateLimit } from '@/lib/rateLimit';
 export const dynamic = 'force-dynamic';
 
 function isAuthorized(req: NextRequest): boolean {
-  const secretKey = process.env.ADMIN_SECRET_KEY || process.env.ADMIN_PASSWORD || 'vetor_admin_2026_secure';
+  const secretKey = process.env.ADMIN_SECRET_KEY || process.env.ADMIN_PASSWORD;
+  
+  if (!secretKey) {
+    console.error('AVISO DE SEGURANÇA: ADMIN_SECRET_KEY não definida nas variáveis de ambiente. Acesso bloqueado.');
+    return false;
+  }
   
   const tokenHeader = req.headers.get('x-admin-token');
   if (tokenHeader && tokenHeader === secretKey) {

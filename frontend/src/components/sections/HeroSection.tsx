@@ -61,12 +61,12 @@ export const HeroSection: React.FC = () => {
           loop
           playsInline
           preload="auto"
-          className="w-full h-full object-cover opacity-35"
+          className="w-full h-full object-cover opacity-55"
         />
 
-        {/* High-Contrast Gradient Vignette Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950" />
-        <div className="absolute inset-0 bg-radial-at-c from-transparent via-slate-950/30 to-slate-950/80" />
+        {/* High-Contrast Gradient Vignette Overlays (Lightened by 10%+) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/30 to-slate-950/85" />
+        <div className="absolute inset-0 bg-radial-at-c from-transparent via-slate-950/15 to-slate-950/60" />
       </div>
 
       {/* Twinkling Cosmic Stars (Pure GPU CSS) */}
@@ -109,32 +109,40 @@ export const HeroSection: React.FC = () => {
           {/* Center Column: Core Value Proposition */}
           <div className="lg:col-span-6 text-center space-y-6">
             
-            {/* Top Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-slate-900/90 border border-emerald-500/40 shadow-lg shadow-emerald-950/40">
-              <span className="text-emerald-400 font-black text-sm">✦</span>
-              <span className="text-xs sm:text-sm font-black uppercase tracking-widest text-emerald-300">
+            {/* Top Eyebrow Badge with cute astronaut avatar */}
+            <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-slate-900/90 border border-emerald-500/40 shadow-lg shadow-emerald-950/40">
+              <div className="w-6 h-6 rounded-full overflow-hidden border border-emerald-400/60 shrink-0 bg-emerald-500/20">
+                <Image
+                  src="/images/mascot/avatar.png"
+                  alt="Comandante Vetor"
+                  width={24}
+                  height={24}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-emerald-300">
                 Agência de Criação de Sites &amp; IA para Empresas
               </span>
             </div>
 
             {/* Main Headline with High-Impact Typography */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.05] uppercase">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08] uppercase">
               Desenvolvimento de Sites <br />
               <span className="gradient-text-emerald drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]">Para Empresas</span>
             </h1>
 
             {/* Sub-headline */}
-            <p className="text-base sm:text-lg lg:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto font-normal">
+            <p className="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto font-normal">
               Criação de sites profissionais com foco em geração de leads, SEO e alta conversão no WhatsApp, além de agentes de IA para acelerar o seu negócio.
             </p>
 
             {/* Action CTA Buttons */}
-            <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="pt-2 sm:pt-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <Button
                 href="/orcamento"
                 variant="primary"
                 size="lg"
-                className="w-full sm:w-auto text-base sm:text-lg font-black shadow-2xl shadow-emerald-600/40 hover:shadow-emerald-500/60 hover:scale-105 active:scale-95 px-9 py-4.5 rounded-full transition-all duration-200"
+                className="w-full sm:w-auto text-base sm:text-lg font-black shadow-2xl shadow-emerald-600/40 hover:shadow-emerald-500/60 hover:scale-105 active:scale-95 px-9 py-4 sm:py-4.5 rounded-full transition-all duration-200"
                 leftIcon={<Zap className="w-5 h-5 fill-white text-white" />}
               >
                 Solicitar Proposta
@@ -144,7 +152,7 @@ export const HeroSection: React.FC = () => {
                 href="/diagnostico"
                 variant="gold"
                 size="lg"
-                className="w-full sm:w-auto text-base sm:text-lg font-bold px-8 py-4.5 rounded-full hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg shadow-amber-500/30"
+                className="w-full sm:w-auto text-base sm:text-lg font-bold px-8 py-4 sm:py-4.5 rounded-full hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg shadow-amber-500/30"
                 leftIcon={<Sparkles className="w-5 h-5 fill-white text-white" />}
               >
                 Diagnóstico de IA
@@ -152,15 +160,15 @@ export const HeroSection: React.FC = () => {
             </div>
 
             {/* Microcopy of Confidence & Region */}
-            <div className="pt-2 flex items-center justify-center gap-2 text-sm text-slate-300 font-semibold">
+            <div className="pt-2 flex items-center justify-center gap-2 text-xs sm:text-sm text-slate-300 font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-slate-300">Atendimento sob medida em São Paulo e online para todo o Brasil</span>
             </div>
 
           </div>
 
-          {/* Right Decorative Column: Mascot "Comandante Vetor" */}
-          <div className="flex lg:col-span-3 flex-col items-center justify-center relative mt-6 lg:mt-0">
+          {/* Right Decorative Column: Mascot "Comandante Vetor" (Desktop) */}
+          <div className="hidden lg:flex lg:col-span-3 flex-col items-center justify-center relative">
             <FloatingElement duration={4.5}>
               <div className="relative w-72 h-72 sm:w-84 sm:h-84 flex items-center justify-center group cursor-pointer">
                 

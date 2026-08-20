@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error('Erro interno ao registrar lead:', error);
     return NextResponse.json(
-      { detail: 'Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente ou entre em contato pelo WhatsApp (11) 91907-2390.' },
+      { detail: 'Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente ou entre em contato pelo WhatsApp (11) 95309-9049.' },
       { status: 500 }
     );
   }

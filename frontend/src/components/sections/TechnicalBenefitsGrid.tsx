@@ -96,14 +96,14 @@ export const TechnicalBenefitsGrid: React.FC = () => {
             loop
             playsInline
             preload="auto"
-            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-50 mix-blend-screen pointer-events-none z-0 scale-105"
+            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-70 mix-blend-screen pointer-events-none z-0 scale-105"
           >
             <source src="/Rede-Neural-&-WhatsApp-AI.mp4" type="video/mp4" />
             <source src="/Rede-Neural-%26-WhatsApp-AI.mp4" type="video/mp4" />
           </video>
 
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07162C]/90 via-[#07162C]/30 to-[#07162C]/80 z-[1] pointer-events-none" />
+          {/* Gradient Overlay (Lightened by 10%+) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#07162C]/75 via-[#07162C]/15 to-[#07162C]/65 z-[1] pointer-events-none" />
 
           {/* Pure GPU Stars */}
           <TwinklingStar size={22} color="gold" delay={0.5} style={{ position: "absolute", top: "12%", left: "10%", zIndex: 2 }} />

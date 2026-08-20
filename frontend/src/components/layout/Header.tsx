@@ -286,7 +286,7 @@ export const Header: React.FC = () => {
             title="Atendimento via WhatsApp"
           >
             <Phone className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>(11) 91907-2390</span>
+            <span>{COMPANY_INFO.phone}</span>
           </a>
 
           <Button

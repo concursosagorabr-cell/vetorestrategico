@@ -83,14 +83,14 @@ export const SolutionTypesGrid: React.FC = () => {
           loop
           playsInline
           preload="auto"
-          className="w-full h-full object-cover opacity-60 mix-blend-screen scale-105 transition-opacity duration-700"
+          className="w-full h-full object-cover opacity-75 mix-blend-screen scale-105 transition-opacity duration-700"
         >
           <source src="/Escaneamento-Quântico.mp4" type="video/mp4" />
           <source src="/Escaneamento-Qu%C3%A2ntico.mp4" type="video/mp4" />
         </video>
         {/* Lighter, high-contrast vignette to keep video bright and text readable */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/25 to-slate-950/80 pointer-events-none" />
-        <div className="absolute inset-0 bg-radial-at-c from-emerald-500/10 via-transparent to-slate-950/60 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/55 via-slate-950/15 to-slate-950/65 pointer-events-none" />
+        <div className="absolute inset-0 bg-radial-at-c from-emerald-500/15 via-transparent to-slate-950/50 pointer-events-none" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

@@ -76,14 +76,14 @@ export const TrustDashboardSection: React.FC = () => {
             loop
             playsInline
             preload="auto"
-            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-50 mix-blend-screen scale-105 pointer-events-none z-0"
+            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-70 mix-blend-screen scale-105 pointer-events-none z-0"
           >
             <source src="/Dashboard-Holográfico-3D.mp4" type="video/mp4" />
             <source src="/Dashboard-Hologr%C3%A1fico-3D.mp4" type="video/mp4" />
           </video>
 
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#04101E]/90 via-transparent to-[#0A192F]/60 pointer-events-none z-0" />
+          {/* Gradient Overlay (Lightened by 10%+) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#04101E]/75 via-transparent to-[#0A192F]/45 pointer-events-none z-0" />
 
           {/* Top Bar of the Mock Dashboard */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-white/10 gap-4 relative z-10">

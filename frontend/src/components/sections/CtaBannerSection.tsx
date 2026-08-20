@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/Button";
 import { TwinklingStar } from "@/components/ui/CosmicDecorations";
 import { ShieldCheck, Zap, MessageSquare } from "lucide-react";
+import { COMPANY_INFO } from "@/lib/constants";
 
 export const CtaBannerSection: React.FC = () => {
   return (
@@ -44,14 +45,14 @@ export const CtaBannerSection: React.FC = () => {
               </Button>
 
               <Button
-                href="https://wa.me/5511919072390?text=Ol%C3%A1%2C%20gostaria%20de%20conversar%20sobre%20um%20projeto%20com%20a%20Vetor%20Estrat%C3%A9gico."
+                href={COMPANY_INFO.whatsappUrl}
                 variant="outline"
                 size="lg"
                 target="_blank"
                 className="w-full sm:w-auto text-base sm:text-lg font-bold rounded-full px-8 py-4.5 bg-slate-900/80 border-slate-700 text-white hover:bg-slate-800"
                 leftIcon={<MessageSquare className="w-5 h-5 text-emerald-400" />}
               >
-                Falar no WhatsApp: (11) 91907-2390
+                Falar no WhatsApp: {COMPANY_INFO.phone}
               </Button>
             </div>
 

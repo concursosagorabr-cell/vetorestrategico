@@ -87,14 +87,14 @@ export const ProcessTimelineSection: React.FC = () => {
             loop
             playsInline
             preload="auto"
-            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-50 mix-blend-screen scale-105 pointer-events-none z-0"
+            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-70 mix-blend-screen scale-105 pointer-events-none z-0"
           >
             <source src="/Partículas-de-Fundo-Ambient.mp4" type="video/mp4" />
             <source src="/Part%C3%ADculas-de-Fundo-Ambient.mp4" type="video/mp4" />
           </video>
 
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F]/90 via-transparent to-[#0A192F]/60 z-[1] pointer-events-none" />
+          {/* Gradient Overlay (Lightened by 10%+) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F]/75 via-transparent to-[#0A192F]/45 z-[1] pointer-events-none" />
 
           {/* Cosmic Background Stars (Pure GPU CSS) */}
           <TwinklingStar size={20} color="gold" delay={0.3} style={{ position: "absolute", top: "10%", right: "15%", zIndex: 2 }} />

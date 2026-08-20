@@ -48,7 +48,7 @@ class Settings(BaseSettings):
     
     # Notification & Email
     COMMERCIAL_EMAIL: str = "contato.vetorestrategico@gmail.com"
-    COMMERCIAL_PHONE: str = "+5511919072390"
+    COMMERCIAL_PHONE: str = "+5511953099049"
     SMTP_HOST: str = ""
     SMTP_PORT: int = 587
     SMTP_USER: str = ""
