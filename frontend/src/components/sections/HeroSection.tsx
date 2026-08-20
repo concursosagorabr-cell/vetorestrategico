@@ -17,10 +17,20 @@ export const HeroSection: React.FC = () => {
     video.defaultMuted = true;
     video.playsInline = true;
     video.loop = true;
+    video.defaultPlaybackRate = 1.25;
     video.playbackRate = 1.25;
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("autoplay", "");
+
+    const enforceRate = () => {
+      if (video.playbackRate !== 1.25) {
+        video.playbackRate = 1.25;
+      }
+    };
+
+    video.addEventListener("loadedmetadata", enforceRate);
+    video.addEventListener("play", enforceRate);
 
     const attemptPlay = () => {
       video.playbackRate = 1.25;
@@ -46,7 +56,11 @@ export const HeroSection: React.FC = () => {
     );
 
     observer.observe(video);
-    return () => observer.disconnect();
+    return () => {
+      video.removeEventListener("loadedmetadata", enforceRate);
+      video.removeEventListener("play", enforceRate);
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -61,7 +75,7 @@ export const HeroSection: React.FC = () => {
           loop
           playsInline
           preload="auto"
-          className="w-full h-full object-cover opacity-55"
+          className="w-full h-full object-cover opacity-55 transform-gpu"
         />
 
         {/* High-Contrast Gradient Vignette Overlays (Lightened by 10%+) */}

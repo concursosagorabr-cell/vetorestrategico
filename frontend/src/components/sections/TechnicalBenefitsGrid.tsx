@@ -24,13 +24,23 @@ export const TechnicalBenefitsGrid: React.FC = () => {
     video.defaultMuted = true;
     video.playsInline = true;
     video.loop = true;
-    video.playbackRate = 1.25;
+    video.defaultPlaybackRate = 1.35;
+    video.playbackRate = 1.35;
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("autoplay", "");
 
+    const enforceRate = () => {
+      if (video.playbackRate !== 1.35) {
+        video.playbackRate = 1.35;
+      }
+    };
+
+    video.addEventListener("loadedmetadata", enforceRate);
+    video.addEventListener("play", enforceRate);
+
     const attemptPlay = () => {
-      video.playbackRate = 1.25;
+      video.playbackRate = 1.35;
       const p = video.play();
       if (p !== undefined) p.catch(() => {});
     };
@@ -40,7 +50,7 @@ export const TechnicalBenefitsGrid: React.FC = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            video.playbackRate = 1.25;
+            video.playbackRate = 1.35;
             attemptPlay();
           } else {
             video.pause();
@@ -50,7 +60,11 @@ export const TechnicalBenefitsGrid: React.FC = () => {
       { threshold: 0.05 }
     );
     observer.observe(video);
-    return () => observer.disconnect();
+    return () => {
+      video.removeEventListener("loadedmetadata", enforceRate);
+      video.removeEventListener("play", enforceRate);
+      observer.disconnect();
+    };
   }, []);
 
   const benefits = [
@@ -88,7 +102,7 @@ export const TechnicalBenefitsGrid: React.FC = () => {
         {/* Cosmic Container with Neural & AI Video */}
         <div className="relative rounded-[2.5rem] bg-[#07162C] border border-sky-900/50 p-8 sm:p-12 lg:p-16 shadow-2xl text-white overflow-hidden">
           
-          {/* Ambient Video Background (Neural Network & AI Connections) */}
+          {/* Ambient Video Background (5% darker & smooth playback) */}
           <video
             ref={videoRef}
             autoPlay
@@ -96,14 +110,14 @@ export const TechnicalBenefitsGrid: React.FC = () => {
             loop
             playsInline
             preload="auto"
-            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-70 mix-blend-screen pointer-events-none z-0 scale-105"
+            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-65 mix-blend-screen pointer-events-none z-0 scale-105 transform-gpu"
           >
             <source src="/Rede-Neural-&-WhatsApp-AI.mp4" type="video/mp4" />
             <source src="/Rede-Neural-%26-WhatsApp-AI.mp4" type="video/mp4" />
           </video>
 
-          {/* Gradient Overlay (Lightened by 10%+) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07162C]/75 via-[#07162C]/15 to-[#07162C]/65 z-[1] pointer-events-none" />
+          {/* Gradient Overlay (5% darker) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#07162C]/80 via-[#07162C]/20 to-[#07162C]/70 z-[1] pointer-events-none" />
 
           {/* Pure GPU Stars */}
           <TwinklingStar size={22} color="gold" delay={0.5} style={{ position: "absolute", top: "12%", left: "10%", zIndex: 2 }} />

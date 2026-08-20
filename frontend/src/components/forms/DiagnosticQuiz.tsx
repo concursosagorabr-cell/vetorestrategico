@@ -202,22 +202,27 @@ export const DiagnosticQuiz: React.FC = () => {
         transition={{ duration: 0.4 }}
         className="rounded-3xl bg-slate-950 border border-emerald-500/30 p-6 sm:p-10 shadow-2xl relative overflow-hidden"
       >
-        {/* 🌌 Quantum Scanning Video Background */}
+        {/* 🌌 Quantum Scanning Video Background (5% darker & smooth playback) */}
         <video
           autoPlay
           muted
           loop
           playsInline
           preload="auto"
-          onPlay={(e) => {
+          onLoadedMetadata={(e) => {
+            e.currentTarget.defaultPlaybackRate = 1.35;
             e.currentTarget.playbackRate = 1.35;
           }}
-          className="absolute inset-0 w-full h-full object-cover opacity-75 mix-blend-screen pointer-events-none z-0 rounded-3xl"
+          onPlay={(e) => {
+            e.currentTarget.defaultPlaybackRate = 1.35;
+            e.currentTarget.playbackRate = 1.35;
+          }}
+          className="absolute inset-0 w-full h-full object-cover opacity-70 mix-blend-screen transform-gpu pointer-events-none z-0 rounded-3xl"
         >
           <source src="/Escaneamento-Quântico.mp4" type="video/mp4" />
           <source src="/Escaneamento-Qu%C3%A2ntico.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-slate-950/15 to-slate-950/45 pointer-events-none z-0 rounded-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-slate-950/50 pointer-events-none z-0 rounded-3xl" />
 
         <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-60 h-60 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />

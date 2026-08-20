@@ -50,10 +50,20 @@ export const CinematicVideo: React.FC<CinematicVideoProps> = ({
     video.defaultMuted = true;
     video.playsInline = true;
     video.loop = true;
+    video.defaultPlaybackRate = 1.35;
     video.playbackRate = 1.35;
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("autoplay", "");
+
+    const enforceRate = () => {
+      if (video.playbackRate !== 1.35) {
+        video.playbackRate = 1.35;
+      }
+    };
+
+    video.addEventListener("loadedmetadata", enforceRate);
+    video.addEventListener("play", enforceRate);
 
     const attemptPlay = () => {
       video.playbackRate = 1.35;
@@ -79,6 +89,7 @@ export const CinematicVideo: React.FC<CinematicVideoProps> = ({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            video.playbackRate = 1.35;
             attemptPlay();
           } else {
             video.pause();
@@ -95,6 +106,8 @@ export const CinematicVideo: React.FC<CinematicVideoProps> = ({
     observer.observe(container);
 
     return () => {
+      video.removeEventListener("loadedmetadata", enforceRate);
+      video.removeEventListener("play", enforceRate);
       observer.disconnect();
     };
   }, [src]);

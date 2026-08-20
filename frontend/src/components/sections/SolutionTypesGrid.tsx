@@ -43,10 +43,20 @@ export const SolutionTypesGrid: React.FC = () => {
     video.defaultMuted = true;
     video.playsInline = true;
     video.loop = true;
+    video.defaultPlaybackRate = 1.35;
     video.playbackRate = 1.35;
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("autoplay", "");
+
+    const enforceRate = () => {
+      if (video.playbackRate !== 1.35) {
+        video.playbackRate = 1.35;
+      }
+    };
+
+    video.addEventListener("loadedmetadata", enforceRate);
+    video.addEventListener("play", enforceRate);
 
     const attemptPlay = () => {
       video.playbackRate = 1.35;
@@ -69,12 +79,16 @@ export const SolutionTypesGrid: React.FC = () => {
       { threshold: 0.05 }
     );
     observer.observe(video);
-    return () => observer.disconnect();
+    return () => {
+      video.removeEventListener("loadedmetadata", enforceRate);
+      video.removeEventListener("play", enforceRate);
+      observer.disconnect();
+    };
   }, []);
 
   return (
     <section className="py-24 bg-slate-950 relative overflow-hidden text-white">
-      {/* 🌌 Quantum Scanning Video Ambient Layer (Bright & Vivid) */}
+      {/* 🌌 Quantum Scanning Video Ambient Layer (5% darker overlay & smooth playback) */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <video
           ref={videoRef}
@@ -83,14 +97,14 @@ export const SolutionTypesGrid: React.FC = () => {
           loop
           playsInline
           preload="auto"
-          className="w-full h-full object-cover opacity-75 mix-blend-screen scale-105 transition-opacity duration-700"
+          className="w-full h-full object-cover opacity-70 mix-blend-screen scale-105 transform-gpu transition-opacity duration-700"
         >
           <source src="/Escaneamento-Quântico.mp4" type="video/mp4" />
           <source src="/Escaneamento-Qu%C3%A2ntico.mp4" type="video/mp4" />
         </video>
-        {/* Lighter, high-contrast vignette to keep video bright and text readable */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/55 via-slate-950/15 to-slate-950/65 pointer-events-none" />
-        <div className="absolute inset-0 bg-radial-at-c from-emerald-500/15 via-transparent to-slate-950/50 pointer-events-none" />
+        {/* High-contrast vignette (adjusted 5% darker) to ensure text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/20 to-slate-950/70 pointer-events-none" />
+        <div className="absolute inset-0 bg-radial-at-c from-emerald-500/10 via-transparent to-slate-950/55 pointer-events-none" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

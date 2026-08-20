@@ -23,10 +23,20 @@ export const TrustDashboardSection: React.FC = () => {
     video.defaultMuted = true;
     video.playsInline = true;
     video.loop = true;
+    video.defaultPlaybackRate = 1.35;
     video.playbackRate = 1.35;
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("autoplay", "");
+
+    const enforceRate = () => {
+      if (video.playbackRate !== 1.35) {
+        video.playbackRate = 1.35;
+      }
+    };
+
+    video.addEventListener("loadedmetadata", enforceRate);
+    video.addEventListener("play", enforceRate);
     
     const attemptPlay = () => {
       video.playbackRate = 1.35;
@@ -49,7 +59,11 @@ export const TrustDashboardSection: React.FC = () => {
       { threshold: 0.05 }
     );
     observer.observe(video);
-    return () => observer.disconnect();
+    return () => {
+      video.removeEventListener("loadedmetadata", enforceRate);
+      video.removeEventListener("play", enforceRate);
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -68,7 +82,7 @@ export const TrustDashboardSection: React.FC = () => {
 
         {/* High-Tech Interactive Dashboard UI Showcase */}
         <div className="rounded-[2.5rem] bg-gradient-to-b from-[#0A192F] to-[#04101E] border border-sky-500/30 p-6 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden text-white">
-          {/* Video Background */}
+          {/* Video Background (5% darker & smooth playback) */}
           <video
             ref={videoRef}
             autoPlay
@@ -76,14 +90,14 @@ export const TrustDashboardSection: React.FC = () => {
             loop
             playsInline
             preload="auto"
-            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-70 mix-blend-screen scale-105 pointer-events-none z-0"
+            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-65 mix-blend-screen scale-105 transform-gpu pointer-events-none z-0"
           >
             <source src="/Dashboard-Holográfico-3D.mp4" type="video/mp4" />
             <source src="/Dashboard-Hologr%C3%A1fico-3D.mp4" type="video/mp4" />
           </video>
 
-          {/* Gradient Overlay (Lightened by 10%+) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#04101E]/75 via-transparent to-[#0A192F]/45 pointer-events-none z-0" />
+          {/* Gradient Overlay (5% darker) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#04101E]/80 via-[#04101E]/15 to-[#0A192F]/50 pointer-events-none z-0" />
 
           {/* Top Bar of the Mock Dashboard */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-white/10 gap-4 relative z-10">
