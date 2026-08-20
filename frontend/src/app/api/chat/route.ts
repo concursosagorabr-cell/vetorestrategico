@@ -13,19 +13,118 @@ function getBrasiliaTime() {
 
 // Extrai números de telefone brasileiros (10 ou 11 dígitos) e e-mails de texto
 function extractContactInfo(text: string) {
-  const cleanPhoneMatches = text.match(/(?:\+?55\s?)?(?:\(?([1-9]{2})\)?\s?)?(?:9\s?[0-9]{4}[-\s]?[0-9]{4}|[2-8][0-9]{3}[-\s]?[0-9]{4})/g);
-  let phone: string | null = null;
-  if (cleanPhoneMatches && cleanPhoneMatches.length > 0) {
-    const rawDigits = cleanPhoneMatches[0].replace(/\D/g, '');
-    if (rawDigits.length >= 10 && rawDigits.length <= 13) {
-      phone = rawDigits.startsWith('55') ? rawDigits : `55${rawDigits}`;
-    }
-  }
+  if (!text) return { phone: null, email: null };
 
   const emailMatch = text.match(/[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/);
   const email = emailMatch ? emailMatch[0].toLowerCase() : null;
 
+  let phone: string | null = null;
+
+  // 1. Sequência contínua de 10 ou 11 dígitos (ex: 11953099049, 1188884444)
+  const raw11 = text.match(/\b(?:55)?([1-9]{2}9[0-9]{8})\b/);
+  const raw10 = text.match(/\b(?:55)?([1-9]{2}[2-8][0-9]{7})\b/);
+
+  if (raw11) {
+    const d = raw11[1];
+    phone = `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+  } else if (raw10) {
+    const d = raw10[1];
+    phone = `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+  } else {
+    // 2. Números formatados (ex: (11) 9 5309-9049, (11) 95309-9049, +55 11 95309-9049)
+    const formatted = text.match(/(?:\+?55\s*)?(?:\([1-9]{2}\)|[1-9]{2})\s*9?\s*[0-9]{4}[-\s]?[0-9]{4}/);
+    if (formatted) {
+      const digits = formatted[0].replace(/\D/g, '');
+      const d = digits.startsWith('55') && digits.length > 11 ? digits.slice(2) : digits;
+      if (d.length === 11) {
+        phone = `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+      } else if (d.length === 10) {
+        phone = `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+      }
+    }
+  }
+
   return { phone, email };
+}
+
+// Salva o lead no Neon e dispara e-mail de forma síncrona/segura
+async function handleLeadCapture(messages: Array<{ role: string; content: string }>, req: NextRequest) {
+  try {
+    const allUserTexts = messages
+      .filter((m) => m.role === 'user')
+      .map((m) => m.content)
+      .join(' | ');
+
+    const { phone, email } = extractContactInfo(allUserTexts);
+
+    if (!phone && !email) {
+      return;
+    }
+
+    // Extrair informações contextuais da conversa
+    let companyName: string | null = null;
+    const urlMatch = allUserTexts.match(/(?:www\.)?([a-zA-Z0-9-]+\.[a-zA-Z0-9.]+)/i);
+    if (urlMatch) {
+      companyName = urlMatch[0];
+    }
+
+    let segment: string | null = null;
+    const segMatches = ['concursos', 'estetica', 'odonto', 'clinica', 'advocacia', 'contabilidade', 'ecommerce', 'blog', 'loja'];
+    for (const seg of segMatches) {
+      if (allUserTexts.toLowerCase().includes(seg)) {
+        segment = seg.charAt(0).toUpperCase() + seg.slice(1);
+        break;
+      }
+    }
+
+    const ip = req.headers.get('x-forwarded-for') || null;
+    const summaryPain = `Lead Chat: ${allUserTexts.slice(-200)}`;
+    const fullTranscript = messages.map((m) => `${m.role.toUpperCase()}: ${m.content}`).join('\n');
+
+    // Evita duplicatas se o mesmo número/email foi registrado nos últimos 15 minutos
+    const checkQuery = phone
+      ? await sql`SELECT id FROM leads WHERE phone = ${phone} AND created_at > NOW() - INTERVAL '15 minutes' LIMIT 1;`
+      : await sql`SELECT id FROM leads WHERE email = ${email} AND created_at > NOW() - INTERVAL '15 minutes' LIMIT 1;`;
+
+    if (checkQuery && checkQuery.length > 0) {
+      // Já cadastrado recentemente, apenas atualiza histórico
+      await sql`UPDATE leads SET message = ${fullTranscript}, updated_at = NOW() WHERE id = ${checkQuery[0].id};`;
+      return;
+    }
+
+    // Insere novo lead
+    const result = await sql`
+      INSERT INTO leads (
+        name, phone, email, company_name, segment, main_pain, message,
+        lead_type, status, source_url, ip_address, created_at, updated_at
+      ) VALUES (
+        'Lead do Chat IA', ${phone || null}, ${email || null}, ${companyName || null}, ${segment || null},
+        ${summaryPain}, ${fullTranscript}, 'CONTACT', 'NEW', '/chat-ia', ${ip},
+        NOW(), NOW()
+      )
+      RETURNING id;
+    `;
+
+    const leadId = result[0]?.id;
+
+    // Disparar e-mail de alerta comercial
+    await sendLeadNotificationEmail(
+      {
+        name: 'Lead do Chat IA (Comandante Vetor)',
+        phone: phone,
+        email: email || 'Não informado',
+        company_name: companyName || 'Não especificado',
+        segment: segment || 'Geral',
+        main_pain: summaryPain,
+        message: fullTranscript,
+      },
+      '🔥 NOVO LEAD CAPTADO NO CHAT'
+    );
+
+    console.log(`[LEAD CAPTURED SUCCESS] ID #${leadId} | Telefone: ${phone} | E-mail: ${email}`);
+  } catch (err) {
+    console.error('Erro ao capturar lead no chat:', err);
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -41,59 +140,8 @@ export async function POST(req: NextRequest) {
 
     const { timeString, hour, isNightShift } = getBrasiliaTime();
 
-    // 1. Verificar se o visitante forneceu telefone ou e-mail na conversa para salvar no Neon
-    const allUserTexts = messages
-      .filter((m: any) => m.role === 'user')
-      .map((m: any) => m.content)
-      .join('\n');
-
-    const lastUserText = messages[messages.length - 1]?.content || '';
-    const { phone, email } = extractContactInfo(lastUserText) || extractContactInfo(allUserTexts);
-
-    if (phone || email) {
-      // Background save to Neon without blocking the chat response
-      (async () => {
-        try {
-          const ip = req.headers.get('x-forwarded-for') || null;
-          const summaryPain = `Captado no Chat IA: ${lastUserText.slice(0, 150)}`;
-          const fullHistory = messages.map((m: any) => `${m.role.toUpperCase()}: ${m.content}`).join('\n');
-
-          // Verifica se já não foi cadastrado nos últimos 5 minutos com o mesmo telefone
-          const existing = phone
-            ? await sql`SELECT id FROM leads WHERE phone = ${phone} AND created_at > NOW() - INTERVAL '10 minutes' LIMIT 1;`
-            : [];
-
-          if (existing.length === 0) {
-            await sql`
-              INSERT INTO leads (
-                name, phone, email, main_pain, message,
-                lead_type, status, source_url, ip_address,
-                created_at, updated_at
-              ) VALUES (
-                'Lead Chat IA', ${phone || null}, ${email || null}, ${summaryPain}, ${fullHistory},
-                'CONTACT', 'NEW', '/chat-ia', ${ip},
-                NOW(), NOW()
-              );
-            `;
-
-            sendLeadNotificationEmail(
-              {
-                name: 'Lead do Chat IA (Comandante Vetor)',
-                phone: phone,
-                email: email || 'Não informado',
-                main_pain: summaryPain,
-                message: fullHistory,
-              },
-              '🔥 NOVO LEAD CAPTADO NO CHAT'
-            ).catch(console.error);
-
-            console.log(`[LEAD CAPTURED] Telefone: ${phone} | E-mail: ${email}`);
-          }
-        } catch (dbErr) {
-          console.error('Erro ao salvar lead captado no chat:', dbErr);
-        }
-      })().catch(console.error);
-    }
+    // 1. Processar captura do lead antes de responder para garantir gravação no Neon
+    await handleLeadCapture(messages, req);
 
     const systemPrompt = `Você é o Comandante Vetor, consultor de IA da Vetor Estratégico (www.vetorestrategico.com).
 
