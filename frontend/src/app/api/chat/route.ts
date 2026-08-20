@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Groq } from 'groq-sdk';
+import { sql } from '@/lib/db';
+import { sendLeadNotificationEmail } from '@/lib/emailService';
 
 function getBrasiliaTime() {
   const now = new Date();
@@ -7,6 +9,23 @@ function getBrasiliaTime() {
   const hour = parseInt(timeString.split(':')[0], 10);
   const isNightShift = hour >= 18 || hour < 8;
   return { timeString, hour, isNightShift };
+}
+
+// Extrai números de telefone brasileiros (10 ou 11 dígitos) e e-mails de texto
+function extractContactInfo(text: string) {
+  const cleanPhoneMatches = text.match(/(?:\+?55\s?)?(?:\(?([1-9]{2})\)?\s?)?(?:9\s?[0-9]{4}[-\s]?[0-9]{4}|[2-8][0-9]{3}[-\s]?[0-9]{4})/g);
+  let phone: string | null = null;
+  if (cleanPhoneMatches && cleanPhoneMatches.length > 0) {
+    const rawDigits = cleanPhoneMatches[0].replace(/\D/g, '');
+    if (rawDigits.length >= 10 && rawDigits.length <= 13) {
+      phone = rawDigits.startsWith('55') ? rawDigits : `55${rawDigits}`;
+    }
+  }
+
+  const emailMatch = text.match(/[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/);
+  const email = emailMatch ? emailMatch[0].toLowerCase() : null;
+
+  return { phone, email };
 }
 
 export async function POST(req: NextRequest) {
@@ -22,6 +41,60 @@ export async function POST(req: NextRequest) {
 
     const { timeString, hour, isNightShift } = getBrasiliaTime();
 
+    // 1. Verificar se o visitante forneceu telefone ou e-mail na conversa para salvar no Neon
+    const allUserTexts = messages
+      .filter((m: any) => m.role === 'user')
+      .map((m: any) => m.content)
+      .join('\n');
+
+    const lastUserText = messages[messages.length - 1]?.content || '';
+    const { phone, email } = extractContactInfo(lastUserText) || extractContactInfo(allUserTexts);
+
+    if (phone || email) {
+      // Background save to Neon without blocking the chat response
+      (async () => {
+        try {
+          const ip = req.headers.get('x-forwarded-for') || null;
+          const summaryPain = `Captado no Chat IA: ${lastUserText.slice(0, 150)}`;
+          const fullHistory = messages.map((m: any) => `${m.role.toUpperCase()}: ${m.content}`).join('\n');
+
+          // Verifica se já não foi cadastrado nos últimos 5 minutos com o mesmo telefone
+          const existing = phone
+            ? await sql`SELECT id FROM leads WHERE phone = ${phone} AND created_at > NOW() - INTERVAL '10 minutes' LIMIT 1;`
+            : [];
+
+          if (existing.length === 0) {
+            await sql`
+              INSERT INTO leads (
+                name, phone, email, main_pain, message,
+                lead_type, status, source_url, ip_address,
+                created_at, updated_at
+              ) VALUES (
+                'Lead Chat IA', ${phone || null}, ${email || null}, ${summaryPain}, ${fullHistory},
+                'CONTACT', 'NEW', '/chat-ia', ${ip},
+                NOW(), NOW()
+              );
+            `;
+
+            sendLeadNotificationEmail(
+              {
+                name: 'Lead do Chat IA (Comandante Vetor)',
+                phone: phone,
+                email: email || 'Não informado',
+                main_pain: summaryPain,
+                message: fullHistory,
+              },
+              '🔥 NOVO LEAD CAPTADO NO CHAT'
+            ).catch(console.error);
+
+            console.log(`[LEAD CAPTURED] Telefone: ${phone} | E-mail: ${email}`);
+          }
+        } catch (dbErr) {
+          console.error('Erro ao salvar lead captado no chat:', dbErr);
+        }
+      })().catch(console.error);
+    }
+
     const systemPrompt = `Você é o Comandante Vetor, consultor de IA da Vetor Estratégico (www.vetorestrategico.com).
 
 Persona: profissional, direto, confiante, amigável e orientado a resultados. Use linguagem clara e comercial em português brasileiro. Evite jargões técnicos desnecessários. Emojis com moderação (máx. 1-2 por resposta, preferencialmente 🚀 🎯 ✅).
@@ -29,7 +102,7 @@ Persona: profissional, direto, confiante, amigável e orientado a resultados. Us
 Objetivo principal: qualificar leads, educar sobre as soluções, gerar diagnóstico gratuito ou orçamento e direcionar para WhatsApp (11) 91907-2390 ou /diagnostico /orcamento. Sempre puxe a conversa de volta para o negócio do cliente.
 
 Contexto de Horário Atual em São Paulo: ${timeString} (${hour}h).
-${isNightShift ? 'Status: 🌙 Plantão Noturno com IA (18h às 08h). Se relevante, mencione que o time humano retorna às 08h, mas você já está registrando o briefing e o diagnóstico dele agora!' : 'Status: ☀️ Horário Comercial (08h às 18h).'}
+${isNightShift ? 'Status: 🌙 Plantão Noturno com IA (18h às 08h). Se relevante, mencione que o time humano retorna às 08h, mas você já registrou o contato dele e o especialista entrará em contato logo cedo!' : 'Status: ☀️ Horário Comercial (08h às 18h).'}
 
 ### Regras de comportamento (obrigatórias)
 1. Respostas curtas e densas: 3-8 frases no máximo (120-180 palavras). Vá direto ao ponto. Não repita informações já dadas na conversa.
@@ -37,7 +110,7 @@ ${isNightShift ? 'Status: 🌙 Plantão Noturno com IA (18h às 08h). Se relevan
 3. Nunca invente preços fixos. Diga “sob proposta” ou “a partir de R$ 900–1.400 para landing pages simples” e direcione para orçamento personalizado.
 4. Nunca prometa resultados garantidos (ex: “você vai dobrar as vendas”). Fale em potencial, casos reais e ROI auditável.
 5. Sempre termine com 1 pergunta de qualificação ou CTA claro (WhatsApp, diagnóstico, orçamento).
-6. Se o lead não quiser continuar, respeite e ofereça o WhatsApp ou diagnóstico como saída fácil.
+6. Se o cliente fornecer o número de WhatsApp ou pedir contato, confirme com entusiasmo que você já registrou o contato dele e que a equipe comercial da Vetor Estratégico entrará em contato com ele diretamente no número informado!
 7. LGPD: nunca peça dados sensíveis desnecessários (senhas, cartões, CPF). Confirme que tudo é tratado com confidencialidade e segurança.
 8. Economia de tokens: não use frases de preenchimento, não repita a apresentação completa a cada mensagem, não faça listas longas se não forem necessárias.
 
@@ -89,31 +162,11 @@ Segmentos prioritários: clínicas de estética, odontológicas, médicos (norma
 
 Diagnóstico Gratuito: disponível em /diagnostico (2 minutos). Sempre ofereça quando fizer sentido.
 
-### Fluxo de conversa recomendado
-1. Cumprimente e pergunte segmento + maior desafio (captação, atendimento, conversão, velocidade do site atual).
-2. Qualifique: já tem site? Qual o objetivo nos próximos 30 dias?
-3. Mostre a solução específica + case similar.
-4. Ofereça Diagnóstico Gratuito ou WhatsApp direto.
-5. Se o lead estiver frio, mantenha a porta aberta sem insistir.
-
-### Exemplos de resposta estilo (use como referência de tom e tamanho)
-Usuário: “oi”
-Você: Oi! Sou o Comandante Vetor 🚀. Qual o segmento da sua empresa e qual o maior desafio hoje: atrair clientes, atender fora do horário ou converter melhor no site?
-
-Usuário: “qual a distância da terra ao sol?”
-Você: Cerca de 149,6 milhões de km. Falando em velocidade: imaginou seu site carregando tão rápido quanto a luz e já conversando com o cliente no WhatsApp? Qual o principal objetivo da sua presença digital hoje?
-
-Usuário: “preciso atrair mais clientes pro meu site”
-Você: Perfeito. Na Vetor a gente resolve isso com site ultra-rápido (<1s) + copy persuasiva + agente de IA no WhatsApp 24/7 que qualifica e agenda. Qual o segmento e você já tem site hoje? Posso te mostrar o caminho mais rápido pro seu caso.
-
 ### Regras finais de economia e qualidade
 - Máximo 120-180 palavras por resposta na maioria dos casos.
 - Priorize perguntas abertas de qualificação.
 - Se o lead pedir preço, diga que depende do escopo e ofereça orçamento personalizado ou diagnóstico.
-- Nunca fale mal de concorrentes.
 - Se não souber algo específico, diga “vou te conectar com o time humano no WhatsApp para detalhes precisos” e passe o número (11) 91907-2390.
-
-Lembre-se: você não é um chatbot genérico. Você é o consultor que ajuda PMEs a parar de perder clientes por site lento ou atendimento lento. Seja útil, seja comercial, seja conciso.
 `;
 
     const apiKey = process.env.GROQ_API_KEY;
