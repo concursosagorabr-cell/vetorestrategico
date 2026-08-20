@@ -1,0 +1,28 @@
+# Python virtual environment
+venv/
+.venv/
+ENV/
+env/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*.class
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+vetor_estrategico.db
+
+# Environment secrets
+.env
+!.env.example
+
+# Logs
+*.log

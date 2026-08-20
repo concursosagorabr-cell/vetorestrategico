@@ -1,0 +1,1 @@
+# Vetor Estratégico Backend Package
