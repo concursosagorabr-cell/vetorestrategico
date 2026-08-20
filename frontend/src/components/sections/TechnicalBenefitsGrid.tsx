@@ -112,15 +112,15 @@ export const TechnicalBenefitsGrid: React.FC = () => {
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Left Column: Mascot with Balloons & CTA */}
+            {/* Left Column: Mascot with Laptop/Tablet & CTA */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center text-center space-y-6">
               
               <FloatingElement duration={4.8}>
                 <div className="relative w-72 h-72 sm:w-88 sm:h-88 flex items-center justify-center group cursor-pointer">
-                  <div className="relative w-full h-full drop-shadow-[0_25px_45px_rgba(2,132,199,0.35)] transition-transform duration-500 group-hover:scale-105">
+                  <div className="relative w-full h-full drop-shadow-[0_25px_45px_rgba(16,185,129,0.4)] transition-transform duration-500 group-hover:scale-105">
                     <Image
                       src="/images/mascot/balloons.png"
-                      alt="Soluções Vetor Estratégico"
+                      alt="Comandante Vetor desenvolvendo no Computador"
                       width={352}
                       height={352}
                       className="w-full h-full object-contain"
