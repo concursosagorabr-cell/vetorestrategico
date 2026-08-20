@@ -12,27 +12,30 @@ export const ProcessTimelineSection: React.FC = () => {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    const SPEED = 1.75;
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
     video.loop = true;
-    video.defaultPlaybackRate = 1.35;
-    video.playbackRate = 1.35;
+    video.defaultPlaybackRate = SPEED;
+    video.playbackRate = SPEED;
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("autoplay", "");
 
     const enforceRate = () => {
-      if (video.playbackRate !== 1.35) {
-        video.playbackRate = 1.35;
+      if (video.playbackRate !== SPEED) {
+        video.playbackRate = SPEED;
       }
     };
 
     video.addEventListener("loadedmetadata", enforceRate);
     video.addEventListener("play", enforceRate);
+    video.addEventListener("ratechange", enforceRate);
+    video.addEventListener("seeked", enforceRate);
 
     const attemptPlay = () => {
-      video.playbackRate = 1.35;
+      video.playbackRate = SPEED;
       const p = video.play();
       if (p !== undefined) p.catch(() => {});
     };
@@ -42,7 +45,7 @@ export const ProcessTimelineSection: React.FC = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            video.playbackRate = 1.35;
+            video.playbackRate = SPEED;
             attemptPlay();
           } else {
             video.pause();
@@ -55,6 +58,8 @@ export const ProcessTimelineSection: React.FC = () => {
     return () => {
       video.removeEventListener("loadedmetadata", enforceRate);
       video.removeEventListener("play", enforceRate);
+      video.removeEventListener("ratechange", enforceRate);
+      video.removeEventListener("seeked", enforceRate);
       observer.disconnect();
     };
   }, []);
@@ -101,6 +106,20 @@ export const ProcessTimelineSection: React.FC = () => {
             loop
             playsInline
             preload="auto"
+            onLoadedMetadata={(e) => {
+              e.currentTarget.defaultPlaybackRate = 1.75;
+              e.currentTarget.playbackRate = 1.75;
+            }}
+            onPlay={(e) => {
+              if (e.currentTarget.playbackRate !== 1.75) {
+                e.currentTarget.playbackRate = 1.75;
+              }
+            }}
+            onRateChange={(e) => {
+              if (e.currentTarget.playbackRate !== 1.75) {
+                e.currentTarget.playbackRate = 1.75;
+              }
+            }}
             className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-65 mix-blend-screen scale-105 transform-gpu pointer-events-none z-0"
           >
             <source src="/Partículas-de-Fundo-Ambient.mp4" type="video/mp4" />

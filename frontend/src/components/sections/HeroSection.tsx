@@ -13,27 +13,30 @@ export const HeroSection: React.FC = () => {
     const video = bgVideoRef.current;
     if (!video) return;
 
+    const SPEED = 1.6;
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
     video.loop = true;
-    video.defaultPlaybackRate = 1.25;
-    video.playbackRate = 1.25;
+    video.defaultPlaybackRate = SPEED;
+    video.playbackRate = SPEED;
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("autoplay", "");
 
     const enforceRate = () => {
-      if (video.playbackRate !== 1.25) {
-        video.playbackRate = 1.25;
+      if (video.playbackRate !== SPEED) {
+        video.playbackRate = SPEED;
       }
     };
 
     video.addEventListener("loadedmetadata", enforceRate);
     video.addEventListener("play", enforceRate);
+    video.addEventListener("ratechange", enforceRate);
+    video.addEventListener("seeked", enforceRate);
 
     const attemptPlay = () => {
-      video.playbackRate = 1.25;
+      video.playbackRate = SPEED;
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {});
@@ -45,7 +48,7 @@ export const HeroSection: React.FC = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            video.playbackRate = 1.25;
+            video.playbackRate = SPEED;
             attemptPlay();
           } else {
             video.pause();
@@ -59,6 +62,8 @@ export const HeroSection: React.FC = () => {
     return () => {
       video.removeEventListener("loadedmetadata", enforceRate);
       video.removeEventListener("play", enforceRate);
+      video.removeEventListener("ratechange", enforceRate);
+      video.removeEventListener("seeked", enforceRate);
       observer.disconnect();
     };
   }, []);
@@ -75,6 +80,20 @@ export const HeroSection: React.FC = () => {
           loop
           playsInline
           preload="auto"
+          onLoadedMetadata={(e) => {
+            e.currentTarget.defaultPlaybackRate = 1.6;
+            e.currentTarget.playbackRate = 1.6;
+          }}
+          onPlay={(e) => {
+            if (e.currentTarget.playbackRate !== 1.6) {
+              e.currentTarget.playbackRate = 1.6;
+            }
+          }}
+          onRateChange={(e) => {
+            if (e.currentTarget.playbackRate !== 1.6) {
+              e.currentTarget.playbackRate = 1.6;
+            }
+          }}
           className="w-full h-full object-cover opacity-55 transform-gpu"
         />
 

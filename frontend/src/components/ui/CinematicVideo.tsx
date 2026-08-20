@@ -45,28 +45,30 @@ export const CinematicVideo: React.FC<CinematicVideoProps> = ({
     const container = containerRef.current;
     if (!video) return;
 
-    // Direct DOM attribute configuration for guaranteed Chrome/Safari autoplay
+    const SPEED = 1.75;
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
     video.loop = true;
-    video.defaultPlaybackRate = 1.35;
-    video.playbackRate = 1.35;
+    video.defaultPlaybackRate = SPEED;
+    video.playbackRate = SPEED;
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("autoplay", "");
 
     const enforceRate = () => {
-      if (video.playbackRate !== 1.35) {
-        video.playbackRate = 1.35;
+      if (video.playbackRate !== SPEED) {
+        video.playbackRate = SPEED;
       }
     };
 
     video.addEventListener("loadedmetadata", enforceRate);
     video.addEventListener("play", enforceRate);
+    video.addEventListener("ratechange", enforceRate);
+    video.addEventListener("seeked", enforceRate);
 
     const attemptPlay = () => {
-      video.playbackRate = 1.35;
+      video.playbackRate = SPEED;
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise
@@ -89,7 +91,7 @@ export const CinematicVideo: React.FC<CinematicVideoProps> = ({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            video.playbackRate = 1.35;
+            video.playbackRate = SPEED;
             attemptPlay();
           } else {
             video.pause();
@@ -108,6 +110,8 @@ export const CinematicVideo: React.FC<CinematicVideoProps> = ({
     return () => {
       video.removeEventListener("loadedmetadata", enforceRate);
       video.removeEventListener("play", enforceRate);
+      video.removeEventListener("ratechange", enforceRate);
+      video.removeEventListener("seeked", enforceRate);
       observer.disconnect();
     };
   }, [src]);
@@ -163,7 +167,21 @@ export const CinematicVideo: React.FC<CinematicVideoProps> = ({
         onCanPlay={() => setIsLoaded(true)}
         onLoadedData={() => setIsLoaded(true)}
         onPlaying={() => setIsLoaded(true)}
-        className={`relative z-10 w-full h-full object-cover transition-opacity duration-500 opacity-100 ${videoClassName}`}
+        onLoadedMetadata={(e) => {
+          e.currentTarget.defaultPlaybackRate = 1.75;
+          e.currentTarget.playbackRate = 1.75;
+        }}
+        onPlay={(e) => {
+          if (e.currentTarget.playbackRate !== 1.75) {
+            e.currentTarget.playbackRate = 1.75;
+          }
+        }}
+        onRateChange={(e) => {
+          if (e.currentTarget.playbackRate !== 1.75) {
+            e.currentTarget.playbackRate = 1.75;
+          }
+        }}
+        className={`relative z-10 w-full h-full object-cover transform-gpu transition-opacity duration-500 opacity-100 ${videoClassName}`}
       >
         <source src={src} type="video/mp4" />
       </video>
