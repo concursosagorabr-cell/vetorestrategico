@@ -1,7 +1,10 @@
 import { neon } from '@neondatabase/serverless';
 
-const databaseUrl =
-  process.env.DATABASE_URL ||
-  'postgresql://neondb_owner:npg_ti5dLhXaP8DH@ep-bold-dew-acvbr7w3.sa-east-1.aws.neon.tech/neondb?sslmode=require';
+const databaseUrl = process.env.DATABASE_URL || '';
+
+if (!databaseUrl && process.env.NODE_ENV === 'production') {
+  console.warn('Aviso: DATABASE_URL não configurada nas variáveis de ambiente.');
+}
 
 export const sql = neon(databaseUrl);
+

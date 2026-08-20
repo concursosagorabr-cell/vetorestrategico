@@ -11,6 +11,7 @@ import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloatingButton } from "@/components/layout/WhatsAppFloatingButton";
+import { AiChatAssistant } from "@/components/layout/AiChatAssistant";
 import { CookieConsent } from "@/components/layout/CookieConsent";
 import { ExitIntentModal } from "@/components/layout/ExitIntentModal";
 
@@ -144,6 +145,7 @@ export default function RootLayout({
         
         {/* Floating Utilities */}
         <WhatsAppFloatingButton />
+        <AiChatAssistant />
         <CookieConsent />
         <ExitIntentModal />
       </body>
