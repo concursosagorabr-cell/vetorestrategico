@@ -1,6 +1,6 @@
 import { ContactFormData, LeadFormData, QuizSubmissionData, QuizResultData } from "@/types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
 
 export async function submitContact(data: ContactFormData) {
   const response = await fetch(`${API_BASE}/api/contact`, {
