@@ -187,10 +187,11 @@ export const BudgetEstimatorQuiz: React.FC<BudgetEstimatorProps> = ({ onComplete
           name: nome,
           email: email,
           phone: telefone,
-          company: `${nome} (${summaryData.demand_type})`,
-          service_interest: `Orçamento de Site: ${summaryData.project_type} (Estimativa: ${summaryData.estimated_range} + R$ 99/mês manutenção)`,
+          company_name: `${nome} (${summaryData.demand_type})`,
+          main_pain: `Orçamento de Site: ${summaryData.project_type} (Estimativa: ${summaryData.estimated_range} + R$ 99/mês manutenção)`,
           message: `Escopo: ${summaryData.project_type} | Situação: ${summaryData.current_situation} | Recursos: ${summaryData.selected_features} | Prazo: ${prazo} | Feedback Preço: ${feedbackPreco} | Manutenção: R$ 99/mês | Obs: ${infoAdicional}`,
           estimated_budget: summaryData.estimated_range,
+          source_url: "/orcamento",
         }),
       });
     } catch {

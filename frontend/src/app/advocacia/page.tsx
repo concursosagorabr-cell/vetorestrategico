@@ -94,12 +94,12 @@ export default function AdvocaciaLandingPage() {
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.08] uppercase">
-                Filtre curiosos e feche contratos com{" "}
-                <span className="gradient-text-emerald">Clientes Qualificados</span>
+                Atendimento Ágil &amp; Qualificação Ética com{" "}
+                <span className="gradient-text-emerald">Inteligência Artificial</span>
               </h1>
 
               <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Agente Jurídico com IA que faz a triagem do caso em 6 segundos no WhatsApp, qualifica os requisitos legais e agenda a consulta consultiva <strong>100% em conformidade com a OAB</strong>.
+                Agente de Atendimento Jurídico com IA que acolhe mensagens no WhatsApp em 6 segundos, organiza as informações fáticas preliminares e agenda a consulta diretamente com o advogado, <strong>100% em conformidade com o Provimento 205/2021 do CFOAB</strong>.
               </p>
 
               {/* Action Buttons */}
@@ -135,7 +135,7 @@ export default function AdvocaciaLandingPage() {
                 </span>
                 <span className="flex items-center gap-1.5 text-slate-800">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  Triagem Automática de Casos e Fatos
+                  Organização Preliminar de Relato dos Fatos
                 </span>
                 <span className="flex items-center gap-1.5 text-slate-800">
                   <ShieldCheck className="w-4 h-4 text-emerald-600" />
@@ -165,7 +165,7 @@ export default function AdvocaciaLandingPage() {
                     className="absolute -bottom-2 -left-2 bg-white/95 backdrop-blur-md px-4 py-2 rounded-2xl shadow-xl border border-indigo-200 text-xs font-bold text-slate-900 flex items-center gap-2"
                   >
                     <span className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-ping" />
-                    <span>+24 novos contratos/mês</span>
+                    <span>Triagem &amp; Acolhimento 24/7</span>
                   </motion.div>
                 </div>
               </FloatingElement>
@@ -310,15 +310,18 @@ export default function AdvocaciaLandingPage() {
               <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-sky-950/50 via-slate-900 to-slate-950 border border-sky-500/40 text-center space-y-4 shadow-xl">
                 <span className="text-xs uppercase tracking-wider font-bold text-sky-400 flex items-center justify-center gap-1.5">
                   <TrendingUp className="w-4 h-4" />
-                  Honorários Adicionais Estimados
+                  Estimativa de Casos Triados com Agilidade
                 </span>
                 <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-sky-400">
-                  +R$ {receitaIncremental.toLocaleString("pt-BR")}
-                  <span className="text-xs text-slate-400 font-normal block mt-1">/mês em novos contratos qualificados</span>
+                  +{contratosNovosMes} atendimentos
+                  <span className="text-xs text-slate-400 font-normal block mt-1">qualificados e organizados por mês</span>
                 </div>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  O <strong>Agente Jurídico Vetor</strong> qualifica os requisitos legais do caso, recolhe o relato e entrega a consulta pronta para fechamento na sua agenda.
+                  O <strong>Agente Jurídico Vetor</strong> acolhe o relato dos fatos, verifica dados cadastrais preliminares e disponibiliza o histórico pronto para análise do advogado responsável.
                 </p>
+                <div className="text-[10px] text-slate-400 border-t border-white/10 pt-2 text-left leading-normal">
+                  ⚖️ <strong>Aviso Ético:</strong> Projeção consultiva baseada em produtividade operacional. Não configura garantia de honorários ou promessa de resultado de qualquer espécie, respeitando o Provimento CFOAB nº 205/2021.
+                </div>
               </div>
 
             </div>

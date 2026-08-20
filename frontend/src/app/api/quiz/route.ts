@@ -2,8 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
 import { calculateQuizResult } from '@/lib/quizEngine';
 import { sendLeadNotificationEmail } from '@/lib/emailService';
+import { getClientIp, rateLimit } from '@/lib/rateLimit';
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req);
+  const limiter = rateLimit(`quiz:${ip}`, 10, 60000);
+
+  if (!limiter.success) {
+    return NextResponse.json(
+      { detail: 'Muitas tentativas em curto intervalo. Por favor, aguarde um minuto.' },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await req.json();
     const {
@@ -18,7 +29,12 @@ export async function POST(req: NextRequest) {
       accepts_lgpd,
     } = body;
 
-    if (!segment || !company_size || !main_bottleneck || !digital_maturity || !name || !email || !phone || !company_name) {
+    const cleanName = String(name || '').trim();
+    const cleanEmail = String(email || '').trim().toLowerCase();
+    const cleanPhone = String(phone || '').trim();
+    const cleanCompanyName = String(company_name || '').trim();
+
+    if (!segment || !company_size || !main_bottleneck || !digital_maturity || !cleanName || !cleanEmail || !cleanPhone || !cleanCompanyName) {
       return NextResponse.json(
         { detail: 'Todos os campos obrigatórios do diagnóstico devem ser preenchidos.' },
         { status: 422 }
@@ -26,7 +42,6 @@ export async function POST(req: NextRequest) {
     }
 
     const result = calculateQuizResult(body);
-    const ip = req.headers.get('x-forwarded-for') || null;
 
     const answersPayload = JSON.stringify({
       segment,
@@ -46,10 +61,23 @@ export async function POST(req: NextRequest) {
         quiz_maturity_level, quiz_recommendation, source_url, ip_address,
         created_at, updated_at
       ) VALUES (
-        ${name}, ${email}, ${phone}, ${company_name}, ${company_size}, ${segment},
-        ${mainPain}, 'QUIZ', 'NEW', ${answersPayload}, ${result.opportunity_score},
-        ${result.maturity_level}, ${recommendation}, '/diagnostico', ${ip},
-        NOW(), NOW()
+        ${cleanName},
+        ${cleanEmail},
+        ${cleanPhone},
+        ${cleanCompanyName},
+        ${company_size},
+        ${segment},
+        ${mainPain},
+        'QUIZ',
+        'NEW',
+        ${answersPayload},
+        ${result.opportunity_score},
+        ${result.maturity_level},
+        ${recommendation},
+        '/diagnostico',
+        ${ip},
+        NOW(),
+        NOW()
       )
       RETURNING id;
     `;
@@ -59,10 +87,10 @@ export async function POST(req: NextRequest) {
 
     sendLeadNotificationEmail(
       {
-        name,
-        email,
-        phone,
-        company_name,
+        name: cleanName,
+        email: cleanEmail,
+        phone: cleanPhone,
+        company_name: cleanCompanyName,
         company_size,
         segment,
         main_pain: mainPain,
@@ -71,13 +99,13 @@ export async function POST(req: NextRequest) {
         quiz_recommendation: `${result.recommendation_title}: ${result.recommendation_summary}`,
       },
       'Diagnóstico de IA Concluído'
-    ).catch(console.error);
+    ).catch((err) => console.error('Erro ao enviar e-mail de diagnóstico:', err));
 
     return NextResponse.json(result, { status: 201 });
   } catch (error: any) {
-    console.error('Erro ao processar diagnóstico de IA:', error);
+    console.error('Erro interno ao processar diagnóstico de IA:', error);
     return NextResponse.json(
-      { detail: error.message || 'Erro ao processar diagnóstico de IA.' },
+      { detail: 'Ocorreu um erro ao calcular o diagnóstico. Por favor, tente novamente ou fale pelo WhatsApp (11) 91907-2390.' },
       { status: 500 }
     );
   }

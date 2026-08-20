@@ -317,8 +317,11 @@ export default function EsteticaLandingPage() {
                   <span className="text-xs text-slate-400 font-normal block mt-1">/mês em procedimentos não fechados</span>
                 </div>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  Com o <strong>Sistema Vetor de Atendimento com IA</strong>, recuperamos em média <strong>35% a 60%</strong> dessas pacientes que hoje esfriam no WhatsApp.
+                  Com o <strong>Sistema Vetor de Atendimento com IA</strong>, otimizamos o tempo de primeira resposta e organizamos os lembretes de comparecimento no WhatsApp.
                 </p>
+                <div className="text-[10px] text-slate-400 border-t border-white/10 pt-2 text-left leading-normal">
+                  ✨ <strong>Aviso Legal:</strong> Simulação estimada baseada em taxas médias de agilidade no atendimento digital. Não representa garantia de faturamento ou de resultados específicos, dependendo da avaliação individual de cada paciente e da equipe técnica da clínica.
+                </div>
               </div>
 
             </div>

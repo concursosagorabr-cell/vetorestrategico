@@ -318,8 +318,11 @@ export default function OdontologiaLandingPage() {
                   <span className="text-xs text-slate-400 font-normal block mt-1">/mês em tratamentos de alto ticket perdidos</span>
                 </div>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  O <strong>Sistema Vetor de IA Odontológica</strong> preenche sua agenda com pacientes pré-qualificados e reduz as faltas para menos de 10%.
+                  O <strong>Sistema Vetor de IA Odontológica</strong> auxilia no pré-atendimento de pacientes no WhatsApp e na organização da escala de confirmação de horários.
                 </p>
+                <div className="text-[10px] text-slate-400 border-t border-white/10 pt-2 text-left leading-normal">
+                  🩺 <strong>Aviso Legal:</strong> Valores e estimativas referenciais de mercado para fins de planejamento operacional. O comparecimento e fechamento clínico dependem de cada paciente e da avaliação presencial do cirurgião-dentista, conforme normas do CFO.
+                </div>
               </div>
 
             </div>

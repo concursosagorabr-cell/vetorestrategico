@@ -1,29 +1,51 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
 import { sendLeadNotificationEmail } from '@/lib/emailService';
+import { getClientIp, rateLimit } from '@/lib/rateLimit';
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req);
+  const limiter = rateLimit(`contact:${ip}`, 10, 60000);
+
+  if (!limiter.success) {
+    return NextResponse.json(
+      { detail: 'Muitas mensagens enviadas em curto intervalo. Por favor, aguarde um minuto.' },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await req.json();
     const { name, email, phone, subject, message, source_url } = body;
 
-    if (!name || !email || !message) {
+    const cleanName = String(name || '').trim();
+    const cleanEmail = String(email || '').trim().toLowerCase();
+    const cleanMessage = String(message || '').trim();
+
+    if (!cleanName || !cleanEmail || !cleanMessage) {
       return NextResponse.json(
         { detail: 'Nome, e-mail e mensagem são obrigatórios.' },
         { status: 400 }
       );
     }
 
-    const ip = req.headers.get('x-forwarded-for') || null;
-    const formattedMessage = `[Assunto: ${subject || 'Geral'}] ${message}`;
+    const formattedMessage = `[Assunto: ${String(subject || 'Geral').trim()}] ${cleanMessage}`;
 
     const rows = await sql`
       INSERT INTO leads (
         name, email, phone, message, lead_type, status,
         source_url, ip_address, created_at, updated_at
       ) VALUES (
-        ${name}, ${email}, ${phone || null}, ${formattedMessage}, 'CONTACT', 'NEW',
-        ${source_url || null}, ${ip}, NOW(), NOW()
+        ${cleanName},
+        ${cleanEmail},
+        ${phone ? String(phone).trim() : null},
+        ${formattedMessage},
+        'CONTACT',
+        'NEW',
+        ${source_url ? String(source_url).trim() : '/contato'},
+        ${ip},
+        NOW(),
+        NOW()
       )
       RETURNING id;
     `;
@@ -32,13 +54,13 @@ export async function POST(req: NextRequest) {
 
     sendLeadNotificationEmail(
       {
-        name,
-        email,
+        name: cleanName,
+        email: cleanEmail,
         phone,
         main_pain: formattedMessage,
       },
       'Mensagem de Contato'
-    ).catch(console.error);
+    ).catch((err) => console.error('Erro ao enviar e-mail de contato:', err));
 
     return NextResponse.json(
       {
@@ -49,9 +71,9 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error: any) {
-    console.error('Erro ao enviar contato:', error);
+    console.error('Erro interno ao processar formulário de contato:', error);
     return NextResponse.json(
-      { detail: error.message || 'Erro ao enviar mensagem de contato.' },
+      { detail: 'Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente ou fale pelo WhatsApp (11) 91907-2390.' },
       { status: 500 }
     );
   }

@@ -1,7 +1,21 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { MessageCircle, Mail, RefreshCw, Sparkles, Building2, User, Clock, ShieldCheck, ArrowLeft } from "lucide-react";
+import React, { useEffect, useState, useCallback } from "react";
+import {
+  MessageCircle,
+  Mail,
+  RefreshCw,
+  Sparkles,
+  Building2,
+  User,
+  Clock,
+  ShieldCheck,
+  ArrowLeft,
+  Lock,
+  LogOut,
+  AlertCircle,
+  KeyRound,
+} from "lucide-react";
 import Link from "next/link";
 
 interface Lead {
@@ -22,28 +36,175 @@ interface Lead {
 }
 
 export default function AdminLeadsPage() {
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState<string>("");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [inputPassword, setInputPassword] = useState<string>("");
+  const [authError, setAuthError] = useState<string | null>(null);
 
-  const fetchLeads = async () => {
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+
+  const fetchLeads = useCallback(async (authToken: string) => {
     setLoading(true);
+    setFetchError(null);
     try {
-      const res = await fetch("/api/admin/leads", { cache: "no-store" });
+      const res = await fetch("/api/admin/leads", {
+        headers: {
+          "x-admin-token": authToken,
+        },
+        cache: "no-store",
+      });
+
+      if (res.status === 401) {
+        setIsAuthenticated(false);
+        sessionStorage.removeItem("vetor_admin_token");
+        setAuthError("Sessão expirada ou chave administrativa incorreta.");
+        return;
+      }
+
+      if (!res.ok) {
+        throw new Error("Falha ao consultar banco de dados.");
+      }
+
       const data = await res.json();
       if (data.leads) {
         setLeads(data.leads);
+        setIsAuthenticated(true);
       }
-    } catch (e) {
-      console.error(e);
+    } catch (e: any) {
+      setFetchError(e.message || "Erro ao conectar ao servidor.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const savedToken = sessionStorage.getItem("vetor_admin_token");
+    if (savedToken) {
+      setToken(savedToken);
+      fetchLeads(savedToken);
+    }
+  }, [fetchLeads]);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputPassword.trim()) {
+      setAuthError("Por favor, digite a chave de acesso.");
+      return;
+    }
+
+    setAuthError(null);
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/admin/leads", {
+        headers: {
+          "x-admin-token": inputPassword.trim(),
+        },
+        cache: "no-store",
+      });
+
+      if (res.status === 401) {
+        setAuthError("Chave de acesso administrativo inválida.");
+        setLoading(false);
+        return;
+      }
+
+      if (!res.ok) {
+        throw new Error("Erro ao validar credenciais.");
+      }
+
+      const data = await res.json();
+      sessionStorage.setItem("vetor_admin_token", inputPassword.trim());
+      setToken(inputPassword.trim());
+      setLeads(data.leads || []);
+      setIsAuthenticated(true);
+      setInputPassword("");
+    } catch (err: any) {
+      setAuthError(err.message || "Erro ao autenticar.");
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchLeads();
-  }, []);
+  const handleLogout = () => {
+    sessionStorage.removeItem("vetor_admin_token");
+    setToken("");
+    setIsAuthenticated(false);
+    setLeads([]);
+  };
 
+  // Se não autenticado, renderiza tela de login seguro
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4">
+        <div className="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl space-y-6">
+          <div className="text-center space-y-2">
+            <div className="w-14 h-14 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex items-center justify-center text-emerald-400 mx-auto">
+              <Lock className="w-7 h-7" />
+            </div>
+            <h1 className="text-2xl font-black text-white">Acesso Restrito</h1>
+            <p className="text-xs text-slate-400">
+              Painel de Gestão Comercial &bull; Vetor Estratégico
+            </p>
+          </div>
+
+          {authError && (
+            <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center gap-2.5 text-red-300 text-xs font-medium">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>{authError}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+                Chave de Acesso Administrativo
+              </label>
+              <div className="relative">
+                <input
+                  type="password"
+                  placeholder="Digite sua chave de segurança..."
+                  value={inputPassword}
+                  onChange={(e) => setInputPassword(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
+                  autoFocus
+                />
+                <KeyRound className="w-4 h-4 text-slate-500 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-3 rounded-xl transition-all shadow-lg shadow-emerald-950/50 disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2"
+            >
+              {loading ? (
+                <>
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  Verificando...
+                </>
+              ) : (
+                "Entrar no Painel Seguro"
+              )}
+            </button>
+          </form>
+
+          <div className="pt-2 border-t border-slate-800/80 text-center">
+            <Link
+              href="/"
+              className="text-xs text-slate-400 hover:text-white inline-flex items-center gap-1.5 transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" /> Voltar à página inicial
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Visualização do Painel Autenticado
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-6">
@@ -59,25 +220,44 @@ export default function AdminLeadsPage() {
             </Link>
             <h1 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-2">
               Painel de Leads &bull; Vetor Estratégico
-              <span className="text-xs bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
-                Neon DB
+              <span className="text-xs bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5" /> Autenticado
               </span>
             </h1>
             <p className="text-xs sm:text-sm text-slate-400">
-              Contatos captados pelo Chat com IA (Comandante Vetor), Diagnóstico de IA e Formulários.
+              Contatos captados com segurança via formulários, diagnóstico e chat autorizado.
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={fetchLeads}
-            disabled={loading}
-            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition-all shadow-lg shadow-emerald-900/30 disabled:opacity-50 cursor-pointer"
-          >
-            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
-            Atualizar Leads
-          </button>
+          <div className="flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => fetchLeads(token)}
+              disabled={loading}
+              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition-all shadow-lg shadow-emerald-900/30 disabled:opacity-50 cursor-pointer"
+            >
+              <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+              Atualizar Leads
+            </button>
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs sm:text-sm font-bold px-3.5 py-2.5 rounded-xl transition-all border border-slate-700 cursor-pointer"
+              title="Encerrar sessão"
+            >
+              <LogOut className="w-4 h-4" />
+              Sair
+            </button>
+          </div>
         </div>
+
+        {fetchError && (
+          <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center gap-3 text-red-300 text-xs font-medium">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>{fetchError}</span>
+          </div>
+        )}
 
         {/* Counter Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -104,12 +284,12 @@ export default function AdminLeadsPage() {
           {loading ? (
             <div className="p-12 text-center text-slate-400 space-y-3">
               <RefreshCw className="w-8 h-8 mx-auto animate-spin text-emerald-400" />
-              <p className="text-sm">Carregando contatos do banco de dados Neon...</p>
+              <p className="text-sm">Carregando contatos seguros...</p>
             </div>
           ) : leads.length === 0 ? (
             <div className="p-12 text-center text-slate-400 space-y-2">
               <p className="text-base font-semibold text-slate-300">Nenhum lead registrado ainda.</p>
-              <p className="text-xs">Assim que um cliente conversar no chat ou preencher um formulário, ele aparecerá aqui instantaneamente!</p>
+              <p className="text-xs">Assim que um cliente enviar uma solicitação, ela aparecerá aqui com total sigilo!</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -211,7 +391,7 @@ export default function AdminLeadsPage() {
                             <a
                               href={`https://wa.me/${cleanPhone}?text=Ol%C3%A1%20${encodeURIComponent(
                                 lead.name === "Lead Chat IA" ? "" : lead.name
-                              )}!%20Sou%20da%20equipe%20da%20Vetor%20Estrat%C3%A9gico.%20Vi%20que%20voc%C3%AA%20conversou%20com%20nosso%20consultor%20virtual%20sobre%20solu%C3%A7%C3%B5es%20digitais.`}
+                              )}!%20Sou%20da%20equipe%20da%20Vetor%20Estrat%C3%A9gico.%20Vi%20que%20voc%C3%AA%20solicitou%20um%20contato%20sobre%20nossas%20solu%C3%A7%C3%B5es%20digitais.`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] px-3.5 py-1.5 rounded-xl transition-all shadow-md shadow-emerald-950/40"
