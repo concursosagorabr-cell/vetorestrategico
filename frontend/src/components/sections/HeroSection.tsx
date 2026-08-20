@@ -4,6 +4,7 @@ import React, { useRef, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { FloatingElement, TwinklingStar, OrbitRings } from "@/components/ui/CosmicDecorations";
+import { ParallaxLayer, ParallaxVideoBackground, CosmicParallaxStars } from "@/components/ui/Parallax";
 import { Sparkles, Zap, CheckCircle2, ChevronDown } from "lucide-react";
 
 export const HeroSection: React.FC = () => {
@@ -70,8 +71,8 @@ export const HeroSection: React.FC = () => {
 
   return (
     <section className="relative pt-8 pb-20 md:pt-14 md:pb-28 overflow-hidden bg-slate-950 text-white min-h-[720px] flex flex-col justify-between">
-      {/* 🌌 FULL HERO CINEMATIC VIDEO BACKGROUND */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
+      {/* 🌌 FULL HERO CINEMATIC VIDEO BACKGROUND WITH SUBTLE PARALLAX */}
+      <ParallaxVideoBackground speed={-0.06}>
         <video
           ref={bgVideoRef}
           src="/Mascote-Comandante-Vetor.mp4"
@@ -100,43 +101,56 @@ export const HeroSection: React.FC = () => {
         {/* High-Contrast Gradient Vignette Overlays (Lightened by 10%+) */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/30 to-slate-950/85" />
         <div className="absolute inset-0 bg-radial-at-c from-transparent via-slate-950/15 to-slate-950/60" />
-      </div>
+      </ParallaxVideoBackground>
+
+      {/* Multi-Plane Cosmic Starfield Parallax */}
+      <CosmicParallaxStars />
 
       {/* Twinkling Cosmic Stars (Pure GPU CSS) */}
-      <TwinklingStar size={22} color="gold" delay={0.2} style={{ position: "absolute", top: "12%", left: "12%" }} />
-      <TwinklingStar size={16} color="cyan" delay={1.2} style={{ position: "absolute", top: "24%", left: "28%" }} />
-      <TwinklingStar size={20} color="emerald" delay={0.7} style={{ position: "absolute", top: "18%", right: "22%" }} />
-      <TwinklingStar size={24} color="gold" delay={1.8} style={{ position: "absolute", top: "34%", right: "8%" }} />
+      <ParallaxLayer speed={0.25} className="absolute top-[12%] left-[12%] pointer-events-none">
+        <TwinklingStar size={22} color="gold" delay={0.2} />
+      </ParallaxLayer>
+      <ParallaxLayer speed={-0.2} className="absolute top-[24%] left-[28%] pointer-events-none">
+        <TwinklingStar size={16} color="cyan" delay={1.2} />
+      </ParallaxLayer>
+      <ParallaxLayer speed={0.3} className="absolute top-[18%] right-[22%] pointer-events-none">
+        <TwinklingStar size={20} color="emerald" delay={0.7} />
+      </ParallaxLayer>
+      <ParallaxLayer speed={-0.15} className="absolute top-[34%] right-[8%] pointer-events-none">
+        <TwinklingStar size={24} color="gold" delay={1.8} />
+      </ParallaxLayer>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         
         {/* Main Hero 3-Column Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-4">
           
-          {/* Left Decorative Column: Cosmic Planet */}
+          {/* Left Decorative Column: Cosmic Planet with Parallax Depth & Tilt */}
           <div className="hidden lg:flex lg:col-span-3 flex-col items-center justify-center relative">
-            <FloatingElement duration={5.5}>
-              <div className="relative w-60 h-60 flex items-center justify-center group">
-                <OrbitRings size={240} className="absolute inset-0 text-sky-400/40" />
-                
-                <div className="relative w-48 h-48 drop-shadow-[0_20px_35px_rgba(2,132,199,0.35)] transition-transform duration-500 group-hover:scale-105">
-                  <Image
-                    src="/images/mascot/planet.png"
-                    alt="Planeta Vetor Cósmico"
-                    width={192}
-                    height={192}
-                    className="w-full h-full object-contain"
-                    priority
-                  />
-                </div>
+            <ParallaxLayer speed={-0.16} rotateSpeed={0.06}>
+              <FloatingElement duration={5.5}>
+                <div className="relative w-60 h-60 flex items-center justify-center group">
+                  <OrbitRings size={240} className="absolute inset-0 text-sky-400/40" />
+                  
+                  <div className="relative w-48 h-48 drop-shadow-[0_20px_35px_rgba(2,132,199,0.35)] transition-transform duration-500 group-hover:scale-105">
+                    <Image
+                      src="/images/mascot/planet.png"
+                      alt="Planeta Vetor Cósmico"
+                      width={192}
+                      height={192}
+                      className="w-full h-full object-contain"
+                      priority
+                    />
+                  </div>
 
-                {/* Micro floating badge */}
-                <div className="absolute -bottom-3 -left-2 bg-slate-900/95 px-3.5 py-1.5 rounded-full border border-emerald-500/30 shadow-xl text-[11px] font-bold text-slate-200 flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Alta Performance &amp; SEO
+                  {/* Micro floating badge */}
+                  <div className="absolute -bottom-3 -left-2 bg-slate-900/95 px-3.5 py-1.5 rounded-full border border-emerald-500/30 shadow-xl text-[11px] font-bold text-slate-200 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    Alta Performance &amp; SEO
+                  </div>
                 </div>
-              </div>
-            </FloatingElement>
+              </FloatingElement>
+            </ParallaxLayer>
           </div>
 
           {/* Center Column: Core Value Proposition */}
@@ -200,34 +214,36 @@ export const HeroSection: React.FC = () => {
 
           </div>
 
-          {/* Right Decorative Column: Mascot "Comandante Vetor" (Desktop) */}
+          {/* Right Decorative Column: Mascot "Comandante Vetor" (Desktop) with Parallax Float */}
           <div className="hidden lg:flex lg:col-span-3 flex-col items-center justify-center relative">
-            <FloatingElement duration={4.5}>
-              <div className="relative w-72 h-72 sm:w-84 sm:h-84 flex items-center justify-center group cursor-pointer">
-                
-                {/* Orbit Ring behind mascot */}
-                <OrbitRings size={320} className="absolute inset-0 text-emerald-400/30 pointer-events-none" />
+            <ParallaxLayer speed={0.12} rotateSpeed={-0.03}>
+              <FloatingElement duration={4.5}>
+                <div className="relative w-72 h-72 sm:w-84 sm:h-84 flex items-center justify-center group cursor-pointer">
+                  
+                  {/* Orbit Ring behind mascot */}
+                  <OrbitRings size={320} className="absolute inset-0 text-emerald-400/30 pointer-events-none" />
 
-                {/* Mascot Image */}
-                <div className="relative w-full h-full drop-shadow-[0_25px_45px_rgba(16,185,129,0.4)] transition-transform duration-500 group-hover:scale-105">
-                  <Image
-                    src="/images/mascot/hero.png"
-                    alt="Mascote Vetor Estratégico"
-                    width={336}
-                    height={336}
-                    className="w-full h-full object-contain"
-                    priority
-                  />
+                  {/* Mascot Image */}
+                  <div className="relative w-full h-full drop-shadow-[0_25px_45px_rgba(16,185,129,0.4)] transition-transform duration-500 group-hover:scale-105">
+                    <Image
+                      src="/images/mascot/hero.png"
+                      alt="Mascote Vetor Estratégico"
+                      width={336}
+                      height={336}
+                      className="w-full h-full object-contain"
+                      priority
+                    />
+                  </div>
+
+                  {/* Floating Speech Bubble Top */}
+                  <div className="absolute -top-2 -right-1 bg-slate-900/95 text-white text-xs font-bold px-3.5 py-1.5 rounded-2xl shadow-2xl border border-emerald-500/50 flex items-center gap-1.5">
+                    <span className="text-emerald-400">⚡</span>
+                    <span>Soluções para PMEs</span>
+                  </div>
+
                 </div>
-
-                {/* Floating Speech Bubble Top */}
-                <div className="absolute -top-2 -right-1 bg-slate-900/95 text-white text-xs font-bold px-3.5 py-1.5 rounded-2xl shadow-2xl border border-emerald-500/50 flex items-center gap-1.5">
-                  <span className="text-emerald-400">⚡</span>
-                  <span>Soluções para PMEs</span>
-                </div>
-
-              </div>
-            </FloatingElement>
+              </FloatingElement>
+            </ParallaxLayer>
           </div>
 
         </div>

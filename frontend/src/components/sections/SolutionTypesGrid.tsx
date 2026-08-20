@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import { SOLUTION_TYPES } from "@/lib/constants";
+import { ParallaxVideoBackground, CosmicParallaxStars } from "@/components/ui/Parallax";
 import {
   Globe,
   MessageCircle,
@@ -93,8 +94,8 @@ export const SolutionTypesGrid: React.FC = () => {
 
   return (
     <section className="py-24 bg-slate-950 relative overflow-hidden text-white">
-      {/* 🌌 Quantum Scanning Video Ambient Layer (5% darker overlay & smooth playback) */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
+      {/* 🌌 Quantum Scanning Video Ambient Layer with Subtle Parallax */}
+      <ParallaxVideoBackground speed={-0.08}>
         <video
           ref={videoRef}
           autoPlay
@@ -124,7 +125,10 @@ export const SolutionTypesGrid: React.FC = () => {
         {/* High-contrast vignette (adjusted 5% darker) to ensure text legibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/20 to-slate-950/70 pointer-events-none" />
         <div className="absolute inset-0 bg-radial-at-c from-emerald-500/10 via-transparent to-slate-950/55 pointer-events-none" />
-      </div>
+      </ParallaxVideoBackground>
+
+      {/* Cosmic Parallax Stars */}
+      <CosmicParallaxStars />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}

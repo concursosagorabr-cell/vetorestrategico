@@ -3,6 +3,7 @@
 import React from "react";
 import { Button } from "@/components/ui/Button";
 import { TwinklingStar } from "@/components/ui/CosmicDecorations";
+import { ParallaxLayer, CosmicParallaxStars } from "@/components/ui/Parallax";
 import { ShieldCheck, Zap, MessageSquare } from "lucide-react";
 import { COMPANY_INFO } from "@/lib/constants";
 
@@ -12,13 +13,26 @@ export const CtaBannerSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-[2.5rem] bg-gradient-to-br from-[#07162C] via-[#0A192F] to-[#062419] border border-emerald-500/30 p-8 sm:p-14 text-center relative overflow-hidden shadow-2xl">
           
-          {/* Subtle background glows */}
-          <div className="absolute -top-20 -left-20 w-80 h-80 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-sky-500/20 rounded-full blur-3xl pointer-events-none" />
+          {/* Parallax Cosmic Background Stars */}
+          <CosmicParallaxStars />
 
-          <TwinklingStar size={24} color="gold" delay={0.2} style={{ position: "absolute", top: "15%", left: "8%" }} />
-          <TwinklingStar size={18} color="cyan" delay={1.2} style={{ position: "absolute", top: "25%", right: "10%" }} />
-          <TwinklingStar size={22} color="emerald" delay={0.7} style={{ position: "absolute", bottom: "20%", left: "15%" }} />
+          {/* Parallax Background Glow Nebulae */}
+          <ParallaxLayer speed={0.15} className="absolute -top-20 -left-20 pointer-events-none">
+            <div className="w-80 h-80 bg-emerald-500/20 rounded-full blur-3xl" />
+          </ParallaxLayer>
+          <ParallaxLayer speed={-0.15} className="absolute -bottom-20 -right-20 pointer-events-none">
+            <div className="w-80 h-80 bg-sky-500/20 rounded-full blur-3xl" />
+          </ParallaxLayer>
+
+          <ParallaxLayer speed={0.25} className="absolute top-[15%] left-[8%] pointer-events-none z-10">
+            <TwinklingStar size={24} color="gold" delay={0.2} />
+          </ParallaxLayer>
+          <ParallaxLayer speed={-0.2} className="absolute top-[25%] right-[10%] pointer-events-none z-10">
+            <TwinklingStar size={18} color="cyan" delay={1.2} />
+          </ParallaxLayer>
+          <ParallaxLayer speed={0.3} className="absolute bottom-[20%] left-[15%] pointer-events-none z-10">
+            <TwinklingStar size={22} color="emerald" delay={0.7} />
+          </ParallaxLayer>
 
           <div className="max-w-4xl mx-auto space-y-6 relative z-10">
             <span className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full text-xs sm:text-sm font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase tracking-widest">

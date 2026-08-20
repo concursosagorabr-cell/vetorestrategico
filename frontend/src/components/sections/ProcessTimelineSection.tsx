@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { FloatingElement, TwinklingStar } from "@/components/ui/CosmicDecorations";
+import { ParallaxLayer, ParallaxVideoBackground, CosmicParallaxStars } from "@/components/ui/Parallax";
 import { Zap } from "lucide-react";
 
 export const ProcessTimelineSection: React.FC = () => {
@@ -98,41 +99,50 @@ export const ProcessTimelineSection: React.FC = () => {
         {/* Cosmic Deep Navy Container */}
         <div className="relative rounded-[2.5rem] bg-[#0A192F] border border-sky-900/60 p-8 sm:p-12 lg:p-16 shadow-2xl overflow-hidden text-white">
           
-          {/* Cinematic Ambient Video Background (5% darker & smooth playback) */}
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            onLoadedMetadata={(e) => {
-              e.currentTarget.defaultPlaybackRate = 2.2;
-              e.currentTarget.playbackRate = 2.2;
-            }}
-            onPlay={(e) => {
-              if (e.currentTarget.playbackRate !== 2.2) {
+          {/* Cinematic Ambient Video Background with Subtle Parallax */}
+          <ParallaxVideoBackground speed={-0.07}>
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              onLoadedMetadata={(e) => {
+                e.currentTarget.defaultPlaybackRate = 2.2;
                 e.currentTarget.playbackRate = 2.2;
-              }
-            }}
-            onRateChange={(e) => {
-              if (e.currentTarget.playbackRate !== 2.2) {
-                e.currentTarget.playbackRate = 2.2;
-              }
-            }}
-            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-65 mix-blend-screen scale-105 transform-gpu pointer-events-none z-0"
-          >
-            <source src="/Partículas-de-Fundo-Ambient.mp4" type="video/mp4" />
-            <source src="/Part%C3%ADculas-de-Fundo-Ambient.mp4" type="video/mp4" />
-          </video>
+              }}
+              onPlay={(e) => {
+                if (e.currentTarget.playbackRate !== 2.2) {
+                  e.currentTarget.playbackRate = 2.2;
+                }
+              }}
+              onRateChange={(e) => {
+                if (e.currentTarget.playbackRate !== 2.2) {
+                  e.currentTarget.playbackRate = 2.2;
+                }
+              }}
+              className="w-full h-full object-cover opacity-65 mix-blend-screen scale-105 transform-gpu pointer-events-none"
+            >
+              <source src="/Partículas-de-Fundo-Ambient.mp4" type="video/mp4" />
+              <source src="/Part%C3%ADculas-de-Fundo-Ambient.mp4" type="video/mp4" />
+            </video>
 
-          {/* Gradient Overlay (5% darker) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F]/80 via-[#0A192F]/15 to-[#0A192F]/50 z-[1] pointer-events-none" />
+            {/* Gradient Overlay (5% darker) */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F]/80 via-[#0A192F]/15 to-[#0A192F]/50 z-[1] pointer-events-none" />
+          </ParallaxVideoBackground>
 
-          {/* Cosmic Background Stars (Pure GPU CSS) */}
-          <TwinklingStar size={20} color="gold" delay={0.3} style={{ position: "absolute", top: "10%", right: "15%", zIndex: 2 }} />
-          <TwinklingStar size={16} color="cyan" delay={1.1} style={{ position: "absolute", bottom: "15%", left: "45%", zIndex: 2 }} />
-          <TwinklingStar size={24} color="gold" delay={2.0} style={{ position: "absolute", top: "60%", right: "8%", zIndex: 2 }} />
+          {/* Cosmic Background Stars with Parallax */}
+          <CosmicParallaxStars />
+          <ParallaxLayer speed={0.2} className="absolute top-[10%] right-[15%] z-[2] pointer-events-none">
+            <TwinklingStar size={20} color="gold" delay={0.3} />
+          </ParallaxLayer>
+          <ParallaxLayer speed={-0.18} className="absolute bottom-[15%] left-[45%] z-[2] pointer-events-none">
+            <TwinklingStar size={16} color="cyan" delay={1.1} />
+          </ParallaxLayer>
+          <ParallaxLayer speed={0.25} className="absolute top-[60%] right-[8%] z-[2] pointer-events-none">
+            <TwinklingStar size={24} color="gold" delay={2.0} />
+          </ParallaxLayer>
 
           {/* Section Header Inside */}
           <div className="relative z-10 text-center max-w-3xl mx-auto space-y-3 mb-14">
@@ -178,23 +188,25 @@ export const ProcessTimelineSection: React.FC = () => {
               ))}
             </div>
 
-            {/* Right Column: Rocket Mascot & Planning Card */}
+            {/* Right Column: Rocket Mascot & Planning Card with Parallax Depth */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center space-y-6">
               
               {/* Floating Rocket Mascot */}
-              <FloatingElement duration={4.6}>
-                <div className="relative w-72 h-72 sm:w-88 sm:h-88 flex items-center justify-center group cursor-pointer">
-                  <div className="relative w-full h-full drop-shadow-[0_25px_45px_rgba(16,185,129,0.35)] transition-transform duration-500 group-hover:scale-105">
-                    <Image
-                      src="/images/mascot/rocket.png"
-                      alt="Comandante Vetor Decolando com Foguete"
-                      width={352}
-                      height={352}
-                      className="w-full h-full object-contain"
-                    />
+              <ParallaxLayer speed={-0.14} rotateSpeed={0.03}>
+                <FloatingElement duration={4.6}>
+                  <div className="relative w-72 h-72 sm:w-88 sm:h-88 flex items-center justify-center group cursor-pointer">
+                    <div className="relative w-full h-full drop-shadow-[0_25px_45px_rgba(16,185,129,0.35)] transition-transform duration-500 group-hover:scale-105">
+                      <Image
+                        src="/images/mascot/rocket.png"
+                        alt="Comandante Vetor Decolando com Foguete"
+                        width={352}
+                        height={352}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
                   </div>
-                </div>
-              </FloatingElement>
+                </FloatingElement>
+              </ParallaxLayer>
 
               {/* Action Callout Box */}
               <div className="w-full text-center space-y-4 pt-2">

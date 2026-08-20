@@ -4,6 +4,7 @@ import React, { useRef, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { FloatingElement, TwinklingStar } from "@/components/ui/CosmicDecorations";
+import { ParallaxLayer, ParallaxVideoBackground, CosmicParallaxStars } from "@/components/ui/Parallax";
 import {
   FileText,
   Palette,
@@ -107,60 +108,71 @@ export const TechnicalBenefitsGrid: React.FC = () => {
         {/* Cosmic Container with Neural & AI Video */}
         <div className="relative rounded-[2.5rem] bg-[#07162C] border border-sky-900/50 p-8 sm:p-12 lg:p-16 shadow-2xl text-white overflow-hidden">
           
-          {/* Ambient Video Background (5% darker & smooth playback) */}
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            onLoadedMetadata={(e) => {
-              e.currentTarget.defaultPlaybackRate = 2.2;
-              e.currentTarget.playbackRate = 2.2;
-            }}
-            onPlay={(e) => {
-              if (e.currentTarget.playbackRate !== 2.2) {
+          {/* Ambient Video Background with Subtle Parallax */}
+          <ParallaxVideoBackground speed={-0.08}>
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              onLoadedMetadata={(e) => {
+                e.currentTarget.defaultPlaybackRate = 2.2;
                 e.currentTarget.playbackRate = 2.2;
-              }
-            }}
-            onRateChange={(e) => {
-              if (e.currentTarget.playbackRate !== 2.2) {
-                e.currentTarget.playbackRate = 2.2;
-              }
-            }}
-            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-65 mix-blend-screen pointer-events-none z-0 scale-105 transform-gpu"
-          >
-            <source src="/Rede-Neural-&-WhatsApp-AI.mp4" type="video/mp4" />
-            <source src="/Rede-Neural-%26-WhatsApp-AI.mp4" type="video/mp4" />
-          </video>
+              }}
+              onPlay={(e) => {
+                if (e.currentTarget.playbackRate !== 2.2) {
+                  e.currentTarget.playbackRate = 2.2;
+                }
+              }}
+              onRateChange={(e) => {
+                if (e.currentTarget.playbackRate !== 2.2) {
+                  e.currentTarget.playbackRate = 2.2;
+                }
+              }}
+              className="w-full h-full object-cover opacity-65 mix-blend-screen pointer-events-none scale-105 transform-gpu"
+            >
+              <source src="/Rede-Neural-&-WhatsApp-AI.mp4" type="video/mp4" />
+              <source src="/Rede-Neural-%26-WhatsApp-AI.mp4" type="video/mp4" />
+            </video>
 
-          {/* Gradient Overlay (5% darker) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07162C]/80 via-[#07162C]/20 to-[#07162C]/70 z-[1] pointer-events-none" />
+            {/* Gradient Overlay (5% darker) */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#07162C]/80 via-[#07162C]/20 to-[#07162C]/70 z-[1] pointer-events-none" />
+          </ParallaxVideoBackground>
 
-          {/* Pure GPU Stars */}
-          <TwinklingStar size={22} color="gold" delay={0.5} style={{ position: "absolute", top: "12%", left: "10%", zIndex: 2 }} />
-          <TwinklingStar size={16} color="cyan" delay={1.4} style={{ position: "absolute", top: "45%", left: "45%", zIndex: 2 }} />
-          <TwinklingStar size={20} color="emerald" delay={0.9} style={{ position: "absolute", bottom: "15%", right: "12%", zIndex: 2 }} />
+          {/* Pure GPU Stars & Cosmic Starfield */}
+          <CosmicParallaxStars />
+          <ParallaxLayer speed={0.18} className="absolute top-[12%] left-[10%] z-[2] pointer-events-none">
+            <TwinklingStar size={22} color="gold" delay={0.5} />
+          </ParallaxLayer>
+          <ParallaxLayer speed={-0.22} className="absolute top-[45%] left-[45%] z-[2] pointer-events-none">
+            <TwinklingStar size={16} color="cyan" delay={1.4} />
+          </ParallaxLayer>
+          <ParallaxLayer speed={0.25} className="absolute bottom-[15%] right-[12%] z-[2] pointer-events-none">
+            <TwinklingStar size={20} color="emerald" delay={0.9} />
+          </ParallaxLayer>
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Left Column: Mascot with Laptop/Tablet & CTA */}
+            {/* Left Column: Mascot with Laptop/Tablet & CTA (Parallax Depth) */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center text-center space-y-6">
               
-              <FloatingElement duration={4.8}>
-                <div className="relative w-72 h-72 sm:w-88 sm:h-88 flex items-center justify-center group cursor-pointer">
-                  <div className="relative w-full h-full drop-shadow-[0_25px_45px_rgba(16,185,129,0.4)] transition-transform duration-500 group-hover:scale-105">
-                    <Image
-                      src="/images/mascot/balloons.png"
-                      alt="Comandante Vetor desenvolvendo no Computador"
-                      width={352}
-                      height={352}
-                      className="w-full h-full object-contain"
-                    />
+              <ParallaxLayer speed={-0.12} rotateSpeed={-0.03}>
+                <FloatingElement duration={4.8}>
+                  <div className="relative w-72 h-72 sm:w-88 sm:h-88 flex items-center justify-center group cursor-pointer">
+                    <div className="relative w-full h-full drop-shadow-[0_25px_45px_rgba(16,185,129,0.4)] transition-transform duration-500 group-hover:scale-105">
+                      <Image
+                        src="/images/mascot/balloons.png"
+                        alt="Comandante Vetor desenvolvendo no Computador"
+                        width={352}
+                        height={352}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
                   </div>
-                </div>
-              </FloatingElement>
+                </FloatingElement>
+              </ParallaxLayer>
 
               <div className="space-y-4 pt-2">
                 <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white max-w-sm mx-auto">

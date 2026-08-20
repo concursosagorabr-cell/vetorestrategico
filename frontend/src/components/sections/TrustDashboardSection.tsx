@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCounter } from "@/components/ui/StatCounter";
+import { ParallaxVideoBackground, CosmicParallaxStars } from "@/components/ui/Parallax";
 import {
   BarChart3,
   Activity,
@@ -87,36 +88,41 @@ export const TrustDashboardSection: React.FC = () => {
 
         {/* High-Tech Interactive Dashboard UI Showcase */}
         <div className="rounded-[2.5rem] bg-gradient-to-b from-[#0A192F] to-[#04101E] border border-sky-500/30 p-6 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden text-white">
-          {/* Video Background (5% darker & smooth playback) */}
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            onLoadedMetadata={(e) => {
-              e.currentTarget.defaultPlaybackRate = 2.2;
-              e.currentTarget.playbackRate = 2.2;
-            }}
-            onPlay={(e) => {
-              if (e.currentTarget.playbackRate !== 2.2) {
+          {/* Video Background with Subtle Parallax */}
+          <ParallaxVideoBackground speed={-0.08}>
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              onLoadedMetadata={(e) => {
+                e.currentTarget.defaultPlaybackRate = 2.2;
                 e.currentTarget.playbackRate = 2.2;
-              }
-            }}
-            onRateChange={(e) => {
-              if (e.currentTarget.playbackRate !== 2.2) {
-                e.currentTarget.playbackRate = 2.2;
-              }
-            }}
-            className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-65 mix-blend-screen scale-105 transform-gpu pointer-events-none z-0"
-          >
-            <source src="/Dashboard-Holográfico-3D.mp4" type="video/mp4" />
-            <source src="/Dashboard-Hologr%C3%A1fico-3D.mp4" type="video/mp4" />
-          </video>
+              }}
+              onPlay={(e) => {
+                if (e.currentTarget.playbackRate !== 2.2) {
+                  e.currentTarget.playbackRate = 2.2;
+                }
+              }}
+              onRateChange={(e) => {
+                if (e.currentTarget.playbackRate !== 2.2) {
+                  e.currentTarget.playbackRate = 2.2;
+                }
+              }}
+              className="w-full h-full object-cover opacity-65 mix-blend-screen scale-105 transform-gpu pointer-events-none"
+            >
+              <source src="/Dashboard-Holográfico-3D.mp4" type="video/mp4" />
+              <source src="/Dashboard-Hologr%C3%A1fico-3D.mp4" type="video/mp4" />
+            </video>
 
-          {/* Gradient Overlay (5% darker) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#04101E]/80 via-[#04101E]/15 to-[#0A192F]/50 pointer-events-none z-0" />
+            {/* Gradient Overlay (5% darker) */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#04101E]/80 via-[#04101E]/15 to-[#0A192F]/50 pointer-events-none" />
+          </ParallaxVideoBackground>
+
+          {/* Cosmic Starfield */}
+          <CosmicParallaxStars />
 
           {/* Top Bar of the Mock Dashboard */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-white/10 gap-4 relative z-10">
