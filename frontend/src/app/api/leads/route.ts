@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
         source_url, ip_address, created_at, updated_at
       ) VALUES (
         ${name}, ${email}, ${phone || null}, ${company_name || null}, ${company_size || null}, ${segment || null},
-        ${main_pain || null}, ${estimated_budget || null}, ${message || null}, 'qualified', 'new',
+        ${main_pain || null}, ${estimated_budget || null}, ${message || null}, 'QUALIFIED', 'NEW',
         ${source_url || null}, ${ip}, NOW(), NOW()
       )
       RETURNING id, name, email, phone, company_name, segment, lead_type, status, created_at;

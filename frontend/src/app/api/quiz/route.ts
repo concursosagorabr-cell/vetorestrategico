@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
         created_at, updated_at
       ) VALUES (
         ${name}, ${email}, ${phone}, ${company_name}, ${company_size}, ${segment},
-        ${mainPain}, 'quiz', 'new', ${answersPayload}, ${result.opportunity_score},
+        ${mainPain}, 'QUIZ', 'NEW', ${answersPayload}, ${result.opportunity_score},
         ${result.maturity_level}, ${recommendation}, '/diagnostico', ${ip},
         NOW(), NOW()
       )

@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         name, email, phone, message, lead_type, status,
         source_url, ip_address, created_at, updated_at
       ) VALUES (
-        ${name}, ${email}, ${phone || null}, ${formattedMessage}, 'contact', 'new',
+        ${name}, ${email}, ${phone || null}, ${formattedMessage}, 'CONTACT', 'NEW',
         ${source_url || null}, ${ip}, NOW(), NOW()
       )
       RETURNING id;
