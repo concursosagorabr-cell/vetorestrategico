@@ -45,7 +45,7 @@ export const CinematicVideo: React.FC<CinematicVideoProps> = ({
     const container = containerRef.current;
     if (!video) return;
 
-    const SPEED = 1.75;
+    const SPEED = 2.2;
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
@@ -168,17 +168,17 @@ export const CinematicVideo: React.FC<CinematicVideoProps> = ({
         onLoadedData={() => setIsLoaded(true)}
         onPlaying={() => setIsLoaded(true)}
         onLoadedMetadata={(e) => {
-          e.currentTarget.defaultPlaybackRate = 1.75;
-          e.currentTarget.playbackRate = 1.75;
+          e.currentTarget.defaultPlaybackRate = 2.2;
+          e.currentTarget.playbackRate = 2.2;
         }}
         onPlay={(e) => {
-          if (e.currentTarget.playbackRate !== 1.75) {
-            e.currentTarget.playbackRate = 1.75;
+          if (e.currentTarget.playbackRate !== 2.2) {
+            e.currentTarget.playbackRate = 2.2;
           }
         }}
         onRateChange={(e) => {
-          if (e.currentTarget.playbackRate !== 1.75) {
-            e.currentTarget.playbackRate = 1.75;
+          if (e.currentTarget.playbackRate !== 2.2) {
+            e.currentTarget.playbackRate = 2.2;
           }
         }}
         className={`relative z-10 w-full h-full object-cover transform-gpu transition-opacity duration-500 opacity-100 ${videoClassName}`}

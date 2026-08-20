@@ -12,7 +12,7 @@ export const ProcessTimelineSection: React.FC = () => {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    const SPEED = 1.75;
+    const SPEED = 2.2;
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
@@ -107,17 +107,17 @@ export const ProcessTimelineSection: React.FC = () => {
             playsInline
             preload="auto"
             onLoadedMetadata={(e) => {
-              e.currentTarget.defaultPlaybackRate = 1.75;
-              e.currentTarget.playbackRate = 1.75;
+              e.currentTarget.defaultPlaybackRate = 2.2;
+              e.currentTarget.playbackRate = 2.2;
             }}
             onPlay={(e) => {
-              if (e.currentTarget.playbackRate !== 1.75) {
-                e.currentTarget.playbackRate = 1.75;
+              if (e.currentTarget.playbackRate !== 2.2) {
+                e.currentTarget.playbackRate = 2.2;
               }
             }}
             onRateChange={(e) => {
-              if (e.currentTarget.playbackRate !== 1.75) {
-                e.currentTarget.playbackRate = 1.75;
+              if (e.currentTarget.playbackRate !== 2.2) {
+                e.currentTarget.playbackRate = 2.2;
               }
             }}
             className="absolute inset-0 w-full h-full object-cover rounded-[2.5rem] overflow-hidden opacity-65 mix-blend-screen scale-105 transform-gpu pointer-events-none z-0"

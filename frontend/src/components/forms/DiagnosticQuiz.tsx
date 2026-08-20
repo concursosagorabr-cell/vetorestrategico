@@ -210,18 +210,18 @@ export const DiagnosticQuiz: React.FC = () => {
           playsInline
           preload="auto"
           onLoadedMetadata={(e) => {
-            e.currentTarget.defaultPlaybackRate = 1.75;
-            e.currentTarget.playbackRate = 1.75;
+            e.currentTarget.defaultPlaybackRate = 2.2;
+            e.currentTarget.playbackRate = 2.2;
           }}
           onPlay={(e) => {
-            if (e.currentTarget.playbackRate !== 1.75) {
-              e.currentTarget.defaultPlaybackRate = 1.75;
-              e.currentTarget.playbackRate = 1.75;
+            if (e.currentTarget.playbackRate !== 2.2) {
+              e.currentTarget.defaultPlaybackRate = 2.2;
+              e.currentTarget.playbackRate = 2.2;
             }
           }}
           onRateChange={(e) => {
-            if (e.currentTarget.playbackRate !== 1.75) {
-              e.currentTarget.playbackRate = 1.75;
+            if (e.currentTarget.playbackRate !== 2.2) {
+              e.currentTarget.playbackRate = 2.2;
             }
           }}
           className="absolute inset-0 w-full h-full object-cover opacity-70 mix-blend-screen transform-gpu pointer-events-none z-0 rounded-3xl"
