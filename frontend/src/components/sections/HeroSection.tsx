@@ -4,8 +4,15 @@ import React, { useRef, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { FloatingElement, TwinklingStar, OrbitRings } from "@/components/ui/CosmicDecorations";
-import { ParallaxLayer, ParallaxVideoBackground, CosmicParallaxStars } from "@/components/ui/Parallax";
-import { Sparkles, Zap, CheckCircle2, ChevronDown } from "lucide-react";
+import {
+  ParallaxLayer,
+  ParallaxVideoBackground,
+  CosmicParallaxStars,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+  ParallaxText,
+} from "@/components/ui/Parallax";
+import { Sparkles, Zap } from "lucide-react";
 
 export const HeroSection: React.FC = () => {
   const bgVideoRef = useRef<HTMLVideoElement>(null);
@@ -98,12 +105,16 @@ export const HeroSection: React.FC = () => {
           className="w-full h-full object-cover opacity-55 transform-gpu"
         />
 
-        {/* High-Contrast Gradient Vignette Overlays (Lightened by 10%+) */}
+        {/* High-Contrast Gradient Vignette Overlays */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/30 to-slate-950/85" />
         <div className="absolute inset-0 bg-radial-at-c from-transparent via-slate-950/15 to-slate-950/60" />
       </ParallaxVideoBackground>
 
-      {/* Multi-Plane Cosmic Starfield Parallax */}
+      {/* Monumental Background Watermark with Parallax Drift */}
+      <ParallaxWatermark text="VETOR ESTRATÉGICO" speed={0.15} direction="left" variant="dark" />
+
+      {/* Themed Strategic Vectors & Starfield */}
+      <StrategicVectorMesh theme="dark" />
       <CosmicParallaxStars />
 
       {/* Twinkling Cosmic Stars (Pure GPU CSS) */}
@@ -157,25 +168,32 @@ export const HeroSection: React.FC = () => {
           <div className="lg:col-span-6 text-center space-y-6">
             
             {/* Top Eyebrow Badge with cute astronaut avatar */}
-            <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-slate-900/90 border border-emerald-500/40 shadow-lg shadow-emerald-950/40">
-              <div className="w-6 h-6 rounded-full overflow-hidden border border-emerald-400/60 shrink-0 bg-emerald-500/20">
-                <Image
-                  src="/images/mascot/avatar.png"
-                  alt="Comandante Vetor"
-                  width={24}
-                  height={24}
-                  className="w-full h-full object-cover"
-                />
+            <ParallaxText speed={-0.08} direction="vertical">
+              <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-slate-900/90 border border-emerald-500/40 shadow-lg shadow-emerald-950/40">
+                <div className="w-6 h-6 rounded-full overflow-hidden border border-emerald-400/60 shrink-0 bg-emerald-500/20">
+                  <Image
+                    src="/images/mascot/avatar.png"
+                    alt="Comandante Vetor"
+                    width={24}
+                    height={24}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-emerald-300">
+                  Agência de Criação de Sites &amp; IA para Empresas
+                </span>
               </div>
-              <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-emerald-300">
-                Agência de Criação de Sites &amp; IA para Empresas
-              </span>
-            </div>
+            </ParallaxText>
 
-            {/* Main Headline with High-Impact Typography */}
+            {/* Main Headline with High-Impact Typography & Subtle Depth */}
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08] uppercase">
-              Desenvolvimento de Sites <br />
-              <span className="gradient-text-emerald drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]">Para Empresas</span>
+              <ParallaxText speed={-0.05} as="span">
+                Desenvolvimento de Sites
+              </ParallaxText>
+              <br />
+              <ParallaxText speed={-0.1} as="span">
+                <span className="gradient-text-emerald drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]">Para Empresas</span>
+              </ParallaxText>
             </h1>
 
             {/* Sub-headline */}
@@ -248,25 +266,36 @@ export const HeroSection: React.FC = () => {
 
         </div>
 
-        {/* Technical Value Pillars Strip (Authentic & Professional) */}
+        {/* Technical Value Pillars Strip with Smooth Parallax Stagger */}
         <div className="mt-14 pt-10 border-t border-slate-800/80">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center gap-1">
-              <span className="text-emerald-400 font-extrabold text-sm">✓ Alta Performance</span>
-              <span className="text-xs text-slate-400">Carregamento rápido no celular</span>
-            </div>
-            <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center gap-1">
-              <span className="text-emerald-400 font-extrabold text-sm">✓ Foco Comercial</span>
-              <span className="text-xs text-slate-400">Conexão direta ao WhatsApp</span>
-            </div>
-            <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center gap-1">
-              <span className="text-emerald-400 font-extrabold text-sm">✓ SEO Técnico</span>
-              <span className="text-xs text-slate-400">Pronto para o Google</span>
-            </div>
-            <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center gap-1">
-              <span className="text-emerald-400 font-extrabold text-sm">✓ Código Próprio</span>
-              <span className="text-xs text-slate-400">Sem plataformas engessadas</span>
-            </div>
+            <ParallaxLayer speed={-0.04}>
+              <div className="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 transition-colors flex flex-col items-center justify-center gap-1">
+                <span className="text-emerald-400 font-extrabold text-sm">✓ Alta Performance</span>
+                <span className="text-xs text-slate-400">Carregamento rápido no celular</span>
+              </div>
+            </ParallaxLayer>
+
+            <ParallaxLayer speed={-0.08}>
+              <div className="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 transition-colors flex flex-col items-center justify-center gap-1">
+                <span className="text-emerald-400 font-extrabold text-sm">✓ Foco Comercial</span>
+                <span className="text-xs text-slate-400">Conexão direta ao WhatsApp</span>
+              </div>
+            </ParallaxLayer>
+
+            <ParallaxLayer speed={-0.04}>
+              <div className="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 transition-colors flex flex-col items-center justify-center gap-1">
+                <span className="text-emerald-400 font-extrabold text-sm">✓ SEO Técnico</span>
+                <span className="text-xs text-slate-400">Pronto para o Google</span>
+              </div>
+            </ParallaxLayer>
+
+            <ParallaxLayer speed={-0.08}>
+              <div className="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 transition-colors flex flex-col items-center justify-center gap-1">
+                <span className="text-emerald-400 font-extrabold text-sm">✓ Código Próprio</span>
+                <span className="text-xs text-slate-400">Sem plataformas engessadas</span>
+              </div>
+            </ParallaxLayer>
           </div>
         </div>
 

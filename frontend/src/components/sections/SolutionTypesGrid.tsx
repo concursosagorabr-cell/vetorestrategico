@@ -3,7 +3,13 @@
 import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import { SOLUTION_TYPES } from "@/lib/constants";
-import { ParallaxVideoBackground, CosmicParallaxStars } from "@/components/ui/Parallax";
+import {
+  ParallaxVideoBackground,
+  CosmicParallaxStars,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+  ParallaxLayer,
+} from "@/components/ui/Parallax";
 import {
   Globe,
   MessageCircle,
@@ -122,10 +128,14 @@ export const SolutionTypesGrid: React.FC = () => {
           <source src="/Escaneamento-Quântico.mp4" type="video/mp4" />
           <source src="/Escaneamento-Qu%C3%A2ntico.mp4" type="video/mp4" />
         </video>
-        {/* High-contrast vignette (adjusted 5% darker) to ensure text legibility */}
+        {/* High-contrast vignette to ensure text legibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/20 to-slate-950/70 pointer-events-none" />
         <div className="absolute inset-0 bg-radial-at-c from-emerald-500/10 via-transparent to-slate-950/55 pointer-events-none" />
       </ParallaxVideoBackground>
+
+      {/* Monumental Watermark & Vector Meshes */}
+      <ParallaxWatermark text="ECOSSISTEMA DIGITAL &bull; IA &bull; SITES" speed={0.16} direction="left" variant="emerald" />
+      <StrategicVectorMesh theme="dark" />
 
       {/* Cosmic Parallax Stars */}
       <CosmicParallaxStars />
@@ -150,33 +160,36 @@ export const SolutionTypesGrid: React.FC = () => {
           </p>
         </div>
 
-        {/* 6 Bento-Style High-Performance Glass Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* 6 Bento-Style High-Performance Glass Cards with Subtle Parallax Stagger */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
           {SOLUTION_TYPES.map((sol, idx) => {
             const Icon = solutionIconMap[sol.icon] || Bot;
+            const cardSpeeds = [0.04, -0.03, 0.05, -0.04, 0.03, -0.05];
+            const speed = cardSpeeds[idx % cardSpeeds.length];
             return (
-              <Link
-                key={idx}
-                href="/servicos"
-                className="rounded-3xl p-7 flex flex-col justify-between group bg-slate-900/80 hover:bg-slate-900/95 border border-white/10 hover:border-emerald-400/60 transition-all duration-300 backdrop-blur-xl shadow-xl hover:shadow-2xl hover:shadow-emerald-950/40 hover:-translate-y-1.5"
-              >
-                <div className="space-y-4">
-                  <div className="w-13 h-13 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500/25 transition-transform duration-300 shadow-inner">
-                    <Icon className="w-6 h-6" />
+              <ParallaxLayer key={idx} speed={speed} className="h-full">
+                <Link
+                  href="/servicos"
+                  className="h-full rounded-3xl p-7 flex flex-col justify-between group bg-slate-900/85 hover:bg-slate-900/95 border border-white/10 hover:border-emerald-400/60 transition-all duration-300 backdrop-blur-xl shadow-xl hover:shadow-2xl hover:shadow-emerald-950/40 hover:-translate-y-1.5"
+                >
+                  <div className="space-y-4">
+                    <div className="w-13 h-13 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500/25 transition-transform duration-300 shadow-inner">
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-lg font-black text-white group-hover:text-emerald-300 transition-colors">
+                      {sol.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                      {sol.desc}
+                    </p>
                   </div>
-                  <h3 className="text-lg font-black text-white group-hover:text-emerald-300 transition-colors">
-                    {sol.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
-                    {sol.desc}
-                  </p>
-                </div>
 
-                <div className="pt-4 mt-6 border-t border-white/10 flex items-center text-xs font-bold text-emerald-400 group-hover:translate-x-1 transition-transform">
-                  <span>Conhecer detalhes</span>
-                  <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-                </div>
-              </Link>
+                  <div className="pt-4 mt-6 border-t border-white/10 flex items-center text-xs font-bold text-emerald-400 group-hover:translate-x-1 transition-transform">
+                    <span>Conhecer detalhes</span>
+                    <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+                  </div>
+                </Link>
+              </ParallaxLayer>
             );
           })}
         </div>

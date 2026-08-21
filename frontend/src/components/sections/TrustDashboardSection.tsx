@@ -3,7 +3,12 @@
 import React, { useEffect, useRef } from "react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCounter } from "@/components/ui/StatCounter";
-import { ParallaxVideoBackground, CosmicParallaxStars } from "@/components/ui/Parallax";
+import {
+  ParallaxVideoBackground,
+  CosmicParallaxStars,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+} from "@/components/ui/Parallax";
 import {
   BarChart3,
   Activity,
@@ -117,9 +122,13 @@ export const TrustDashboardSection: React.FC = () => {
               <source src="/Dashboard-Hologr%C3%A1fico-3D.mp4" type="video/mp4" />
             </video>
 
-            {/* Gradient Overlay (5% darker) */}
+            {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#04101E]/80 via-[#04101E]/15 to-[#0A192F]/50 pointer-events-none" />
           </ParallaxVideoBackground>
+
+          {/* Monumental Watermark & Vector Meshes */}
+          <ParallaxWatermark text="INFRAESTRUTURA &bull; SEGURANÇA &bull; VELOCIDADE" speed={0.15} direction="right" variant="cyan" />
+          <StrategicVectorMesh theme="dark" />
 
           {/* Cosmic Starfield */}
           <CosmicParallaxStars />

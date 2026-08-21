@@ -4,7 +4,12 @@ import React from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { ParallaxLayer } from "@/components/ui/Parallax";
+import {
+  ParallaxLayer,
+  ParallaxVectorGrid,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+} from "@/components/ui/Parallax";
 import { ArrowRight, ExternalLink, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -53,8 +58,13 @@ export const FeaturedCasesSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-slate-50/50 border-y border-slate-200/60 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-slate-50/70 border-y border-slate-200/60 relative overflow-hidden">
+      {/* Background Vector Grid & Monumental Watermark */}
+      <ParallaxVectorGrid theme="light" speed={0.06} />
+      <ParallaxWatermark text="PROJETOS REAIS &bull; CASES DE SUCESSO" speed={0.16} direction="left" variant="light" />
+      <StrategicVectorMesh theme="light" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
@@ -71,7 +81,7 @@ export const FeaturedCasesSection: React.FC = () => {
           </div>
 
           <div className="mt-6 md:mt-0">
-            <Button href="/cases" variant="outline" size="lg" className="rounded-full px-6 font-bold" rightIcon={<ArrowRight className="w-4 h-4" />}>
+            <Button href="/cases" variant="outline" size="lg" className="rounded-full px-6 font-bold hover:scale-105 transition-all shadow-xs" rightIcon={<ArrowRight className="w-4 h-4" />}>
               Ver Todos os Projetos
             </Button>
           </div>
@@ -80,7 +90,7 @@ export const FeaturedCasesSection: React.FC = () => {
         {/* Browser Mockup Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {showcaseProjects.map((proj, idx) => {
-            const speeds = [0.05, -0.04, 0.06, -0.05];
+            const speeds = [0.06, -0.04, 0.08, -0.05];
             const speed = speeds[idx % speeds.length];
             return (
               <ParallaxLayer key={idx} speed={speed} className="h-full">
@@ -89,11 +99,11 @@ export const FeaturedCasesSection: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: idx * 0.1 }}
-                  className="h-full rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1.5"
+                  className="h-full rounded-3xl bg-white/95 backdrop-blur-xs border border-slate-200 shadow-sm hover:shadow-2xl hover:border-emerald-300/80 transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1.5"
                 >
                   <div>
                     {/* Browser Top Bar */}
-                    <div className="bg-slate-100/80 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+                    <div className="bg-slate-100/90 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
                         <span className="w-2.5 h-2.5 rounded-full bg-rose-400" />
                         <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
@@ -140,7 +150,7 @@ export const FeaturedCasesSection: React.FC = () => {
                   </div>
 
                   {/* Bottom Card Action */}
-                  <div className="px-5 py-3.5 bg-slate-50/80 border-t border-slate-100 flex items-center justify-between">
+                  <div className="px-5 py-3.5 bg-slate-50/90 border-t border-slate-100 flex items-center justify-between">
                     <div>
                       <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
                         Destaque Técnico:

@@ -1,6 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import {
+  ParallaxLayer,
+  ParallaxVectorGrid,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+} from "@/components/ui/Parallax";
 import { AlertTriangle, Clock, XCircle, ArrowRight, Sparkles } from "lucide-react";
 
 export const ProvocativeAlertSection: React.FC = () => {
@@ -24,9 +30,14 @@ export const ProvocativeAlertSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-slate-50/50 border-y border-slate-200/60 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-white border border-amber-200/80 p-8 sm:p-12 relative overflow-hidden shadow-md">
+    <section className="py-20 bg-slate-50/70 border-y border-slate-200/60 relative overflow-hidden">
+      {/* Background Vector Grid & Monumental Watermark */}
+      <ParallaxVectorGrid theme="light" speed={0.06} />
+      <ParallaxWatermark text="DIAGNÓSTICO &bull; OPORTUNIDADE &bull; CRESCIMENTO" speed={0.16} direction="left" variant="light" />
+      <StrategicVectorMesh theme="light" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="rounded-3xl bg-white/95 backdrop-blur-xs border border-amber-200/80 p-8 sm:p-12 relative overflow-hidden shadow-xl">
           {/* Subtle Warning Glow */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -46,25 +57,26 @@ export const ProvocativeAlertSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Grid of Alert Signs */}
+          {/* Grid of Alert Signs with Staggered Parallax */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto mb-10">
             {alertSigns.map((sign, idx) => (
-              <div
-                key={idx}
-                className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-start gap-4"
-              >
-                <div className="w-9 h-9 rounded-xl bg-red-50 text-red-600 flex items-center justify-center shrink-0 mt-0.5 border border-red-100">
-                  <XCircle className="w-5 h-5" />
+              <ParallaxLayer key={idx} speed={idx % 2 === 0 ? 0.03 : -0.02}>
+                <div
+                  className="p-5 sm:p-6 rounded-2xl bg-slate-50/90 border border-slate-200/80 flex items-start gap-4 hover:border-amber-300 transition-colors"
+                >
+                  <div className="w-9 h-9 rounded-xl bg-red-50 text-red-600 flex items-center justify-center shrink-0 mt-0.5 border border-red-100">
+                    <XCircle className="w-5 h-5" />
+                  </div>
+                  <div className="space-y-1 text-left">
+                    <h3 className="text-base font-bold text-slate-900">
+                      {sign.title}
+                    </h3>
+                    <p className="text-sm text-slate-600 leading-relaxed font-normal">
+                      {sign.desc}
+                    </p>
+                  </div>
                 </div>
-                <div className="space-y-1 text-left">
-                  <h3 className="text-base font-bold text-slate-900">
-                    {sign.title}
-                  </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed font-normal">
-                    {sign.desc}
-                  </p>
-                </div>
-              </div>
+              </ParallaxLayer>
             ))}
           </div>
 
@@ -74,7 +86,7 @@ export const ProvocativeAlertSection: React.FC = () => {
               href="/orcamento"
               variant="primary"
               size="lg"
-              className="text-base font-bold rounded-full px-8 py-4 shadow-lg shadow-emerald-600/25"
+              className="text-base font-bold rounded-full px-8 py-4 shadow-lg shadow-emerald-600/25 hover:scale-105 active:scale-95 transition-all"
               leftIcon={<Sparkles className="w-5 h-5 fill-white text-white" />}
             >
               Planejar Meu Novo Site Agora
@@ -84,7 +96,7 @@ export const ProvocativeAlertSection: React.FC = () => {
               href="/diagnostico"
               variant="outline"
               size="lg"
-              className="text-base font-bold rounded-full px-7 py-4"
+              className="text-base font-bold rounded-full px-7 py-4 hover:scale-105 active:scale-95 transition-all"
               rightIcon={<ArrowRight className="w-4 h-4" />}
             >
               Fazer Diagnóstico de IA Gratuito

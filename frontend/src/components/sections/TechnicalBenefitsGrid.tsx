@@ -4,7 +4,13 @@ import React, { useRef, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { FloatingElement, TwinklingStar } from "@/components/ui/CosmicDecorations";
-import { ParallaxLayer, ParallaxVideoBackground, CosmicParallaxStars } from "@/components/ui/Parallax";
+import {
+  ParallaxLayer,
+  ParallaxVideoBackground,
+  CosmicParallaxStars,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+} from "@/components/ui/Parallax";
 import {
   FileText,
   Palette,
@@ -12,7 +18,6 @@ import {
   Video,
   Cpu,
   Zap,
-  CheckCircle2,
 } from "lucide-react";
 
 export const TechnicalBenefitsGrid: React.FC = () => {
@@ -137,9 +142,13 @@ export const TechnicalBenefitsGrid: React.FC = () => {
               <source src="/Rede-Neural-%26-WhatsApp-AI.mp4" type="video/mp4" />
             </video>
 
-            {/* Gradient Overlay (5% darker) */}
+            {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#07162C]/80 via-[#07162C]/20 to-[#07162C]/70 z-[1] pointer-events-none" />
           </ParallaxVideoBackground>
+
+          {/* Monumental Watermark & Vector Meshes */}
+          <ParallaxWatermark text="ENGENHARIA WEB &bull; ALTA PERFORMANCE" speed={0.15} direction="right" variant="emerald" />
+          <StrategicVectorMesh theme="dark" />
 
           {/* Pure GPU Stars & Cosmic Starfield */}
           <CosmicParallaxStars />
@@ -183,7 +192,7 @@ export const TechnicalBenefitsGrid: React.FC = () => {
                   href="/orcamento"
                   variant="primary"
                   size="lg"
-                  className="w-full sm:w-auto text-base sm:text-lg font-black shadow-2xl shadow-emerald-500/40 rounded-full px-9 py-4.5"
+                  className="w-full sm:w-auto text-base sm:text-lg font-black shadow-2xl shadow-emerald-500/40 rounded-full px-9 py-4.5 hover:scale-105 active:scale-95 transition-all"
                   leftIcon={<Zap className="w-5 h-5 fill-white text-white" />}
                 >
                   Solicitar Proposta

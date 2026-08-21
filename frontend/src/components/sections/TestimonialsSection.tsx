@@ -1,13 +1,24 @@
 import React from "react";
 import Image from "next/image";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import {
+  ParallaxLayer,
+  ParallaxVectorGrid,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+} from "@/components/ui/Parallax";
 import { TESTIMONIALS } from "@/lib/constants";
 import { Star, Quote } from "lucide-react";
 
 export const TestimonialsSection: React.FC = () => {
   return (
-    <section className="py-20 bg-slate-50/50 border-t border-slate-200/60 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-slate-50/70 border-t border-slate-200/60 relative overflow-hidden">
+      {/* Background Vector Grid & Monumental Watermark */}
+      <ParallaxVectorGrid theme="light" speed={0.06} />
+      <ParallaxWatermark text="DEPOIMENTOS &bull; AUTORIDADE &bull; CLIENTES" speed={0.16} direction="left" variant="light" />
+      <StrategicVectorMesh theme="light" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeading
           eyebrow="Depoimentos"
           eyebrowVariant="gold"

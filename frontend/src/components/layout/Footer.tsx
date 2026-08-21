@@ -162,7 +162,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div>
-            &copy; {currentYear} {COMPANY_INFO.name}. Todos os direitos reservados. CNPJ: {COMPANY_INFO.cnpjPlaceholder}.
+            &copy; {currentYear} {COMPANY_INFO.name}. Todos os direitos reservados.: {COMPANY_INFO.cnpjPlaceholder}.
           </div>
 
           <div className="flex items-center gap-6">

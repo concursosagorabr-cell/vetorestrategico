@@ -10,7 +10,7 @@ export const COMPANY_INFO = {
   rawPhone: "5511953099049",
   whatsappUrl: "https://wa.me/5511953099049?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20uma%20proposta%20comercial%20com%20a%20Vetor%20Estrat%C3%A9gico.",
   location: "São Paulo - SP & Atendimento Online em Todo o Brasil",
-  cnpjPlaceholder: "48.912.304/0001-80",
+  cnpjPlaceholder: "",
   rating: "5.0",
   satisfactionRate: "Atendimento Personalizado",
   projectsDelivered: "Foco em Qualidade",

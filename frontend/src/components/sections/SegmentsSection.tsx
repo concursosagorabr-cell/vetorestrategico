@@ -1,6 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import {
+  ParallaxVectorGrid,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+} from "@/components/ui/Parallax";
 import { SEGMENTS } from "@/lib/constants";
 import {
   Activity,
@@ -25,8 +30,13 @@ const segmentIconMap: Record<string, React.ElementType> = {
 
 export const SegmentsSection: React.FC = () => {
   return (
-    <section className="py-20 bg-background relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-background relative overflow-hidden">
+      {/* Background Vector Grid & Monumental Watermark */}
+      <ParallaxVectorGrid theme="light" speed={0.06} />
+      <ParallaxWatermark text="SEGMENTOS &bull; MERCADOS &bull; RESULTADOS" speed={0.16} direction="right" variant="cyan" />
+      <StrategicVectorMesh theme="light" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeading
           eyebrow="Segmentos de Atuação"
           eyebrowVariant="cyan"

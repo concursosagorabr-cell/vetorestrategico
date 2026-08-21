@@ -3,13 +3,23 @@ import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import {
+  ParallaxVectorGrid,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+} from "@/components/ui/Parallax";
 import { BLOG_POSTS } from "@/lib/constants";
 import { Clock, ArrowRight, BookOpen } from "lucide-react";
 
 export const BlogHighlightsSection: React.FC = () => {
   return (
-    <section className="py-20 bg-slate-50/50 border-t border-slate-200/60 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-slate-50/70 border-t border-slate-200/60 relative overflow-hidden">
+      {/* Background Vector Grid & Monumental Watermark */}
+      <ParallaxVectorGrid theme="light" speed={0.06} />
+      <ParallaxWatermark text="CONTEÚDO &bull; INSIGHTS &bull; ARTIGOS" speed={0.16} direction="left" variant="light" />
+      <StrategicVectorMesh theme="light" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <SectionHeading
             eyebrow="Conteúdo & Insights"

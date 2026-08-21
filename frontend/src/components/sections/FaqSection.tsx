@@ -1,14 +1,24 @@
 import React from "react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { AccordionItem } from "@/components/ui/Accordion";
+import {
+  ParallaxVectorGrid,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+} from "@/components/ui/Parallax";
 import { FAQS, COMPANY_INFO } from "@/lib/constants";
 import { HelpCircle, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 export const FaqSection: React.FC = () => {
   return (
-    <section className="py-20 bg-slate-50/50 border-t border-slate-200/60 relative">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-slate-50/70 border-t border-slate-200/60 relative overflow-hidden">
+      {/* Background Vector Grid & Monumental Watermark */}
+      <ParallaxVectorGrid theme="light" speed={0.06} />
+      <ParallaxWatermark text="DÚVIDAS &bull; PERGUNTAS &bull; SUPORTE" speed={0.16} direction="right" variant="light" />
+      <StrategicVectorMesh theme="light" />
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeading
           eyebrow="Tire Suas Dúvidas"
           eyebrowVariant="emerald"

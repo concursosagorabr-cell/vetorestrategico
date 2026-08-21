@@ -3,6 +3,11 @@ import type { Metadata } from "next";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import {
+  ParallaxVectorGrid,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+} from "@/components/ui/Parallax";
 import { SERVICES, COMPANY_INFO } from "@/lib/constants";
 import { LeadForm } from "@/components/forms/LeadForm";
 import {
@@ -35,8 +40,13 @@ const serviceIconMap: Record<string, React.ElementType> = {
 
 export default function ServicesPage() {
   return (
-    <div className="py-12 sm:py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+    <div className="py-12 sm:py-20 bg-background relative overflow-hidden">
+      {/* Background Vector Grid & Monumental Watermark */}
+      <ParallaxVectorGrid theme="light" speed={0.06} />
+      <ParallaxWatermark text="SOLUÇÕES &bull; SITES &bull; INTELIGÊNCIA ARTIFICIAL" speed={0.16} direction="left" variant="light" />
+      <StrategicVectorMesh theme="light" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 relative z-10">
         
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">

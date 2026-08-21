@@ -4,7 +4,13 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { FloatingElement, TwinklingStar } from "@/components/ui/CosmicDecorations";
-import { ParallaxLayer, ParallaxVideoBackground, CosmicParallaxStars } from "@/components/ui/Parallax";
+import {
+  ParallaxLayer,
+  ParallaxVideoBackground,
+  CosmicParallaxStars,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+} from "@/components/ui/Parallax";
 import { Zap } from "lucide-react";
 
 export const ProcessTimelineSection: React.FC = () => {
@@ -128,9 +134,13 @@ export const ProcessTimelineSection: React.FC = () => {
               <source src="/Part%C3%ADculas-de-Fundo-Ambient.mp4" type="video/mp4" />
             </video>
 
-            {/* Gradient Overlay (5% darker) */}
+            {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F]/80 via-[#0A192F]/15 to-[#0A192F]/50 z-[1] pointer-events-none" />
           </ParallaxVideoBackground>
+
+          {/* Monumental Watermark & Vector Meshes */}
+          <ParallaxWatermark text="CRONOGRAMA &bull; ETAPAS &bull; EXECUÇÃO" speed={0.16} direction="left" variant="cyan" />
+          <StrategicVectorMesh theme="dark" />
 
           {/* Cosmic Background Stars with Parallax */}
           <CosmicParallaxStars />

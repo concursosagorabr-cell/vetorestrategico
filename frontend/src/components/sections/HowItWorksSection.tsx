@@ -1,7 +1,12 @@
 import React from "react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { ParallaxLayer } from "@/components/ui/Parallax";
+import {
+  ParallaxLayer,
+  ParallaxVectorGrid,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+} from "@/components/ui/Parallax";
 import { Search, Cog, Rocket, ArrowRight } from "lucide-react";
 
 export const HowItWorksSection: React.FC = () => {
@@ -12,7 +17,7 @@ export const HowItWorksSection: React.FC = () => {
       title: "Diagnóstico da Operação",
       description: "Identificamos os processos repetitivos e os gargalos de atendimento e vendas que mais drenam tempo e dinheiro da sua empresa.",
       color: "emerald",
-      parallaxSpeed: 0.05,
+      parallaxSpeed: 0.06,
     },
     {
       step: "02",
@@ -20,7 +25,7 @@ export const HowItWorksSection: React.FC = () => {
       title: "Plano & Construção da IA",
       description: "Desenhamos a solução sob medida conectada ao seu WhatsApp, CRM e ERP, com regras de negócio claras e sem termos difíceis.",
       color: "cyan",
-      parallaxSpeed: -0.05,
+      parallaxSpeed: -0.04,
     },
     {
       step: "03",
@@ -33,8 +38,13 @@ export const HowItWorksSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-slate-50/50 border-y border-slate-200/60 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-slate-50/70 border-y border-slate-200/60 relative overflow-hidden">
+      {/* Background Vector Grid & Parallax Watermark */}
+      <ParallaxVectorGrid theme="light" speed={0.06} />
+      <ParallaxWatermark text="METODOLOGIA &bull; EXECUÇÃO &bull; RESULTADOS" speed={0.16} direction="right" variant="light" />
+      <StrategicVectorMesh theme="light" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeading
           eyebrow="Como Funciona"
           eyebrowVariant="emerald"
@@ -50,7 +60,7 @@ export const HowItWorksSection: React.FC = () => {
             return (
               <ParallaxLayer key={item.step} speed={item.parallaxSpeed} className="h-full">
                 <div
-                  className="h-full relative rounded-3xl bg-white border border-slate-200 p-8 flex flex-col justify-between hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1"
+                  className="h-full relative rounded-3xl bg-white/95 backdrop-blur-xs border border-slate-200 p-8 flex flex-col justify-between hover:border-slate-300 shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1"
                 >
                   {/* Step Indicator Header */}
                   <div className="flex items-center justify-between mb-6">
@@ -98,7 +108,7 @@ export const HowItWorksSection: React.FC = () => {
 
         {/* CTA Footer */}
         <div className="mt-12 text-center">
-          <Button href="/diagnostico" variant="primary" size="lg" className="rounded-full px-8 py-4 text-base font-bold" rightIcon={<ArrowRight className="w-4 h-4" />}>
+          <Button href="/diagnostico" variant="primary" size="lg" className="rounded-full px-8 py-4 text-base font-bold shadow-lg shadow-emerald-600/20 hover:shadow-emerald-600/35 hover:scale-105 active:scale-95 transition-all" rightIcon={<ArrowRight className="w-4 h-4" />}>
             Comece pelo Diagnóstico Gratuito
           </Button>
         </div>

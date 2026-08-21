@@ -2,6 +2,11 @@ import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import {
+  ParallaxVectorGrid,
+  ParallaxWatermark,
+  StrategicVectorMesh,
+} from "@/components/ui/Parallax";
 import { CASE_STUDIES, COMPANY_INFO } from "@/lib/constants";
 import { InteractiveCasesViewer } from "@/components/sections/InteractiveCasesViewer";
 import { MessageSquare, Zap } from "lucide-react";
@@ -14,8 +19,13 @@ export const metadata: Metadata = {
 
 export default function CasesPage() {
   return (
-    <div className="py-12 sm:py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="py-12 sm:py-20 bg-background relative overflow-hidden">
+      {/* Background Vector Grid & Monumental Watermark */}
+      <ParallaxVectorGrid theme="light" speed={0.06} />
+      <ParallaxWatermark text="CASES REAIS &bull; PORTFÓLIO &bull; RESULTADOS" speed={0.16} direction="right" variant="cyan" />
+      <StrategicVectorMesh theme="light" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
         
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
