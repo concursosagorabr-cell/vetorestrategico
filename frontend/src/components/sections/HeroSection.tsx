@@ -82,7 +82,7 @@ export const HeroSection: React.FC = () => {
       <ParallaxVideoBackground speed={-0.06}>
         <video
           ref={bgVideoRef}
-          src="/Mascote-Comandante-Vetor.mp4"
+          src="/mascote-comandante-vetor.mp4"
           autoPlay
           muted
           loop

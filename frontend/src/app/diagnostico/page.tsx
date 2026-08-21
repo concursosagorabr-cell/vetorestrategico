@@ -1,5 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Badge } from "@/components/ui/Badge";
 import { DiagnosticQuiz } from "@/components/forms/DiagnosticQuiz";
 import { Sparkles, ShieldCheck, Clock, CheckCircle2, TrendingUp } from "lucide-react";
@@ -22,9 +23,12 @@ export default function DiagnosticoPage() {
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 text-center md:text-left">
           <div className="relative w-40 h-40 sm:w-52 sm:h-52 shrink-0 flex items-center justify-center">
             <div className="absolute inset-2 bg-amber-400/20 rounded-full blur-2xl pointer-events-none" />
-            <img
+            <Image
               src="/images/mascot/diagnostic.png"
               alt="Comandante Vetor Diagnóstico"
+              width={208}
+              height={208}
+              priority
               className="relative w-full h-full object-contain drop-shadow-[0_15px_30px_rgba(217,119,6,0.25)]"
             />
           </div>

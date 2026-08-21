@@ -125,8 +125,7 @@ export const SolutionTypesGrid: React.FC = () => {
           }}
           className="w-full h-full object-cover opacity-70 mix-blend-screen scale-105 transform-gpu transition-opacity duration-700"
         >
-          <source src="/Escaneamento-Quântico.mp4" type="video/mp4" />
-          <source src="/Escaneamento-Qu%C3%A2ntico.mp4" type="video/mp4" />
+          <source src="/escaneamento-quantico.mp4" type="video/mp4" />
         </video>
         {/* High-contrast vignette to ensure text legibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/20 to-slate-950/70 pointer-events-none" />

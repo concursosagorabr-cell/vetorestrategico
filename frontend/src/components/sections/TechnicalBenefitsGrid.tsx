@@ -138,8 +138,7 @@ export const TechnicalBenefitsGrid: React.FC = () => {
               }}
               className="w-full h-full object-cover opacity-65 mix-blend-screen pointer-events-none scale-105 transform-gpu"
             >
-              <source src="/Rede-Neural-&-WhatsApp-AI.mp4" type="video/mp4" />
-              <source src="/Rede-Neural-%26-WhatsApp-AI.mp4" type="video/mp4" />
+              <source src="/rede-neural-whatsapp-ai.mp4" type="video/mp4" />
             </video>
 
             {/* Gradient Overlay */}

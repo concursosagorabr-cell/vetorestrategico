@@ -130,8 +130,7 @@ export const ProcessTimelineSection: React.FC = () => {
               }}
               className="w-full h-full object-cover opacity-65 mix-blend-screen scale-105 transform-gpu pointer-events-none"
             >
-              <source src="/Partículas-de-Fundo-Ambient.mp4" type="video/mp4" />
-              <source src="/Part%C3%ADculas-de-Fundo-Ambient.mp4" type="video/mp4" />
+              <source src="/particulas-fundo-ambient.mp4" type="video/mp4" />
             </video>
 
             {/* Gradient Overlay */}

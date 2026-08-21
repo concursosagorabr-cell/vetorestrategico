@@ -118,8 +118,7 @@ export const TrustDashboardSection: React.FC = () => {
               }}
               className="w-full h-full object-cover opacity-65 mix-blend-screen scale-105 transform-gpu pointer-events-none"
             >
-              <source src="/Dashboard-Holográfico-3D.mp4" type="video/mp4" />
-              <source src="/Dashboard-Hologr%C3%A1fico-3D.mp4" type="video/mp4" />
+              <source src="/dashboard-holografico-3d.mp4" type="video/mp4" />
             </video>
 
             {/* Gradient Overlay */}

@@ -75,18 +75,19 @@ export function generateWebSiteSchema() {
   };
 }
 
-export function generateFaqSchema() {
+export function generateFaqSchema(customFaqs?: { question: string; answer: string }[]) {
+  const faqList = customFaqs && customFaqs.length > 0 ? customFaqs : FAQS;
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": FAQS.map(faq => ({
+    "mainEntity": faqList.map((faq) => ({
       "@type": "Question",
       "name": faq.question,
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
+        "text": faq.answer,
+      },
+    })),
   };
 }
 

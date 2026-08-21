@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, X, Minimize2, Sparkles, MessageCircle, Moon, Sun, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -111,9 +112,11 @@ export const AiChatAssistant: React.FC = () => {
           <span className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 opacity-40 group-hover:opacity-75 blur-sm transition-all duration-300 animate-pulse" />
 
           <div className="relative w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center overflow-hidden shrink-0">
-            <img
+            <Image
               src="/images/mascot/avatar.png"
               alt="Comandante Vetor"
+              width={32}
+              height={32}
               className="w-full h-full object-cover"
             />
           </div>
@@ -153,9 +156,11 @@ export const AiChatAssistant: React.FC = () => {
             <div className="bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 border-b border-slate-800/80 p-3.5 px-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="relative w-10 h-10 rounded-full bg-emerald-500/10 border-2 border-emerald-400/50 p-0.5 overflow-hidden">
-                  <img
+                  <Image
                     src="/images/mascot/avatar.png"
                     alt="Comandante Vetor"
+                    width={40}
+                    height={40}
                     className="w-full h-full object-cover"
                   />
                   <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 border-2 border-slate-950 rounded-full" />

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { COMPANY_INFO } from "@/lib/constants";
 import { MessageCircle, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,9 +22,11 @@ export const WhatsAppFloatingButton: React.FC = () => {
             className="hidden sm:flex items-center gap-3 bg-white border border-emerald-200 text-slate-900 px-4 py-3 rounded-2xl shadow-2xl text-xs font-medium relative max-w-xs"
           >
             <div className="w-11 h-11 rounded-full bg-emerald-50 border-2 border-emerald-400 shrink-0 shadow-sm flex items-center justify-center overflow-hidden">
-              <img
+              <Image
                 src="/images/mascot/avatar.png"
                 alt="Comandante Vetor"
+                width={44}
+                height={44}
                 className="w-full h-full object-cover"
               />
             </div>
