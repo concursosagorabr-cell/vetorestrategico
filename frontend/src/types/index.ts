@@ -128,3 +128,5 @@ export interface FAQItem {
   answer: string;
   category?: string;
 }
+
+export * from "./directory";

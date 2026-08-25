@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { BLOG_POSTS } from "@/lib/constants";
+import { DIRECTORY_TOOLS } from "@/lib/directoryData";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://vetorestrategico.com.br";
@@ -12,6 +13,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: currentDate,
       changeFrequency: "daily",
       priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/diretorio`,
+      lastModified: currentDate,
+      changeFrequency: "daily",
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/diretorio/cadastrar`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.85,
     },
     {
       url: `${baseUrl}/servicos`,
@@ -115,6 +128,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
+  // Dynamic directory tool pages
+  const directoryToolPages: MetadataRoute.Sitemap = DIRECTORY_TOOLS.map((tool) => ({
+    url: `${baseUrl}/diretorio/${tool.slug}`,
+    lastModified: currentDate,
+    changeFrequency: "weekly",
+    priority: 0.9,
+  }));
+
   // Dynamic blog articles
   const blogPages: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
@@ -123,5 +144,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...blogPages];
+  return [...staticPages, ...directoryToolPages, ...blogPages];
 }

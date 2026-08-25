@@ -120,7 +120,47 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 4: Institucional & Ações */}
+          {/* Col 4: Diretório de IA (Chris Koerner Hub) */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-1.5">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-white">
+                Diretório de IA
+              </h4>
+              <span className="text-[10px] font-black uppercase px-1.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300">
+                Novo
+              </span>
+            </div>
+            <ul className="space-y-2.5 text-xs text-slate-400">
+              <li>
+                <Link href="/diretorio" className="text-emerald-400 font-bold hover:text-emerald-300 transition-colors flex items-center gap-1">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Catálogo de Ferramentas
+                </Link>
+              </li>
+              <li>
+                <Link href="/diretorio?categoria=whatsapp-atendimento" className="hover:text-white transition-colors">
+                  Robôs de WhatsApp
+                </Link>
+              </li>
+              <li>
+                <Link href="/diretorio?categoria=automacao-processos-rpa" className="hover:text-white transition-colors">
+                  Automações RPA &amp; Processos
+                </Link>
+              </li>
+              <li>
+                <Link href="/diretorio?categoria=agendamento-consultas" className="hover:text-white transition-colors">
+                  Agendamento &amp; Recall
+                </Link>
+              </li>
+              <li>
+                <Link href="/diretorio/cadastrar" className="text-amber-400 font-semibold hover:text-amber-300 transition-colors inline-flex items-center gap-1">
+                  <span>+</span> Cadastre sua Solução
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 5: Institucional & Ações */}
           <div className="space-y-4">
             <h4 className="text-sm font-bold uppercase tracking-wider text-white">
               Institucional

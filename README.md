@@ -107,18 +107,19 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # 4. Inicie o servidor FastAPI
-uvicorn app.main:app --reload --port 8000
+uvicorn app.main:app --reload --port 8006
 ```
 
 >> python -m venv venv
 >> .\venv\Scripts\Activate.ps1
 >> 
 >> pip install -r requirements.txt
->> uvicorn app.main:app --reload --port 8000
+>> uvicorn app.main:app --reload --port 8006
+>> python -m uvicorn app.main:app --reload --port 8006
 
-- A API estará rodando em: `http://localhost:8000`
-- Documentação interativa Swagger: `http://localhost:8000/docs`
-- Health check: `http://localhost:8000/api/health`
+- A API estará rodando em: `http://localhost:8006`
+- Documentação interativa Swagger: `http://localhost:8006/docs`
+- Health check: `http://localhost:8006/api/health`
 
 #### Executando os Testes do Backend
 ```bash

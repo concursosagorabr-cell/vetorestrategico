@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     PROJECT_DESCRIPTION: str = "API REST para consultoria de IA & Negócios para PMEs"
     VERSION: str = "1.0.0"
     ENVIRONMENT: str = "development"
+    PORT: int = 8006
     
     # CORS
     CORS_ORIGINS: Union[List[str], str] = [

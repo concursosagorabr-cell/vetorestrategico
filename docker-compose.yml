@@ -9,7 +9,7 @@ services:
     container_name: vetor_backend
     restart: always
     ports:
-      - "8000:8000"
+      - "8006:8006"
     environment:
       - ENVIRONMENT=production
       - DATABASE_URL=sqlite:///./vetor_estrategico.db
@@ -18,7 +18,7 @@ services:
     volumes:
       - backend_data:/app
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8006/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -33,7 +33,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://backend:8000
+      - NEXT_PUBLIC_API_URL=http://backend:8006
       - NEXT_PUBLIC_SITE_URL=https://vetorestrategico.com.br
     depends_on:
       - backend

@@ -5,6 +5,7 @@ import { FeaturedCasesSection } from "@/components/sections/FeaturedCasesSection
 import { ProcessTimelineSection } from "@/components/sections/ProcessTimelineSection";
 import { TechnicalBenefitsGrid } from "@/components/sections/TechnicalBenefitsGrid";
 import { SolutionTypesGrid } from "@/components/sections/SolutionTypesGrid";
+import { DirectorySpotlightSection } from "@/components/sections/DirectorySpotlightSection";
 import { TrustDashboardSection } from "@/components/sections/TrustDashboardSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { AboutSnippetSection } from "@/components/sections/AboutSnippetSection";
@@ -26,6 +27,7 @@ export default function HomePage() {
       <ProcessTimelineSection />
       <TechnicalBenefitsGrid />
       <SolutionTypesGrid />
+      <DirectorySpotlightSection />
       <TrustDashboardSection />
       <TestimonialsSection />
       <AboutSnippetSection />

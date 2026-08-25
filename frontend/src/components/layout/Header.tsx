@@ -83,6 +83,7 @@ export const NICHE_LINKS = [
 
 export const NAV_LINKS_BASE = [
   { label: "Serviços", href: "/servicos" },
+  { label: "Diretório IA", href: "/diretorio", badge: "Novo" },
   { label: "Portfólio", href: "/cases" },
   { label: "Preços", href: "/planos" },
   { label: "Orçamento", href: "/orcamento" },
@@ -251,20 +252,25 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Standard Navigation Links */}
-          {NAV_LINKS_BASE.map((link) => {
+          {NAV_LINKS_BASE.map((link: any) => {
             const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "text-sm xl:text-base font-bold transition-colors duration-200 relative py-1",
+                  "text-sm xl:text-base font-bold transition-colors duration-200 relative py-1 inline-flex items-center gap-1",
                   isActive
                     ? "text-emerald-600 font-black"
                     : "text-slate-700 hover:text-slate-950"
                 )}
               >
-                {link.label}
+                <span>{link.label}</span>
+                {link.badge && (
+                  <span className="text-[10px] font-black uppercase px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 tracking-wider">
+                    {link.badge}
+                  </span>
+                )}
                 {isActive && (
                   <motion.div
                     layoutId="activeNavIndicator"
@@ -362,13 +368,18 @@ export const Header: React.FC = () => {
                   Menu Principal
                 </span>
                 <nav className="flex flex-col space-y-1">
-                  {NAV_LINKS_BASE.map((link) => (
+                  {NAV_LINKS_BASE.map((link: any) => (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-800 hover:bg-slate-50"
+                      className="px-3 py-2.5 rounded-lg text-sm font-bold text-slate-800 hover:bg-slate-50 flex items-center justify-between"
                     >
-                      {link.label}
+                      <span>{link.label}</span>
+                      {link.badge && (
+                        <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 tracking-wider">
+                          {link.badge}
+                        </span>
+                      )}
                     </Link>
                   ))}
                 </nav>
