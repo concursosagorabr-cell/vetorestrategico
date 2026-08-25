@@ -121,6 +121,7 @@ export interface BlogPost {
     avatarUrl: string;
   };
   tags: string[];
+  coverImage?: string;
 }
 
 export interface FAQItem {

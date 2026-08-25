@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -43,31 +44,44 @@ export const BlogHighlightsSection: React.FC = () => {
           {BLOG_POSTS.slice(0, 3).map((post) => (
             <article
               key={post.id}
-              className="rounded-3xl bg-white border border-slate-200 p-6 flex flex-col justify-between hover:border-emerald-300 shadow-sm hover:shadow-md transition-all duration-300 group"
+              className="rounded-3xl bg-white border border-slate-200 overflow-hidden flex flex-col justify-between hover:border-emerald-300 shadow-sm hover:shadow-md transition-all duration-300 group"
             >
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <Badge variant="emerald" size="sm">
-                    {post.category}
-                  </Badge>
-                  <span className="text-[11px] text-slate-400 flex items-center gap-1 font-medium">
-                    <Clock className="w-3 h-3" />
-                    {post.readTime}
-                  </span>
+              <div>
+                {post.coverImage && (
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-950">
+                    <Image
+                      src={post.coverImage}
+                      alt={post.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                )}
+
+                <div className="p-6 space-y-3.5">
+                  <div className="flex items-center justify-between">
+                    <Badge variant="emerald" size="sm">
+                      {post.category}
+                    </Badge>
+                    <span className="text-[11px] text-slate-400 flex items-center gap-1 font-medium">
+                      <Clock className="w-3 h-3" />
+                      {post.readTime}
+                    </span>
+                  </div>
+
+                  <Link href={`/blog/${post.slug}`}>
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-2 leading-snug">
+                      {post.title}
+                    </h3>
+                  </Link>
+
+                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                    {post.excerpt}
+                  </p>
                 </div>
-
-                <Link href={`/blog/${post.slug}`}>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
-                </Link>
-
-                <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
-                  {post.excerpt}
-                </p>
               </div>
 
-              <div className="pt-4 mt-6 border-t border-slate-100 flex items-center justify-between">
+              <div className="p-6 pt-0 mt-2 flex items-center justify-between border-t border-slate-100 pt-4">
                 <span className="text-[11px] text-slate-400 font-medium">
                   {post.publishDate}
                 </span>
