@@ -498,7 +498,7 @@ export const FAQS: FAQItem[] = [
   },
   {
     question: "Quanto custa a manutenção e hospedagem para manter o site no ar?",
-    answer: "A taxa de manutenção e hospedagem básica é de apenas R$ 99/mês. Ela inclui hospedagem em servidores de alta velocidade, certificado de segurança SSL ativo, monitoramento de estabilidade e suporte técnico contínuo para manter seu site sempre funcionando perfeitamente."
+    answer: "A taxa de manutenção e hospedagem básica é de apenas R$ 147/mês. Ela inclui hospedagem em servidores de alta velocidade, certificado de segurança SSL ativo, monitoramento de estabilidade e suporte técnico contínuo para manter seu site sempre funcionando perfeitamente."
   },
   {
     question: "Qual é o prazo de entrega de um projeto?",
@@ -708,7 +708,7 @@ Os valores no mercado brasileiro variam consideravelmente, desde plataformas gra
 ## 2. Custos Recorrentes Essenciais
 Para manter um site ativo e seguro no ar, você terá apenas dois custos recorrentes:
 1. **Domínio próprio (ex: suaempresa.com.br):** Cerca de R$ 40 a R$ 60 por ano no Registro.br.
-2. **Hospedagem em nuvem e manutenção preventiva:** Cerca de R$ 99/mês para servidores velozes com certificado SSL e monitoramento 24/7.
+2. **Hospedagem em nuvem e manutenção preventiva:** Cerca de R$ 147/mês para servidores velozes com certificado SSL e monitoramento 24/7.
 
 ## 3. Como calcular o retorno do investimento (ROI)
 Se um site profissional custa R$ 2.500 e gera **apenas 2 novos clientes de médio porte por mês**, o investimento total se paga integralmente nas primeiras semanas de operação.

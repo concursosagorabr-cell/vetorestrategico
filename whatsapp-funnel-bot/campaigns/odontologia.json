@@ -1,0 +1,29 @@
+{
+  "campaign_name": "Prospecção - Consultórios Odontológicos",
+  "niche": "odontologia",
+  "specialty": "Consultórios Odontológicos & Clínicas Dentárias",
+  "settings": {
+    "delay_between_contacts_seconds": 30,
+    "delay_between_messages_seconds": 5,
+    "default_city": "São Paulo",
+    "default_service": "implantes dentários e odontologia estética",
+    "llm_provider": "groq",
+    "llm_model": "openai/gpt-oss-120b"
+  },
+  "contacts": [
+    {
+      "name": "Dr. Carlos Odontologia Integrada",
+      "phone": "5511999990001",
+      "city": "São Paulo",
+      "service": "implantes dentários e próteses",
+      "niche": "odontologia"
+    },
+    {
+      "name": "Clínica Sorriso & Arte",
+      "phone": "5511999990002",
+      "city": "São Paulo",
+      "service": "alinhadores invisíveis e estética dental",
+      "niche": "odontologia"
+    }
+  ]
+}

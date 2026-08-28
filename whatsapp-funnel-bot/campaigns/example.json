@@ -1,0 +1,129 @@
+{
+  "campaign_name": "Prospecção - Sites de Alta Performance (Ferraz de Vasconcelos)",
+  "contacts": [
+    {
+      "name": "Dr. Carlos - Odonto",
+      "phone": "5511999990001",
+      "service": "Implantes Dentários",
+      "city": "Ferraz de Vasconcelos"
+    },
+    {
+      "name": "Marcos Auto Center",
+      "phone": "5511999990002",
+      "service": "Mecânica e Câmbio Automático",
+      "city": "Ferraz de Vasconcelos"
+    },
+    {
+      "name": "Dra. Juliana Advocacia",
+      "phone": "5511999990003",
+      "service": "Direito Trabalhista",
+      "city": "Ferraz de Vasconcelos"
+    }
+  ],
+  "script": [
+    {
+      "step": 1,
+      "name": "Passo 1: Topo de Funil (A Isca)",
+      "message": "Oi, bom dia! Sou aqui de {city}. Vocês ainda trabalham com {service}?",
+      "wait_for_reply": true,
+      "timeout_hours": 24,
+      "expected_response": "Confirmação inicial se a empresa realiza o serviço informado.",
+      "on_yes": {
+        "next_step": 2
+      },
+      "on_no": {
+        "next_step": "end_negative",
+        "message": "Entendido! Muito obrigado pela atenção. Se precisarem de algo no futuro, estamos à disposição. Tenha um ótimo dia!"
+      },
+      "on_doubt": {
+        "next_step": 1,
+        "message": "Oi! Sou morador aqui de {city} e estava pesquisando empresas de {service}. Vocês ainda realizam esse atendimento?"
+      }
+    },
+    {
+      "step": 2,
+      "name": "Passo 2: Meio de Funil (O Pitch de 24h & Inversão de Risco)",
+      "message": "Maravilha. O motivo da pergunta é que notei que vocês estão sem site no Google e estão perdendo clientes por isso. Eu crio sites de alta performance para o seu segmento e topo desenhar a página da sua empresa de graça. Em 24 horas te mando o link do site funcionando.\n\nSe você gostar do resultado, fechamos apenas a manutenção de R$ 147/mês. Sem contrato de fidelidade e risco zero. Se não quiser ficar com o site, não me paga nada. Posso começar o seu esboço para te mostrar amanhã?",
+      "wait_for_reply": true,
+      "timeout_hours": 24,
+      "expected_response": "Resposta ao pitch: aprovação (sim/pode mandar), recusa (não), ou objeções (redes sociais/insta, orçamento/dinheiro, já tem site).",
+      "on_yes": {
+        "next_step": "end_positive",
+        "message": "Perfeito, {name}! Já vou dar início à estrutura do seu site de alta performance. Em até 24 horas te envio o link exclusivo por aqui para você testar. Muito obrigado e até já!"
+      },
+      "on_no": {
+        "next_step": "end_negative",
+        "message": "Sem problemas, {name}! Agradeço muito pelo seu tempo. Se um dia quiser aumentar suas vendas e ser encontrado no Google, estou à disposição. Abraços e boas vendas!"
+      },
+      "on_objection_social_media": {
+        "next_step": 3,
+        "message": "O Instagram é ótimo como vitrine, mas quem pesquisa {service} em {city} no Google está com o problema na mão, querendo fechar na hora. O site não concorre com sua rede social, ele pesca o cliente que tem urgência. Posso desenhar o esboço sem custo para você ver a diferença?"
+      },
+      "on_objection_budget": {
+        "next_step": 4,
+        "message": "Exatamente por isso eu assumo 100% do risco. Crio o design inicial sem te cobrar um centavo. Você só paga a manutenção se colocar no ar. Um único cliente novo que o Google te trouxer já paga essa taxa de R$ 147 com folga. Posso começar o seu esboço para te mostrar amanhã?"
+      },
+      "on_objection_has_website": {
+        "next_step": 5,
+        "message": "Eu dei uma olhada e notei que ele demora alguns segundos para carregar no 3G/4G. O Google pune sites lentos não recomendando a página. Eu crio uma versão muito mais rápida. A gente joga os dois no PageSpeed Insights (a ferramenta oficial do Google). Se o meu não for visivelmente mais rápido e com nota maior, não fechamos negócio. Topa esse teste sem custo?"
+      },
+      "on_doubt": {
+        "next_step": 2,
+        "message": "É sem pegadinhas: eu faço o esboço do site em 24h sem cobrar nada. Se você amar o resultado, a manutenção e hospedagem é só R$ 147/mês, sem contrato preso. Se não gostar, não paga nada. Posso preparar o protótipo?"
+      }
+    },
+    {
+      "step": 3,
+      "name": "Passo 3: Tratativa de Objeção 1 (Redes Sociais vs Google)",
+      "wait_for_reply": true,
+      "timeout_hours": 24,
+      "expected_response": "Resposta após esclarecimento sobre Instagram vs Google: aceitar esboço (sim/pode ser) ou recusar (não).",
+      "on_yes": {
+        "next_step": "end_positive",
+        "message": "Maravilha, {name}! Vou estruturar a página do seu negócio e em 24h te envio o link funcionando. Tenho certeza que vai gostar!"
+      },
+      "on_no": {
+        "next_step": "end_negative",
+        "message": "Compreendo perfeitamente, {name}! Muito obrigado pela atenção e sucesso nas vendas!"
+      }
+    },
+    {
+      "step": 4,
+      "name": "Passo 4: Tratativa de Objeção 2 (Orçamento & Risco Zero)",
+      "wait_for_reply": true,
+      "timeout_hours": 24,
+      "expected_response": "Resposta após reforço de risco zero: aceitar ver protótipo ou recusar.",
+      "on_yes": {
+        "next_step": "end_positive",
+        "message": "Excelente, {name}! Já vou colocar a mão na massa no seu esboço gratuito. Em 24h te mando o link por aqui!"
+      },
+      "on_no": {
+        "next_step": "end_negative",
+        "message": "Tudo bem, {name}! Obrigado pela atenção e sucesso com o negócio!"
+      }
+    },
+    {
+      "step": 5,
+      "name": "Passo 5: Tratativa de Objeção 3 (Velocidade & PageSpeed Google)",
+      "wait_for_reply": true,
+      "timeout_hours": 24,
+      "expected_response": "Resposta ao teste de velocidade do Google: aceitar o teste comparativo ou recusar.",
+      "on_yes": {
+        "next_step": "end_positive",
+        "message": "Fechado, {name}! Vou criar uma versão ultra-rápida e em 24h te envio com o teste comparativo do Google. Até amanhã!"
+      },
+      "on_no": {
+        "next_step": "end_negative",
+        "message": "Combinado, {name}! Muito obrigado e parabéns pelo site atual. Se precisar de otimizações no futuro, estamos por aqui!"
+      }
+    }
+  ],
+  "settings": {
+    "delay_between_contacts_seconds": 30,
+    "delay_between_messages_seconds": 5,
+    "default_city": "Ferraz de Vasconcelos",
+    "default_service": "Serviços Especializados",
+    "llm_provider": "groq",
+    "llm_model": "llama3-70b-8192"
+  }
+}

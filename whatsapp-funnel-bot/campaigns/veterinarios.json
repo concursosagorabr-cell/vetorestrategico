@@ -1,0 +1,29 @@
+{
+  "campaign_name": "Prospecção - Clínicas Veterinárias & Pet Shops",
+  "niche": "veterinaria",
+  "specialty": "Clínicas Veterinárias & Hospitais Pet",
+  "settings": {
+    "delay_between_contacts_seconds": 30,
+    "delay_between_messages_seconds": 5,
+    "default_city": "São Paulo",
+    "default_service": "clínica veterinária e atendimento pet",
+    "llm_provider": "groq",
+    "llm_model": "openai/gpt-oss-120b"
+  },
+  "contacts": [
+    {
+      "name": "Hospital Veterinário Pet Care",
+      "phone": "5511999990005",
+      "city": "São Paulo",
+      "service": "atendimento veterinário 24h e cirurgias",
+      "niche": "veterinaria"
+    },
+    {
+      "name": "Clínica Vet & Amor",
+      "phone": "5511999990006",
+      "city": "São Paulo",
+      "service": "consultas, vacinas e exames laboratoriais",
+      "niche": "veterinaria"
+    }
+  ]
+}

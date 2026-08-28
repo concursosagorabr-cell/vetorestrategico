@@ -1,0 +1,29 @@
+{
+  "campaign_name": "Prospecção - Clínicas de Estética Avançada",
+  "niche": "estetica",
+  "specialty": "Clínicas de Estética & Beleza",
+  "settings": {
+    "delay_between_contacts_seconds": 30,
+    "delay_between_messages_seconds": 5,
+    "default_city": "Ferraz de Vasconcelos",
+    "default_service": "estética avançada e depilação a laser",
+    "llm_provider": "groq",
+    "llm_model": "openai/gpt-oss-120b"
+  },
+  "contacts": [
+    {
+      "name": "GiO Estética Avançada Centro",
+      "phone": "5511995738934",
+      "city": "Ferraz de Vasconcelos",
+      "service": "depilação a laser e harmonização",
+      "niche": "estetica"
+    },
+    {
+      "name": "Royal Face Clínica de Estética",
+      "phone": "5511943202044",
+      "city": "Ferraz de Vasconcelos",
+      "service": "estética facial e corporal",
+      "niche": "estetica"
+    }
+  ]
+}

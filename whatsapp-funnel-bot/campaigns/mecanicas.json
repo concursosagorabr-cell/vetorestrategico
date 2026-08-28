@@ -1,0 +1,29 @@
+{
+  "campaign_name": "Prospecção - Oficinas Mecânicas & Auto Centers",
+  "niche": "mecanica",
+  "specialty": "Oficinas Mecânicas & Auto Centers",
+  "settings": {
+    "delay_between_contacts_seconds": 30,
+    "delay_between_messages_seconds": 5,
+    "default_city": "São Paulo",
+    "default_service": "mecânica geral e revisão automotiva",
+    "llm_provider": "groq",
+    "llm_model": "openai/gpt-oss-120b"
+  },
+  "contacts": [
+    {
+      "name": "Auto Mecânica Precision",
+      "phone": "5511999990003",
+      "city": "São Paulo",
+      "service": "câmbio automático e injeção eletrônica",
+      "niche": "mecanica"
+    },
+    {
+      "name": "Centro Automotivo Paulista",
+      "phone": "5511999990004",
+      "city": "São Paulo",
+      "service": "suspensão, freios e alinhamento",
+      "niche": "mecanica"
+    }
+  ]
+}

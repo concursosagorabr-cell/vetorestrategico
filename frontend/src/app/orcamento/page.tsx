@@ -62,7 +62,7 @@ export default function OrcamentoPage() {
             <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shrink-0">
               <Sparkles className="w-4 h-4" />
             </div>
-            <span>Manutenção básica: R$ 99/mês no ar</span>
+            <span>Manutenção básica: R$ 147/mês no ar</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs flex items-center gap-3">

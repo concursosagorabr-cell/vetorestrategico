@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Funnel Bot — Painel de Prospecção com IA</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background: #0b1329; color: #e2e8f0; min-height: 100vh; }
+        .container { max-width: 1240px; margin: 0 auto; padding: 24px 20px; }
+        h1 { font-size: 24px; font-weight: 700; color: #f8fafc; display: flex; align-items: center; gap: 10px; }
+        h2 { font-size: 18px; margin-bottom: 14px; color: #f1f5f9; display: flex; align-items: center; gap: 8px; }
+        .tabs { display: flex; gap: 8px; margin: 20px 0 24px; border-bottom: 1px solid #1e293b; padding-bottom: 10px; flex-wrap: wrap; }
+        .tab { padding: 10px 18px; border-radius: 8px; cursor: pointer; background: #1e293b; color: #94a3b8; font-size: 13px; font-weight: 600; transition: all 0.2s; border: 1px solid transparent; user-select: none; }
+        .tab:hover { background: #334155; color: #f8fafc; }
+        .tab.active { background: #0284c7; color: white; border-color: #38bdf8; box-shadow: 0 4px 12px rgba(2,132,199,0.3); }
+        .card { background: #131e3a; border: 1px solid #1e293b; border-radius: 12px; padding: 18px; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .card h3 { font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+        .card .value { font-size: 28px; font-weight: 700; margin-top: 6px; color: #f8fafc; }
+        .section { background: #131e3a; border: 1px solid #1e293b; border-radius: 12px; padding: 22px; margin-bottom: 24px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #1e293b; font-size: 13px; }
+        th { color: #94a3b8; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        .btn { padding: 8px 14px; border-radius: 6px; border: none; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-green { background: #10b981; color: white; }
+        .btn-green:hover { background: #059669; }
+        .btn-blue { background: #0284c7; color: white; }
+        .btn-blue:hover { background: #0369a1; }
+        .btn-red { background: #ef4444; color: white; }
+        .btn-red:hover { background: #dc2626; }
+        .btn-purple { background: #8b5cf6; color: white; }
+        .btn-purple:hover { background: #7c3aed; }
+        .badge { padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+        .badge-green { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .badge-blue { background: rgba(2, 132, 199, 0.2); color: #38bdf8; }
+        .badge-yellow { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .badge-red { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+        .badge-purple { background: rgba(139, 92, 246, 0.2); color: #c084fc; }
+        .login { max-width: 380px; margin: 100px auto; background: #131e3a; border: 1px solid #1e293b; border-radius: 12px; padding: 32px; text-align: center; }
+        .login input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #334155; background: #0b1329; color: #f8fafc; font-size: 14px; }
+        .login button { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #10b981; color: white; font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 10px; }
+        .hidden { display: none !important; }
+        
+        /* Chat Layout */
+        .chat-layout { display: grid; grid-template-columns: 360px 1fr; gap: 16px; min-height: 600px; }
+        @media (max-width: 860px) { .chat-layout { grid-template-columns: 1fr; } }
+        .conv-sidebar { background: #0f172a; border-radius: 10px; border: 1px solid #1e293b; display: flex; flex-direction: column; overflow: hidden; height: 600px; }
+        .conv-list { flex: 1; overflow-y: auto; }
+        .conv-item { padding: 12px 14px; border-bottom: 1px solid #1e293b; cursor: pointer; transition: background 0.15s; }
+        .conv-item:hover { background: #1e293b; }
+        .conv-item.active { background: #1e3a5f; border-left: 4px solid #10b981; }
+        .conv-name { font-weight: 600; font-size: 13px; color: #f8fafc; display: flex; justify-content: space-between; align-items: center; }
+        .conv-preview { font-size: 12px; color: #94a3b8; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .conv-meta { font-size: 10px; color: #64748b; margin-top: 4px; display: flex; justify-content: space-between; }
+        .chat-window { background: #0f172a; border-radius: 10px; border: 1px solid #1e293b; display: flex; flex-direction: column; height: 600px; }
+        .chat-header { padding: 14px 18px; background: #1e293b; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; border-radius: 10px 10px 0 0; }
+        .chat-messages { flex: 1; padding: 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .chat-bubble { max-width: 78%; padding: 12px 16px; border-radius: 14px; font-size: 13px; line-height: 1.45; word-wrap: break-word; }
+        .chat-outbound { align-self: flex-end; background: #065f46; color: #ecfdf5; border-bottom-right-radius: 2px; }
+        .chat-inbound { align-self: flex-start; background: #1e293b; color: #f1f5f9; border-bottom-left-radius: 2px; border: 1px solid #334155; }
+        .chat-meta { font-size: 10px; margin-top: 4px; opacity: 0.75; text-align: right; }
+        .ia-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #2563eb; color: white; margin-bottom: 4px; }
+        
+        /* Guide Cards */
+        .guide-box { background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 18px; margin-bottom: 16px; }
+        .guide-step { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px; }
+        .step-num { background: #0284c7; color: white; font-weight: bold; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; }
+        pre.code-sample { background: #060b17; border: 1px solid #1e293b; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 12px; color: #38bdf8; overflow-x: auto; margin-top: 8px; }
+    </style>
+</head>
+<body>
+    <div id="loginScreen" class="login">
+        <h2>📱 WhatsApp Funnel Bot</h2>
+        <p style="font-size: 12px; color: #94a3b8; margin: 8px 0 16px;">Entre com suas credenciais de acesso</p>
+        <input type="text" id="user" placeholder="Usuário (ex: vetor)">
+        <input type="password" id="pass" placeholder="Senha (ex: vetor)">
+        <button onclick="login()">Entrar no Painel</button>
+    </div>
+
+    <div id="dashboard" class="container hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <h1>📱 WhatsApp Funnel Bot <span style="font-size: 12px; background: #0284c7; padding: 3px 8px; border-radius: 12px; color: white; font-weight: bold;">IA 120B Ativa</span></h1>
+            <button class="btn btn-red" style="padding: 6px 12px; font-size: 11px;" onclick="logout()">Sair</button>
+        </div>
+
+        <!-- Cards de Resumo Geral -->
+        <div class="cards" id="topStatsCards">
+            <div class="card"><h3>Total de Campanhas</h3><div class="value" id="statTotalCampaigns">0</div></div>
+            <div class="card"><h3>Total de Contatos</h3><div class="value" id="statTotalContacts">0</div></div>
+            <div class="card"><h3>Leads Qualificados</h3><div class="value" style="color: #34d399;" id="statPositiveLeads">0</div></div>
+            <div class="card"><h3>Taxa de Aceite</h3><div class="value" style="color: #38bdf8;" id="statConversionRate">0%</div></div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('campaigns')">📋 Campanhas</div>
+            <div class="tab" onclick="showTab('conversations')">💬 Conversas ao Vivo</div>
+            <div class="tab" onclick="showTab('create')">📝 Nova Campanha</div>
+            <div class="tab" onclick="showTab('guide')">📖 Como Usar & Exemplos</div>
+            <div class="tab" onclick="showTab('status')">📡 Status WhatsApp</div>
+        </div>
+
+        <!-- Aba Campanhas -->
+        <div id="tab-campaigns">
+            <div class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                    <h2>📋 Lista de Campanhas</h2>
+                    <button class="btn btn-blue" onclick="loadCampaigns()">🔄 Atualizar</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome da Campanha</th>
+                            <th>Status</th>
+                            <th>Início da Campanha</th>
+                            <th>Leads Contactados</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="campaignsTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Aba Conversas ao Vivo -->
+        <div id="tab-conversations" class="hidden">
+            <div class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h2>💬 Monitor de Conversas em Tempo Real</h2>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <span id="liveDot" style="display: inline-block; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e;"></span>
+                        <span style="font-size: 12px; color: #94a3b8;">Ao Vivo (3s)</span>
+                        <button class="btn btn-blue" style="padding: 4px 10px; font-size: 11px;" onclick="loadConversations()">🔄 Atualizar</button>
+                    </div>
+                </div>
+                <div class="chat-layout">
+                    <!-- Lista de Contatos -->
+                    <div class="conv-sidebar">
+                        <div style="padding: 10px; border-bottom: 1px solid #1e293b;">
+                            <input type="text" id="convSearch" placeholder="🔍 Filtrar por nome ou telefone..." oninput="filterConversations()" style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #e2e8f0; font-size: 12px;">
+                        </div>
+                        <div class="conv-list" id="conversationsList">
+                            <div style="padding: 20px; text-align: center; color: #64748b; font-size: 12px;">Carregando conversas...</div>
+                        </div>
+                    </div>
+                    <!-- Janela de Chat -->
+                    <div class="chat-window" id="chatWindow">
+                        <div class="chat-header" id="chatHeader">
+                            <div>
+                                <span style="font-weight: 600; font-size: 14px; color: #f8fafc;" id="chatContactName">Selecione um contato</span>
+                                <span style="font-size: 12px; color: #94a3b8; margin-left: 8px;" id="chatContactPhone"></span>
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <a id="waDirectBtn" href="#" target="_blank" class="btn btn-green" style="font-size: 11px; padding: 4px 10px; text-decoration: none; display: none;">📲 Abrir no WhatsApp</a>
+                                <div id="chatContactBadge"></div>
+                            </div>
+                        </div>
+                        <div class="chat-messages" id="chatMessages">
+                            <div style="text-align: center; color: #64748b; margin-top: 100px; font-size: 13px;">
+                                👈 Clique em uma conversa ao lado para acompanhar o diálogo e as decisões da IA em tempo real.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aba Criar Campanha -->
+        <div id="tab-create" class="hidden">
+            <div class="section">
+                <h2>📝 Nova Campanha Multi-Nicho</h2>
+                <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">Selecione o nicho da empresa para que a IA adapte o vocabulário, roteiro e quebra de objeções:</p>
+                
+                <div style="display: flex; gap: 12px; align-items: center; background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 14px; margin-bottom: 16px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 260px;">
+                        <label style="display: block; font-size: 11px; color: #94a3b8; margin-bottom: 4px; font-weight: bold; text-transform: uppercase;">Especialidade / Nicho:</label>
+                        <select id="nicheSelector" onchange="onNicheChange()" style="width: 100%; background: #1e293b; border: 1px solid #475569; border-radius: 6px; padding: 8px; color: #f8fafc; font-weight: 500; font-size: 13px;">
+                            <option value="estetica">💎 Clínicas de Estética & Beleza (Harmonização, Laser, Botox)</option>
+                            <option value="odontologia">🦷 Consultórios Odontológicos (Implantes, Próteses, Alinhadores)</option>
+                            <option value="mecanica">🚗 Oficinas Mecânicas & Auto Centers (Revisão, Câmbio, Socorro)</option>
+                            <option value="veterinaria">🐾 Clínicas Veterinárias & Pet Shops (Consultas, Vacinas, Emergências)</option>
+                            <option value="advocacia">⚖️ Escritórios de Advocacia (Trabalhista, Previdenciário, Empresarial)</option>
+                            <option value="custom">⚡ Personalizado / Qualquer Nicho (Adaptável por IA)</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: flex-end;">
+                        <button class="btn btn-blue" onclick="loadNicheTemplate()" style="padding: 9px 16px;">🎯 Carregar Template Completo</button>
+                        <button class="btn" style="background: #334155; color: #f8fafc; padding: 9px 16px;" onclick="loadMinimalContactsTemplate()">📋 Apenas Lista Simples</button>
+                    </div>
+                </div>
+
+                <div id="nicheBadgeInfo" style="margin-bottom: 12px; padding: 10px 14px; background: rgba(56, 189, 248, 0.1); border-left: 3px solid #38bdf8; border-radius: 4px; font-size: 12px; color: #38bdf8;">
+                    <strong>Foco:</strong> Procedimentos de alto ticket e clientes que buscam no Google com alta intenção de compra.
+                </div>
+
+                <textarea id="campaignJson" rows="18" style="width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 12px; color: #e2e8f0; font-family: monospace; font-size: 12px; line-height: 1.4;"></textarea>
+                <div style="margin-top: 14px; display: flex; gap: 10px;">
+                    <button class="btn btn-green" onclick="createCampaign()" style="font-weight: bold; padding: 10px 22px; font-size: 13px;">🚀 Criar e Salvar Campanha</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aba Guia & Exemplos (Para Leigos) -->
+        <div id="tab-guide" class="hidden">
+            <div class="section">
+                <h2>📖 Guia Passo a Passo (Como Usar o Programa)</h2>
+                <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">Aprenda como colocar o robô para prospectar clientes para você no piloto automático em 3 passos simples:</p>
+
+                <div class="guide-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="font-size: 14px; color: #f8fafc;">Conecte seu WhatsApp</h3>
+                        <p style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Vá na aba <strong>📡 Status WhatsApp</strong> e escaneie o QR Code com o WhatsApp do seu celular (Aparelhos Conectados). Quando aparecer "Conectado", o robô já está pronto para enviar mensagens.</p>
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="font-size: 14px; color: #f8fafc;">Crie uma Campanha com seus Contatos</h3>
+                        <p style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Na aba <strong>📝 Nova Campanha</strong>, selecione o segmento dos seus contatos (ex: Estética, Mecânica, Dentista). Você só precisa colar o nome e o WhatsApp dos clientes. O robô já cuida de todo o roteiro de vendas.</p>
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="font-size: 14px; color: #f8fafc;">Inicie e Acompanhe as Respostas</h3>
+                        <p style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Clique em <strong>Iniciar</strong> na lista de campanhas. O robô enviará a primeira mensagem com intervalo seguro. Quando o cliente responder, a <strong>Inteligência Artificial (GPT 120B)</strong> responderá na hora, tirando dúvidas e agendando a demonstração.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📋 Exemplos de JSON Prontos para Copiar</h2>
+                <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">Você pode copiar qualquer um dos exemplos abaixo ou clicar no botão <strong>"⚡ Usar na Nova Campanha"</strong>:</p>
+
+                <!-- Exemplo 1: Lista Ultra Simples -->
+                <div class="guide-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-size: 13px; color: #34d399;">🟢 Exemplo 1: Formato Mais Simples de Todos (Apenas Nomes e Telefones)</h3>
+                        <button class="btn btn-purple" style="font-size: 11px; padding: 4px 10px;" onclick="useSampleTemplate('simple')">⚡ Usar na Nova Campanha</button>
+                    </div>
+                    <p style="font-size: 12px; color: #94a3b8; margin-top: 6px;">Basta informar a lista de contatos. O sistema detecta a cidade e o serviço padrão automaticamente:</p>
+                    <pre class="code-sample" id="codeSampleSimple">[
+  {
+    "nome": "Carla Teles Estética",
+    "telefone": "11995788035",
+    "servico": "estética facial",
+    "cidade": "São Paulo"
+  },
+  {
+    "nome": "Dr. Fernando Ribeiro",
+    "telefone": "11999990001",
+    "servico": "implantes dentários",
+    "cidade": "São Paulo"
+  }
+]</pre>
+                </div>
+
+                <!-- Exemplo 2: Mecânica -->
+                <div class="guide-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-size: 13px; color: #38bdf8;">🚗 Exemplo 2: Campanha de Oficinas Mecânicas</h3>
+                        <button class="btn btn-purple" style="font-size: 11px; padding: 4px 10px;" onclick="useSampleTemplate('mecanica')">⚡ Usar na Nova Campanha</button>
+                    </div>
+                    <pre class="code-sample" id="codeSampleMecanica">{
+  "campaign_name": "Prospecção - Oficinas Mecânicas SP",
+  "niche": "mecanica",
+  "settings": {
+    "delay_between_contacts_seconds": 30,
+    "default_city": "São Paulo",
+    "default_service": "mecânica automotiva e revisão"
+  },
+  "contacts": [
+    {
+      "name": "Auto Mecânica Precision",
+      "phone": "5511999990003",
+      "service": "câmbio automático e injeção",
+      "city": "São Paulo"
+    }
+  ]
+}</pre>
+                </div>
+
+                <!-- Exemplo 3: Odontologia -->
+                <div class="guide-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-size: 13px; color: #fbbf24;">🦷 Exemplo 3: Campanha de Consultórios Odontológicos</h3>
+                        <button class="btn btn-purple" style="font-size: 11px; padding: 4px 10px;" onclick="useSampleTemplate('odontologia')">⚡ Usar na Nova Campanha</button>
+                    </div>
+                    <pre class="code-sample" id="codeSampleOdonto">{
+  "campaign_name": "Prospecção - Consultórios Odontológicos",
+  "niche": "odontologia",
+  "settings": {
+    "delay_between_contacts_seconds": 30,
+    "default_city": "São Paulo",
+    "default_service": "implantes dentários"
+  },
+  "contacts": [
+    {
+      "name": "Dr. Carlos Odonto",
+      "phone": "5511999990001",
+      "service": "implantes dentários e próteses",
+      "city": "São Paulo"
+    }
+  ]
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aba Status -->
+        <div id="tab-status" class="hidden">
+            <div class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h2>📡 Status do WhatsApp</h2>
+                    <button class="btn btn-blue" onclick="checkStatus()">🔄 Atualizar Status / QR Code</button>
+                </div>
+                <div id="whatsappStatus" style="font-size: 14px; margin-bottom: 16px; line-height: 1.5;">Verificando conexão...</div>
+                <div id="qrcodeContainer" style="display: none; background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 20px; text-align: center; max-width: 360px;">
+                    <p style="font-size: 13px; color: #94a3b8; margin-bottom: 12px; font-weight: 600;">Abra o WhatsApp > Aparelhos conectados > Conectar um aparelho:</p>
+                    <div style="background: white; padding: 12px; border-radius: 8px; display: inline-block; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                        <img id="qrcodeImg" style="width: 250px; height: 250px; display: block; object-fit: contain;">
+                    </div>
+                    <p style="font-size: 11px; color: #64748b; margin-top: 10px;">O QR Code atualiza automaticamente a cada poucos segundos.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Relatório -->
+        <div id="reportModal" class="section hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <h2>📊 Relatório Detalhado da Campanha</h2>
+                <button class="btn" style="background: #334155; color: white;" onclick="closeReport()">Fechar ✖</button>
+            </div>
+            <div class="cards" id="reportCards"></div>
+            <h3 style="font-size: 14px; margin: 16px 0 8px; color: #34d399;">✅ Leads Positivos (Aceitaram a Proposta)</h3>
+            <table>
+                <thead><tr><th>Nome</th><th>Telefone</th><th>Ação</th></tr></thead>
+                <tbody id="positiveList"></tbody>
+            </table>
+            <h3 style="font-size: 14px; margin: 16px 0 8px; color: #f87171;">❌ Negativos / Desistências</h3>
+            <table>
+                <thead><tr><th>Nome</th><th>Telefone</th></tr></thead>
+                <tbody id="negativeList"></tbody>
+            </table>
+            <div style="margin-top: 16px; display: flex; gap: 8px;">
+                <button class="btn btn-blue" onclick="exportReport()">📥 Exportar Relatório em JSON</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let token = localStorage.getItem('bot_token') || '';
+        let currentCampaignId = null;
+        let allConversations = [];
+        let activeContactId = null;
+
+        if (token) {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            loadCampaigns();
+            loadGeneralStats();
+        }
+
+        async function login() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            token = btoa(u + ':' + p);
+            const res = await api('/api/campaigns');
+            if (res !== null) {
+                localStorage.setItem('bot_token', token);
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                loadCampaigns();
+                loadGeneralStats();
+            } else {
+                alert('Credenciais incorretas! Tente novamente.');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('bot_token');
+            token = '';
+            location.reload();
+        }
+
+        async function api(path, method = 'GET', body = null) {
+            const opts = {
+                method,
+                headers: {
+                    'Authorization': 'Basic ' + token,
+                    'Content-Type': 'application/json'
+                }
+            };
+            if (body) opts.body = JSON.stringify(body);
+            try {
+                const res = await fetch(path, opts);
+                if (res.status === 401) { logout(); return null; }
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({ detail: res.statusText }));
+                    throw new Error(err.detail || res.statusText);
+                }
+                return await res.json();
+            } catch (e) {
+                console.error(e);
+                return null;
+            }
+        }
+
+        function showTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            const activeTabEl = Array.from(document.querySelectorAll('.tab')).find(t => t.getAttribute('onclick')?.includes(tab));
+            if (activeTabEl) activeTabEl.classList.add('active');
+
+            ['campaigns', 'conversations', 'create', 'guide', 'status'].forEach(t => {
+                const el = document.getElementById('tab-' + t);
+                if (el) el.classList.add('hidden');
+            });
+            const targetEl = document.getElementById('tab-' + tab);
+            if (targetEl) targetEl.classList.remove('hidden');
+
+            if (tab === 'status') checkStatus();
+            if (tab === 'campaigns') { loadCampaigns(); loadGeneralStats(); }
+            if (tab === 'create') onNicheChange();
+            if (tab === 'conversations') {
+                loadConversations();
+                startConversationsPolling();
+            } else {
+                stopConversationsPolling();
+            }
+        }
+
+        async function loadGeneralStats() {
+            const camps = await api('/api/campaigns');
+            const convs = await api('/api/conversations');
+            if (camps) document.getElementById('statTotalCampaigns').innerText = camps.length;
+            if (convs) {
+                document.getElementById('statTotalContacts').innerText = convs.length;
+                const pos = convs.filter(c => c.result === 'positive').length;
+                document.getElementById('statPositiveLeads').innerText = pos;
+                const rate = convs.length > 0 ? ((pos / convs.length) * 100).toFixed(1) : '0';
+                document.getElementById('statConversionRate').innerText = rate + '%';
+            }
+        }
+
+        async function loadCampaigns() {
+            const data = await api('/api/campaigns');
+            if (!data) return;
+            const tbody = document.getElementById('campaignsTable');
+            tbody.innerHTML = data.map(c => {
+                const startedStr = c.started_at 
+                    ? `<span style="color: #38bdf8; font-weight: 500;">📅 ${new Date(c.started_at).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>` 
+                    : `<span style="color: #64748b; font-style: italic;">Aguardando início</span>`;
+
+                const contacted = c.contacted_count || 0;
+                const total = c.total_contacts || 0;
+                const pct = total > 0 ? Math.round((contacted / total) * 100) : 0;
+                const barColor = pct === 100 ? '#10b981' : '#0284c7';
+                const progressHtml = `
+                    <div style="min-width: 130px; max-width: 180px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                            <span style="font-weight: 700; color: #f8fafc;">${contacted} / ${total} contatados</span>
+                            <span style="color: #94a3b8; font-weight: 600;">${pct}%</span>
+                        </div>
+                        <div style="background: #0f172a; height: 6px; border-radius: 3px; overflow: hidden; border: 1px solid #1e293b;">
+                            <div style="background: ${barColor}; width: ${pct}%; height: 100%; transition: width 0.3s;"></div>
+                        </div>
+                    </div>
+                `;
+
+                return `
+                    <tr>
+                        <td><strong>${c.name}</strong></td>
+                        <td><span class="badge badge-${c.status === 'running' ? 'green' : c.status === 'completed' ? 'blue' : 'yellow'}">${c.status}</span></td>
+                        <td>${startedStr}</td>
+                        <td>${progressHtml}</td>
+                        <td style="display: flex; gap: 6px; flex-wrap: wrap;">
+                            ${c.status === 'draft' ? `<button class="btn btn-green" onclick="startCampaign('${c.id}')">🚀 Iniciar</button>` : ''}
+                            <button class="btn btn-blue" onclick="viewReport('${c.id}')">📊 Relatório</button>
+                            <button class="btn btn-red" onclick="deleteCampaign('${c.id}', '${c.name.replace(/'/g, "\\'")}')">🗑️ Excluir</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        async function startCampaign(id) {
+            await api(`/api/campaigns/${id}/start`, 'POST');
+            loadCampaigns();
+            loadGeneralStats();
+        }
+
+        async function deleteCampaign(id, name) {
+            if (confirm(`Tem certeza que deseja apagar a campanha "${name}"?\nTodos os contatos e histórico de mensagens associados serão excluídos permanentemente.`)) {
+                const res = await api(`/api/campaigns/${id}`, 'DELETE');
+                if (res) {
+                    alert('Campanha excluída com sucesso.');
+                    loadCampaigns();
+                    loadGeneralStats();
+                }
+            }
+        }
+
+        async function viewReport(id) {
+            currentCampaignId = id;
+            const data = await api(`/api/campaigns/${id}/report`);
+            if (!data) return;
+
+            document.getElementById('reportCards').innerHTML = `
+                <div class="card"><h3>Total</h3><div class="value">${data.total_contacts}</div></div>
+                <div class="card"><h3>Positivos (Aceitaram)</h3><div class="value" style="color: #34d399;">${data.positive}</div></div>
+                <div class="card"><h3>Negativos</h3><div class="value" style="color: #f87171;">${data.negative}</div></div>
+                <div class="card"><h3>Timeout</h3><div class="value" style="color: #fbbf24;">${data.timeout}</div></div>
+                <div class="card"><h3>Conversão</h3><div class="value">${data.conversion_rate}%</div></div>
+            `;
+
+            document.getElementById('positiveList').innerHTML = (data.positive_list || []).map(p => 
+                `<tr>
+                    <td><strong>${p.name}</strong></td>
+                    <td>${p.phone}</td>
+                    <td><a href="https://wa.me/${p.phone}" target="_blank" class="btn btn-green" style="font-size: 11px; padding: 3px 8px; text-decoration: none;">📲 WhatsApp</a></td>
+                </tr>`
+            ).join('') || '<tr><td colspan="3">Nenhum lead positivo ainda.</td></tr>';
+
+            document.getElementById('negativeList').innerHTML = (data.negative_list || []).map(p => 
+                `<tr><td>${p.name}</td><td>${p.phone}</td></tr>`
+            ).join('') || '<tr><td colspan="2">Nenhum lead negativo.</td></tr>';
+
+            document.getElementById('reportModal').classList.remove('hidden');
+        }
+
+        function closeReport() {
+            document.getElementById('reportModal').classList.add('hidden');
+        }
+
+        async function exportReport() {
+            if (!currentCampaignId) return;
+            const data = await api(`/api/campaigns/${currentCampaignId}/export`, 'POST');
+            if (data) alert('Relatório exportado com sucesso: ' + data.filename);
+        }
+
+        async function createCampaign() {
+            const json = document.getElementById('campaignJson').value.trim();
+            if (!json) { alert('Cole o JSON da campanha antes de salvar.'); return; }
+            try {
+                const data = JSON.parse(json);
+                const resp = await api('/api/campaigns', 'POST', data);
+                if (resp) {
+                    alert('✅ Campanha criada com sucesso: ' + resp.name);
+                    document.getElementById('campaignJson').value = '';
+                    loadCampaigns();
+                    loadGeneralStats();
+                    showTab('campaigns');
+                }
+            } catch (e) {
+                alert('Erro no formato JSON: ' + e.message);
+            }
+        }
+
+        const NICHE_DESCRIPTIONS = {
+            estetica: "💎 Foco: Procedimentos estéticos de alto ticket (harmonização, laser, botox) e clientes que buscam no Google.",
+            odontologia: "🦷 Foco: Captação de pacientes particulares para implantes, próteses, alinhadores e autoridade local.",
+            mecanica: "🚗 Foco: Motoristas com problemas no carro, socorro, revisão e orçamentos rápidos no WhatsApp.",
+            veterinaria: "🐾 Foco: Tutores de pets buscando veterinário de confiança, emergência 24h, consultas e vacinas.",
+            advocacia: "⚖️ Foco: Clientes com causas jurídicas urgentes (trabalhista, previdenciário, empresarial) buscando autoridade.",
+            custom: "⚡ Foco: IA adaptativa para qualquer segmento informado no campo 'service' / 'niche'."
+        };
+
+        const NICHE_CONTACT_SAMPLES = {
+            estetica: [
+                { "name": "GiO Estética Avançada Centro", "phone": "5511995738934", "service": "depilação a laser e harmonização", "city": "Ferraz de Vasconcelos", "niche": "estetica" },
+                { "name": "Royal Face Clínica de Estética", "phone": "5511943202044", "service": "estética facial e corporal", "city": "Ferraz de Vasconcelos", "niche": "estetica" }
+            ],
+            odontologia: [
+                { "name": "Dr. Carlos Odontologia Integrada", "phone": "5511999990001", "service": "implantes dentários e próteses", "city": "São Paulo", "niche": "odontologia" },
+                { "name": "Clínica Sorriso & Arte", "phone": "5511999990002", "service": "alinhadores invisíveis e estética dental", "city": "São Paulo", "niche": "odontologia" }
+            ],
+            mecanica: [
+                { "name": "Auto Mecânica Precision", "phone": "5511999990003", "service": "câmbio automático e injeção eletrônica", "city": "São Paulo", "niche": "mecanica" },
+                { "name": "Centro Automotivo Paulista", "phone": "5511999990004", "service": "suspensão, freios e alinhamento", "city": "São Paulo", "niche": "mecanica" }
+            ],
+            veterinaria: [
+                { "name": "Hospital Veterinário Pet Care", "phone": "5511999990005", "service": "atendimento veterinário 24h e cirurgias", "city": "São Paulo", "niche": "veterinaria" },
+                { "name": "Clínica Vet & Amor", "phone": "5511999990006", "service": "consultas, vacinas e exames laboratoriais", "city": "São Paulo", "niche": "veterinaria" }
+            ],
+            advocacia: [
+                { "name": "Silva & Associados Advocacia", "phone": "5511999990007", "service": "direito trabalhista e previdenciário", "city": "São Paulo", "niche": "advocacia" },
+                { "name": "Dr. Fernando Ribeiro Advogados", "phone": "5511999990008", "service": "direito empresarial e tributário", "city": "São Paulo", "niche": "advocacia" }
+            ],
+            custom: [
+                { "name": "Empresa Modelo Exemplo", "phone": "5511999990009", "service": "energia solar e climatização", "city": "São Paulo", "niche": "energia_solar" }
+            ]
+        };
+
+        function onNicheChange() {
+            const niche = document.getElementById('nicheSelector').value;
+            const badge = document.getElementById('nicheBadgeInfo');
+            badge.innerHTML = `<strong>Especialidade:</strong> ${NICHE_DESCRIPTIONS[niche] || NICHE_DESCRIPTIONS.custom}`;
+        }
+
+        async function loadNicheTemplate() {
+            const niche = document.getElementById('nicheSelector').value;
+            try {
+                const res = await api('/api/niches');
+                const preset = res && res.presets && res.presets[niche] ? res.presets[niche] : null;
+                
+                const template = {
+                    "campaign_name": `Prospecção - ${preset ? preset.name : niche.toUpperCase()}`,
+                    "niche": niche,
+                    "specialty": preset ? preset.name : "Serviços Especializados",
+                    "settings": {
+                        "delay_between_contacts_seconds": 30,
+                        "delay_between_messages_seconds": 5,
+                        "default_city": preset ? preset.default_city : "São Paulo",
+                        "default_service": preset ? preset.default_service : "seus serviços",
+                        "llm_provider": "groq",
+                        "llm_model": "openai/gpt-oss-120b"
+                    },
+                    "contacts": NICHE_CONTACT_SAMPLES[niche] || NICHE_CONTACT_SAMPLES.estetica,
+                    "steps": preset ? preset.steps : undefined
+                };
+
+                if (!template.steps) delete template.steps;
+                document.getElementById('campaignJson').value = JSON.stringify(template, null, 2);
+            } catch (e) {
+                loadMinimalContactsTemplate();
+            }
+        }
+
+        function loadMinimalContactsTemplate() {
+            const niche = document.getElementById('nicheSelector').value;
+            const template = {
+                "campaign_name": `Prospecção Rápida - ${niche.toUpperCase()}`,
+                "niche": niche,
+                "settings": {
+                    "delay_between_contacts_seconds": 30,
+                    "llm_model": "openai/gpt-oss-120b"
+                },
+                "contacts": NICHE_CONTACT_SAMPLES[niche] || NICHE_CONTACT_SAMPLES.estetica
+            };
+            document.getElementById('campaignJson').value = JSON.stringify(template, null, 2);
+        }
+
+        function useSampleTemplate(type) {
+            showTab('create');
+            if (type === 'simple') {
+                document.getElementById('campaignJson').value = document.getElementById('codeSampleSimple').innerText;
+            } else if (type === 'mecanica') {
+                document.getElementById('nicheSelector').value = 'mecanica';
+                onNicheChange();
+                document.getElementById('campaignJson').value = document.getElementById('codeSampleMecanica').innerText;
+            } else if (type === 'odontologia') {
+                document.getElementById('nicheSelector').value = 'odontologia';
+                onNicheChange();
+                document.getElementById('campaignJson').value = document.getElementById('codeSampleOdonto').innerText;
+            }
+        }
+
+        let statusPollInterval = null;
+        async function checkStatus() {
+            const data = await api('/api/status');
+            if (!data) return;
+            const statusDiv = document.getElementById('whatsappStatus');
+            const qrContainer = document.getElementById('qrcodeContainer');
+            const qrImg = document.getElementById('qrcodeImg');
+
+            if (data.state === 'open') {
+                statusDiv.innerHTML = '<span class="badge badge-green" style="font-size: 14px; padding: 6px 12px;">🟢 WhatsApp Conectado e Pronto para Disparar!</span>';
+                qrContainer.style.display = 'none';
+                if (statusPollInterval) clearInterval(statusPollInterval);
+            } else if (data.qrcode) {
+                statusDiv.innerHTML = '<span class="badge badge-yellow" style="font-size: 14px; padding: 6px 12px;">🟡 Aguardando leitura do QR Code pelo WhatsApp...</span>';
+                qrImg.src = data.qrcode.startsWith('data:') ? data.qrcode : 'data:image/png;base64,' + data.qrcode;
+                qrContainer.style.display = 'block';
+                if (!statusPollInterval) statusPollInterval = setInterval(checkStatus, 5000);
+            } else {
+                statusDiv.innerHTML = `<span class="badge badge-blue" style="font-size: 14px; padding: 6px 12px;">Status: ${data.state || 'Conectando à Evolution API...'}</span>`;
+                qrContainer.style.display = 'none';
+            }
+        }
+
+        let convsPollInterval = null;
+        function startConversationsPolling() {
+            if (convsPollInterval) clearInterval(convsPollInterval);
+            convsPollInterval = setInterval(loadConversations, 3000);
+        }
+        function stopConversationsPolling() {
+            if (convsPollInterval) {
+                clearInterval(convsPollInterval);
+                convsPollInterval = null;
+            }
+        }
+
+        async function loadConversations() {
+            const data = await api('/api/conversations');
+            if (!data) return;
+            allConversations = data;
+            renderConversationsList();
+            if (activeContactId) loadContactMessages(activeContactId, false);
+        }
+
+        function filterConversations() {
+            renderConversationsList();
+        }
+
+        const tagMap = {
+            yes: { label: '✅ Sim / Aceitou', color: '#10b981' },
+            no: { label: '❌ Não / Recusou', color: '#ef4444' },
+            greeting: { label: '💬 Saudação / Neutro', color: '#38bdf8' },
+            doubt: { label: '❓ Dúvida / Pergunta', color: '#f59e0b' },
+            objection_social_media: { label: '📸 Objeção: Redes Sociais', color: '#ec4899' },
+            objection_budget: { label: '💰 Objeção: Orçamento', color: '#8b5cf6' },
+            objection_has_website: { label: '🌐 Objeção: Já tem Site', color: '#06b6d4' },
+            other: { label: '💬 Resposta Neutra', color: '#64748b' }
+        };
+
+        function renderConversationsList() {
+            const query = (document.getElementById('convSearch')?.value || '').toLowerCase();
+            const filtered = allConversations.filter(c => 
+                c.name.toLowerCase().includes(query) || c.phone.includes(query) || (c.campaign_name && c.campaign_name.toLowerCase().includes(query))
+            );
+
+            const listEl = document.getElementById('conversationsList');
+            if (filtered.length === 0) {
+                listEl.innerHTML = '<div style="padding: 20px; text-align: center; color: #64748b; font-size: 12px;">Nenhum contato encontrado.</div>';
+                return;
+            }
+
+            listEl.innerHTML = filtered.map(c => {
+                const isActive = c.id === activeContactId;
+                const statusBadge = c.result === 'positive' ? '<span class="badge badge-green">Positivo</span>' :
+                                    c.result === 'negative' ? '<span class="badge badge-red">Negativo</span>' :
+                                    c.status === 'waiting_reply' ? '<span class="badge badge-yellow">Aguardando</span>' :
+                                    `<span class="badge badge-blue">${c.status}</span>`;
+                
+                const lastText = c.last_message ? (c.last_message.direction === 'outbound' ? '🤖 ' : '👤 ') + c.last_message.text : 'Sem mensagens';
+                const timeStr = c.last_message_at ? new Date(c.last_message_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+
+                return `
+                    <div class="conv-item ${isActive ? 'active' : ''}" onclick="selectContact('${c.id}')">
+                        <div class="conv-name">
+                            <span>${c.name}</span>
+                            ${statusBadge}
+                        </div>
+                        <div class="conv-preview">${lastText}</div>
+                        <div class="conv-meta">
+                            <span>Passo ${c.current_step + 1} • ${c.campaign_name || 'Campanha'}</span>
+                            <span>${timeStr}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function selectContact(id) {
+            activeContactId = id;
+            renderConversationsList();
+            await loadContactMessages(id, true);
+        }
+
+        async function loadContactMessages(id, scrollToBottom = true) {
+            const data = await api(`/api/contacts/${id}/messages`);
+            if (!data) return;
+
+            const c = data.contact;
+            document.getElementById('chatContactName').innerText = c.name;
+            document.getElementById('chatContactPhone').innerText = '+' + c.phone;
+
+            const waBtn = document.getElementById('waDirectBtn');
+            if (waBtn) {
+                waBtn.href = `https://wa.me/${c.phone}`;
+                waBtn.style.display = 'inline-flex';
+            }
+
+            const badgeEl = document.getElementById('chatContactBadge');
+            badgeEl.innerHTML = c.result === 'positive' ? '<span class="badge badge-green" style="font-size: 12px; padding: 4px 10px;">⭐ Lead Qualificado (Aceitou)</span>' :
+                                c.result === 'negative' ? '<span class="badge badge-red" style="font-size: 12px; padding: 4px 10px;">❌ Encerrado Negativo</span>' :
+                                c.status === 'waiting_reply' ? '<span class="badge badge-yellow" style="font-size: 12px; padding: 4px 10px;">🟡 Aguardando Resposta (Passo ' + (c.current_step + 1) + ')</span>' :
+                                `<span class="badge badge-blue">${c.status}</span>`;
+
+            const msgsEl = document.getElementById('chatMessages');
+            if (data.messages.length === 0) {
+                msgsEl.innerHTML = '<div style="text-align: center; color: #64748b; margin-top: 100px;">Nenhuma mensagem registrada.</div>';
+                return;
+            }
+
+            msgsEl.innerHTML = data.messages.map(m => {
+                const isOut = m.direction === 'outbound';
+                const time = m.created_at ? new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+                
+                let iaBadge = '';
+                if (!isOut && m.classification) {
+                    const tagInfo = tagMap[m.classification] || { label: m.classification, color: '#64748b' };
+                    iaBadge = `<div><span class="ia-tag" style="background: ${tagInfo.color}; font-size: 10px;">IA: ${tagInfo.label}</span></div>`;
+                }
+
+                return `
+                    <div class="chat-bubble ${isOut ? 'chat-outbound' : 'chat-inbound'}">
+                        ${iaBadge}
+                        <div>${m.text.replace(/\\n/g, '<br>')}</div>
+                        <div class="chat-meta">${isOut ? '🤖 Robô' : '👤 ' + c.name} • ${time}</div>
+                    </div>
+                `;
+            }).join('');
+
+            if (scrollToBottom) {
+                msgsEl.scrollTop = msgsEl.scrollHeight;
+            }
+        }
+    </script>
+</body>
+</html>

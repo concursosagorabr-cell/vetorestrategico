@@ -149,7 +149,7 @@ export const BudgetEstimatorQuiz: React.FC<BudgetEstimatorProps> = ({ onComplete
       max += 300;
     }
 
-    return { min, max, monthlyMaintenance: 99 };
+    return { min, max, monthlyMaintenance: 147 };
   };
 
   const estimate = calculateEstimate();
@@ -188,8 +188,8 @@ export const BudgetEstimatorQuiz: React.FC<BudgetEstimatorProps> = ({ onComplete
           email: email,
           phone: telefone,
           company_name: `${nome} (${summaryData.demand_type})`,
-          main_pain: `Orçamento de Site: ${summaryData.project_type} (Estimativa: ${summaryData.estimated_range} + R$ 99/mês manutenção)`,
-          message: `Escopo: ${summaryData.project_type} | Situação: ${summaryData.current_situation} | Recursos: ${summaryData.selected_features} | Prazo: ${prazo} | Feedback Preço: ${feedbackPreco} | Manutenção: R$ 99/mês | Obs: ${infoAdicional}`,
+          main_pain: `Orçamento de Site: ${summaryData.project_type} (Estimativa: ${summaryData.estimated_range} + R$ 147/mês manutenção)`,
+          message: `Escopo: ${summaryData.project_type} | Situação: ${summaryData.current_situation} | Recursos: ${summaryData.selected_features} | Prazo: ${prazo} | Feedback Preço: ${feedbackPreco} | Manutenção: R$ 147/mês | Obs: ${infoAdicional}`,
           estimated_budget: summaryData.estimated_range,
           source_url: "/orcamento",
         }),
@@ -209,7 +209,7 @@ export const BudgetEstimatorQuiz: React.FC<BudgetEstimatorProps> = ({ onComplete
       `🏢 *Tipo:* ${tipoDemanda === "pj" ? "Pessoa Jurídica / Empresa" : "Pessoa Física"}\n` +
       `⏱️ *Prazo:* ${prazo === "urgente" ? "Urgente (até 15 dias)" : prazo === "normal" ? "Normal (em 30 dias)" : "Planejamento futuro"}\n` +
       `💰 *Investimento estimado:* R$ ${estimate.min.toLocaleString("pt-BR")} a R$ ${estimate.max.toLocaleString("pt-BR")}\n` +
-      `🔧 *Manutenção básica:* R$ 99/mês (para manter no ar, seguro e atualizado)\n\n` +
+      `🔧 *Manutenção básica:* R$ 147/mês (para manter no ar, seguro e atualizado)\n\n` +
       `Gostaria de formalizar minha proposta personalizada!`;
     return `https://wa.me/${COMPANY_INFO.rawPhone}?text=${encodeURIComponent(msg)}`;
   };
@@ -828,7 +828,7 @@ export const BudgetEstimatorQuiz: React.FC<BudgetEstimatorProps> = ({ onComplete
               {/* Maintenance Fee Callout */}
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold">
                 <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>+ Manutenção e hospedagem básica: apenas R$ 99/mês para mantê-lo no ar e seguro</span>
+                <span>+ Manutenção e hospedagem básica: apenas R$ 147/mês para mantê-lo no ar e seguro</span>
               </div>
 
               <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
@@ -846,7 +846,7 @@ export const BudgetEstimatorQuiz: React.FC<BudgetEstimatorProps> = ({ onComplete
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs sm:text-sm text-slate-700 flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
               <div>
-                <strong>Condições especiais:</strong> Valores promocionais para início de projeto. Ao aprovar sua proposta, sua empresa garante a taxa de manutenção de R$ 99/mês com suporte técnico e estabilidade em nuvem.
+                <strong>Condições especiais:</strong> Valores promocionais para início de projeto. Ao aprovar sua proposta, sua empresa garante a taxa de manutenção de R$ 147/mês com suporte técnico e estabilidade em nuvem.
               </div>
             </div>
 
@@ -942,7 +942,7 @@ export const BudgetEstimatorQuiz: React.FC<BudgetEstimatorProps> = ({ onComplete
                 <strong>Investimento do Projeto:</strong> R$ {estimate.min.toLocaleString("pt-BR")} a R$ {estimate.max.toLocaleString("pt-BR")}
               </p>
               <p>
-                <strong>Manutenção Básica:</strong> R$ 99/mês (hospedagem em nuvem, SSL e suporte)
+                <strong>Manutenção Básica:</strong> R$ 147/mês (hospedagem em nuvem, SSL e suporte)
               </p>
             </div>
 
@@ -1001,7 +1001,7 @@ export const BudgetEstimatorQuiz: React.FC<BudgetEstimatorProps> = ({ onComplete
                 Estimativa Enviada com Sucesso:
               </div>
               <p>• <strong>Investimento do Projeto:</strong> R$ {estimate.min.toLocaleString("pt-BR")} a R$ {estimate.max.toLocaleString("pt-BR")}</p>
-              <p>• <strong>Manutenção Básica:</strong> R$ 99/mês (hospedagem, segurança e suporte)</p>
+              <p>• <strong>Manutenção Básica:</strong> R$ 147/mês (hospedagem, segurança e suporte)</p>
               <p>• <strong>Contato Cadastrado:</strong> {telefone} ({email})</p>
             </div>
 

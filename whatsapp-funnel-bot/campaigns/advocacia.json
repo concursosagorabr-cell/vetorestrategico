@@ -1,0 +1,29 @@
+{
+  "campaign_name": "Prospecção - Escritórios de Advocacia",
+  "niche": "advocacia",
+  "specialty": "Escritórios de Advocacia & Advogados",
+  "settings": {
+    "delay_between_contacts_seconds": 30,
+    "delay_between_messages_seconds": 5,
+    "default_city": "São Paulo",
+    "default_service": "assessoria jurídica e advocacia especializada",
+    "llm_provider": "groq",
+    "llm_model": "openai/gpt-oss-120b"
+  },
+  "contacts": [
+    {
+      "name": "Silva & Associados Advocacia",
+      "phone": "5511999990007",
+      "city": "São Paulo",
+      "service": "direito trabalhista e previdenciário",
+      "niche": "advocacia"
+    },
+    {
+      "name": "Dr. Fernando Ribeiro Advogados",
+      "phone": "5511999990008",
+      "city": "São Paulo",
+      "service": "direito empresarial e tributário",
+      "niche": "advocacia"
+    }
+  ]
+}
