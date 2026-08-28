@@ -23,22 +23,54 @@ export default function HomePage() {
     <>
       <HeroSection />
       <HowItWorksSection />
-      <FeaturedCasesSection />
-      <ProcessTimelineSection />
-      <TechnicalBenefitsGrid />
-      <SolutionTypesGrid />
-      <DirectorySpotlightSection />
-      <TrustDashboardSection />
-      <TestimonialsSection />
-      <AboutSnippetSection />
-      <DeliverablesChecklistSection />
-      <PricingSection />
-      <ProvocativeAlertSection />
-      <SegmentsSection />
-      <FaqSection />
-      <ComplementaryServicesSection />
-      <BlogHighlightsSection />
-      <CtaBannerSection />
+      <div className="section-defer">
+        <FeaturedCasesSection />
+      </div>
+      <div className="section-defer">
+        <ProcessTimelineSection />
+      </div>
+      <div className="section-defer">
+        <TechnicalBenefitsGrid />
+      </div>
+      <div className="section-defer">
+        <SolutionTypesGrid />
+      </div>
+      <div className="section-defer">
+        <DirectorySpotlightSection />
+      </div>
+      <div className="section-defer">
+        <TrustDashboardSection />
+      </div>
+      <div className="section-defer">
+        <TestimonialsSection />
+      </div>
+      <div className="section-defer">
+        <AboutSnippetSection />
+      </div>
+      <div className="section-defer">
+        <DeliverablesChecklistSection />
+      </div>
+      <div className="section-defer">
+        <PricingSection />
+      </div>
+      <div className="section-defer">
+        <ProvocativeAlertSection />
+      </div>
+      <div className="section-defer">
+        <SegmentsSection />
+      </div>
+      <div className="section-defer">
+        <FaqSection />
+      </div>
+      <div className="section-defer">
+        <ComplementaryServicesSection />
+      </div>
+      <div className="section-defer">
+        <BlogHighlightsSection />
+      </div>
+      <div className="section-defer">
+        <CtaBannerSection />
+      </div>
     </>
   );
 }

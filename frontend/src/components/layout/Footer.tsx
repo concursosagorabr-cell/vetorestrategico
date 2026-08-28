@@ -289,11 +289,16 @@ export const Footer: React.FC = () => {
                   Diagnóstico Rápido IA
                 </Link>
               </li>
-              {NAV_LINKS.map((link) => (
+              {NAV_LINKS.map((link: any) => (
                 <li key={link.href}>
                   <Link href={link.href} className="hover:text-white hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 group">
                     <ArrowRight className="w-3 h-3 text-slate-600 group-hover:text-emerald-400 transition-colors shrink-0" />
-                    {link.label}
+                    <span>{link.label}</span>
+                    {link.badge && (
+                      <span className="text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                        {link.badge}
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}

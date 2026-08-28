@@ -35,23 +35,27 @@ export const AboutSnippetSection: React.FC = () => {
             </p>
 
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-              Desenvolvemos plataformas web velozes e integrações de atendimento que geram valor direto: <strong className="text-slate-900">mais contatos chegando pelo WhatsApp, menos tempo de espera para o cliente e processos organizados para a sua empresa</strong>.
+              Construímos a Vetor Estratégico literalmente do zero na prática com um propósito claro: provar que engenharia web de ponta gera <strong className="text-slate-900">acessos orgânicos reais no Google desde o primeiro mês</strong>, sem depender exclusivamente de anúncios pagos.
+            </p>
+
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+              Trabalhamos com <strong className="text-slate-900">risco zero para o cliente</strong>: apresentamos o protótipo do site antes de qualquer pagamento, liberamos acesso direto aos painéis da Vercel e Google Analytics para você auditar seus resultados, e <strong className="text-slate-900">não exigimos contratos de fidelidade nem cobramos multas</strong>.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/80 border border-slate-200 shadow-xs">
                 <Compass className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div className="text-xs">
-                  <strong className="text-slate-900 block text-sm mb-0.5">Foco Comercial</strong>
-                  <span className="text-slate-500">Toda estrutura é planejada para facilitar o contato de quem quer contratar.</span>
+                  <strong className="text-slate-900 block text-sm mb-0.5">Tráfego Orgânico Real</strong>
+                  <span className="text-slate-500">SEO técnico e velocidade para atrair clientes sem depender de anúncios pagos.</span>
                 </div>
               </div>
 
               <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/80 border border-slate-200 shadow-xs">
                 <Code2 className="w-5 h-5 text-sky-600 shrink-0 mt-0.5" />
                 <div className="text-xs">
-                  <strong className="text-slate-900 block text-sm mb-0.5">Código Próprio & Limpo</strong>
-                  <span className="text-slate-500">Sem plataformas engessadas. Carregamento veloz e controle total.</span>
+                  <strong className="text-slate-900 block text-sm mb-0.5">Painéis Transparentes</strong>
+                  <span className="text-slate-500">Acesso direto à Vercel e Google Analytics para você acompanhar mês a mês.</span>
                 </div>
               </div>
             </div>
@@ -76,32 +80,32 @@ export const AboutSnippetSection: React.FC = () => {
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <span className="text-sm font-bold text-slate-900 block">Escopo e Prazos Transparentes</span>
-                      <span className="text-xs text-slate-500">Entregas alinhadas em etapas claras com acompanhamento técnico contínuo.</span>
+                      <span className="text-sm font-bold text-slate-900 block">Protótipo Antes do Pagamento</span>
+                      <span className="text-xs text-slate-500">Avalie a proposta sem custo inicial; só pague a criação se aprovar.</span>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <span className="text-sm font-bold text-slate-900 block">Performance Mobile-First</span>
-                      <span className="text-xs text-slate-500">Prioridade absoluta na experiência rápida de quem navega pelo smartphone.</span>
+                      <span className="text-sm font-bold text-slate-900 block">Acesso Direto aos Painéis de Métricas</span>
+                      <span className="text-xs text-slate-500">Acompanhe visitantes e visualizações na Vercel e Google Analytics.</span>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <span className="text-sm font-bold text-slate-900 block">Conformidade com a LGPD</span>
-                      <span className="text-xs text-slate-500">Tratamento seguro e sigiloso de todos os dados da sua empresa e clientes.</span>
+                      <span className="text-sm font-bold text-slate-900 block">Zero Fidelidade & Sem Multas</span>
+                      <span className="text-xs text-slate-500">Liberdade total para cancelar o serviço a qualquer momento sem taxas.</span>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <span className="text-sm font-bold text-slate-900 block">Autonomia do Cliente</span>
-                      <span className="text-xs text-slate-500">Domínio e acessos 100% de propriedade da sua empresa com suporte dedicado.</span>
+                      <span className="text-sm font-bold text-slate-900 block">Performance & Conformidade LGPD</span>
+                      <span className="text-xs text-slate-500">Páginas velozes (&lt; 1s no celular) e tratamento seguro de dados.</span>
                     </div>
                   </div>
                 </div>

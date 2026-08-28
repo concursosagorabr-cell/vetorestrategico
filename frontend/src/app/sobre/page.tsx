@@ -79,52 +79,52 @@ export default function AboutPage() {
               Nosso Propósito & Metodologia
             </h2>
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-              A <strong>Vetor Estratégico</strong> foi criada para preencher um espaço recorrente no mercado: de um lado, agências que entregam sites visualmente agradáveis mas lentos e sem foco em captação; de outro, soluções de tecnologia excessivamente complexas que não atendem às necessidades reais de uma empresa.
+              A <strong>Vetor Estratégico</strong> foi construída literalmente do zero na prática em menos de 30 dias com um objetivo inequívoco: <strong>provar na prática que engenharia web de alta performance gera tráfego orgânico real desde o primeiro mês, sem depender de anúncios pagos</strong>.
             </p>
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-              Atuamos com foco naquilo que realmente move o ponteiro do negócio: <strong>páginas institucionais de alto padrão, carregamento instantâneo no celular, canais diretos de contato no WhatsApp e automações de triagem comercial</strong>.
+              Diferente do mercado tradicional de agências que promete números sem comprovação, nós <strong>disponibilizamos aos nossos clientes acesso direto aos painéis da Vercel e do Google Analytics</strong>. Você audita os visitantes, visualizações e o desempenho do seu site mês a mês por conta própria.
             </p>
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-              Atendemos empresas e profissionais liberais em todo o Brasil a partir de São Paulo, construindo soluções técnicas sob medida e mantendo uma relação de proximidade e transparência em cada projeto entregue.
+              Além disso, atuamos com <strong>risco zero</strong>: apresentamos um protótipo navegável do projeto para sua avaliação antes de qualquer pagamento. O valor da criação só é cobrado se você realmente aprovar a proposta e decidir fechar negócio. <strong>Não trabalhamos com contratos de fidelidade ou multas de rescisão</strong> — nosso compromisso é que você continue conosco pela qualidade do resultado e valor gerado no dia a dia.
             </p>
           </div>
 
           <div className="lg:col-span-5 rounded-3xl bg-white border border-slate-200 p-8 space-y-6 shadow-xl">
             <h3 className="text-lg font-bold text-slate-900 pb-4 border-b border-slate-100 flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-emerald-600" />
-              Nossos Compromissos Técnicos
+              Nossos Compromissos de Confiança
             </h3>
 
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-sm font-bold text-slate-900 block">Performance Mobile-First</span>
-                  <span className="text-xs text-slate-500">Páginas leves que abrem em frações de segundo no celular.</span>
+                  <span className="text-sm font-bold text-slate-900 block">Protótipo Avaliado Antes do Pagamento</span>
+                  <span className="text-xs text-slate-500">Veja seu site funcionando antes de pagar qualquer valor de criação.</span>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-sm font-bold text-slate-900 block">Integração Direta com WhatsApp</span>
-                  <span className="text-xs text-slate-500">Facilidade de contato para o cliente e agilidade para sua equipe.</span>
+                  <span className="text-sm font-bold text-slate-900 block">Acesso Direto aos Painéis Vercel &amp; Analytics</span>
+                  <span className="text-xs text-slate-500">Acompanhamento transparente de acessos e métricas em tempo real.</span>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-sm font-bold text-slate-900 block">Conformidade com a LGPD</span>
-                  <span className="text-xs text-slate-500">Segurança de dados e respeito total à privacidade do usuário.</span>
+                  <span className="text-sm font-bold text-slate-900 block">Zero Fidelidade &amp; Sem Multas</span>
+                  <span className="text-xs text-slate-500">Liberdade total para cancelar o serviço quando quiser, sem taxas.</span>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-sm font-bold text-slate-900 block">Propriedade Integral do Cliente</span>
-                  <span className="text-xs text-slate-500">Domínio, acessos e arquivos são 100% da sua empresa.</span>
+                  <span className="text-sm font-bold text-slate-900 block">Tráfego Orgânico &amp; Performance (&lt; 1s)</span>
+                  <span className="text-xs text-slate-500">Código limpo em Next.js e SEO técnico preparado para o Google.</span>
                 </div>
               </div>
             </div>

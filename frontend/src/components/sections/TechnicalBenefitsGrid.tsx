@@ -53,7 +53,6 @@ export const TechnicalBenefitsGrid: React.FC = () => {
       const p = video.play();
       if (p !== undefined) p.catch(() => {});
     };
-    attemptPlay();
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -121,7 +120,7 @@ export const TechnicalBenefitsGrid: React.FC = () => {
               muted
               loop
               playsInline
-              preload="auto"
+              preload="none"
               onLoadedMetadata={(e) => {
                 e.currentTarget.defaultPlaybackRate = 2.2;
                 e.currentTarget.playbackRate = 2.2;

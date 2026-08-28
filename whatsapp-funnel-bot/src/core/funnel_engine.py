@@ -84,7 +84,8 @@ DEFAULT_SALES_FUNNEL_STEPS = [
         },
         "on_objection_portfolio": {
             "next_step": 2,
-            "message": "Claro, {name}! www.concursosagora.com.br é uma das páginas que desenvolvemos.\n\nEm menos de um mês conseguimos mais de 2mil acessos para esse site, o seu site terá painel com login e senha administrativa para você poder acessar e conferir os acessos no seu site quando quiser. Utilizamos ferramentas oficiais do Google Analytics também. Não tem fidelidade, você pode cancelar o serviço quando quiser.\n\nNão criamos sites genéricos em HTML ou WordPress, como a maioria das empresas. Desenvolvemos sites modernos e de alta performance utilizando a tecnologia Next.js, proporcionando mais velocidade, segurança, excelente experiência para o usuário e uma estrutura otimizada para SEO.\n\nSeu site é desenvolvido com tecnologia de ponta para facilitar a indexação e melhorar seu potencial de posicionamento nos mecanismos de busca, como Google e Bing.\n\nPosso personalizar o modelo para a {name} sem custo nenhum para vocês verem funcionando em 24h?"
+            "media_path": "assets/concursosagora-analytics.png",
+            "message": "Claro, {name}! www.concursosagora.com.br é uma das páginas que desenvolvemos.\n\nEm menos de um mês conseguimos mais de 2mil acessos para esse site, como você pode ver no print do relatório de tráfego que te enviei acima. O seu site terá painel com login e senha administrativa para você poder acessar e conferir os acessos no seu site quando quiser. Utilizamos ferramentas oficiais do Google Analytics também. Não tem fidelidade, você pode cancelar o serviço quando quiser.\n\nNão criamos sites genéricos em HTML ou WordPress, como a maioria das empresas. Desenvolvemos sites modernos e de alta performance utilizando a tecnologia Next.js, proporcionando mais velocidade, segurança, excelente experiência para o usuário e uma estrutura otimizada para SEO.\n\nSeu site é desenvolvido com tecnologia de ponta para facilitar a indexação e melhorar seu potencial de posicionamento nos mecanismos de busca, como Google e Bing.\n\nPosso personalizar o modelo para a {name} sem custo nenhum para vocês verem funcionando em 24h?"
         },
         "on_ask_whats_included": {
             "next_step": 2,
@@ -418,6 +419,26 @@ class FunnelEngine:
 
         return None, None
 
+    def _resolve_media_path(self, media_path: Optional[str]) -> Optional[str]:
+        """Resolve o caminho de mídia (absoluto, relativo à raiz do projeto ou URL)."""
+        if not media_path:
+            return None
+        if os.path.isabs(media_path) or media_path.startswith("http://") or media_path.startswith("https://") or media_path.startswith("data:"):
+            return media_path
+        
+        # Procura relativo à raiz do whatsapp-funnel-bot
+        bot_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        candidate = os.path.join(bot_root, media_path)
+        if os.path.exists(candidate):
+            return candidate
+        
+        # Procura em assets/
+        assets_candidate = os.path.join(bot_root, "assets", os.path.basename(media_path))
+        if os.path.exists(assets_candidate):
+            return assets_candidate
+
+        return media_path
+
     async def _send_step_message(self, contact: Contact, campaign: Campaign) -> bool:
         """Envia a mensagem do step atual para um contato."""
         script = campaign.script_config or []
@@ -429,15 +450,25 @@ class FunnelEngine:
 
         step = script[step_index]
         message_template = step.get("message")
-        if not message_template:
+        media_path = step.get("media_path") or step.get("media_url") or step.get("image")
+        if not message_template and not media_path:
             logger.info(f"Step {step_index} não possui mensagem inicial configurada.")
             return True
 
-        # Substitui variáveis
-        message = self._format_message(message_template, contact, campaign)
+        message = self._format_message(message_template or "", contact, campaign)
 
-        # Envia via Evolution API
-        success = await self.evolution.send_text_message(contact.phone, message)
+        resolved_media = self._resolve_media_path(media_path)
+        if resolved_media and hasattr(self.evolution, "send_media_message"):
+            success = await self.evolution.send_media_message(
+                phone=contact.phone,
+                media_path_or_url=resolved_media,
+                caption=message,
+                media_type="image",
+                mimetype="image/png",
+                file_name="concursosagora-analytics.png"
+            )
+        else:
+            success = await self.evolution.send_text_message(contact.phone, message)
 
         if success:
             await self.message_repo.create(
@@ -635,11 +666,17 @@ class FunnelEngine:
 
         next_step = None
         response_message = None
+        media_path = None
         if isinstance(branch, dict):
             next_step = branch.get("next_step") if "next_step" in branch else branch.get("step")
             response_message = branch.get("message") or branch.get("mensagem") or branch.get("text")
+            media_path = branch.get("media_path") or branch.get("media_url") or branch.get("image") or branch.get("imagem")
         elif isinstance(branch, (int, str)):
             next_step = branch
+
+        # Se for objeção de portfólio e não houver mídia explicitamente configurada, usa o relatório de tráfego padrão
+        if intent == "objection_portfolio" and not media_path:
+            media_path = "assets/concursosagora-analytics.png"
 
         # Tratamento especial para mensagens automáticas de ausência (away)
         if intent == "away":
@@ -662,11 +699,12 @@ class FunnelEngine:
             target_idx, target_step = self._find_step(script, 2)
             if target_step and target_step.get("message"):
                 response_message = target_step.get("message")
+                media_path = target_step.get("media_path") or target_step.get("media_url") or target_step.get("image")
                 next_step = 2
 
-        # Se a ramificação tiver uma mensagem de resposta configurada, envia para o WhatsApp
-        if response_message:
-            formatted_msg = self._format_message(response_message, contact, campaign, incoming_message=raw_msg)
+        # Se a ramificação tiver uma mensagem de resposta ou mídia configurada, envia para o WhatsApp
+        if response_message or media_path:
+            formatted_msg = self._format_message(response_message or "", contact, campaign, incoming_message=raw_msg)
             
             # Anti-loop / Anti-repetição exata: se a mensagem for idêntica à última enviada pelo bot, varia a resposta
             if bot_last_message and formatted_msg.strip() == bot_last_message.strip():
@@ -686,7 +724,19 @@ class FunnelEngine:
                         contact, campaign, incoming_message=raw_msg
                     )
 
-            await self.evolution.send_text_message(contact.phone, formatted_msg)
+            resolved_media = self._resolve_media_path(media_path)
+            if resolved_media and (os.path.exists(resolved_media) or resolved_media.startswith("http")) and hasattr(self.evolution, "send_media_message"):
+                await self.evolution.send_media_message(
+                    phone=contact.phone,
+                    media_path_or_url=resolved_media,
+                    caption=formatted_msg,
+                    media_type="image",
+                    mimetype="image/png",
+                    file_name="concursosagora-analytics.png"
+                )
+            else:
+                await self.evolution.send_text_message(contact.phone, formatted_msg)
+
             await self.message_repo.create(
                 contact_id=contact.id,
                 direction="outbound",

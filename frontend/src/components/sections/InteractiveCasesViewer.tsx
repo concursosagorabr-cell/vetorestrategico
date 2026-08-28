@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -15,6 +16,7 @@ import {
   Quote,
   Layers,
   Zap,
+  BarChart3,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -249,6 +251,30 @@ export const InteractiveCasesViewer: React.FC<InteractiveCasesViewerProps> = ({ 
                   Escopo Entregue
                 </span>
               </div>
+
+              {/* Real Analytics Showcase for Concursos Agora */}
+              {currentCase.id === "case-concursos-agora" && (
+                <div className="rounded-2xl overflow-hidden border border-emerald-300/80 bg-slate-900 shadow-md">
+                  <div className="bg-slate-900 px-3.5 py-2 border-b border-slate-800 flex items-center justify-between text-[11px]">
+                    <span className="font-mono text-slate-300 flex items-center gap-1.5">
+                      <BarChart3 className="w-3.5 h-3.5 text-emerald-400" />
+                      Vercel Analytics &bull; 30 Dias
+                    </span>
+                    <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      100% Orgânico
+                    </span>
+                  </div>
+                  <div className="relative aspect-video w-full overflow-hidden bg-slate-950">
+                    <Image
+                      src="/images/cases/concursosagora-analytics.png"
+                      alt="Painel Vercel Analytics do Portal Concursos Agora com mais de 2.100 visitantes orgânicos"
+                      width={600}
+                      height={300}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                </div>
+              )}
 
               {/* Metrics Grid */}
               <div className="space-y-3">

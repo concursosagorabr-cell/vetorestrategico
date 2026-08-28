@@ -10,6 +10,22 @@ import {
   MotionValue,
 } from "framer-motion";
 
+export function useIsMobileOrReducedMotion() {
+  const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia("(max-width: 768px)");
+    setIsMobile(media.matches);
+    const listener = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, []);
+
+  return shouldReduceMotion || isMobile;
+}
+
 export interface ParallaxLayerProps {
   children?: React.ReactNode;
   /** Speed multiplier: negative moves faster upward (foreground), positive lags behind (deep background). Default: -0.2 */
@@ -49,7 +65,7 @@ export const ParallaxLayer: React.FC<ParallaxLayerProps> = ({
   style = {},
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useIsMobileOrReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -159,7 +175,7 @@ export const ParallaxText: React.FC<ParallaxTextProps> = ({
   as = "div",
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useIsMobileOrReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -215,7 +231,7 @@ export const ParallaxWatermark: React.FC<ParallaxWatermarkProps> = ({
   outline = true,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useIsMobileOrReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -308,7 +324,7 @@ export const ParallaxVectorGrid: React.FC<ParallaxVectorGridProps> = ({
   speed = 0.08,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useIsMobileOrReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -498,7 +514,7 @@ export const ParallaxVideoBackground: React.FC<ParallaxVideoBackgroundProps> = (
   speed = -0.08,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useIsMobileOrReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -540,7 +556,7 @@ export interface CosmicParallaxStarsProps {
 export const CosmicParallaxStars: React.FC<CosmicParallaxStarsProps> = ({
   className = "",
 }) => {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useIsMobileOrReducedMotion();
 
   if (shouldReduceMotion) return null;
 

@@ -86,6 +86,7 @@ export const NAV_LINKS_BASE = [
   { label: "Diretório IA", href: "/diretorio", badge: "Novo" },
   { label: "Portfólio", href: "/cases" },
   { label: "Preços", href: "/planos" },
+  { label: "Carreiras", href: "/trabalhe-conosco", badge: "Vagas" },
   { label: "Orçamento", href: "/orcamento" },
   { label: "Sobre", href: "/sobre" },
   { label: "Blog", href: "/blog" },

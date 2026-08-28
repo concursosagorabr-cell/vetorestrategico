@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import dynamic from "next/dynamic";
 import "@/styles/globals.css";
 import { COMPANY_INFO } from "@/lib/constants";
 import {
@@ -11,9 +12,19 @@ import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloatingButton } from "@/components/layout/WhatsAppFloatingButton";
-import { AiChatAssistant } from "@/components/layout/AiChatAssistant";
-import { CookieConsent } from "@/components/layout/CookieConsent";
-import { ExitIntentModal } from "@/components/layout/ExitIntentModal";
+
+const AiChatAssistant = dynamic(
+  () => import("@/components/layout/AiChatAssistant").then((m) => m.AiChatAssistant),
+  { ssr: false }
+);
+const CookieConsent = dynamic(
+  () => import("@/components/layout/CookieConsent").then((m) => m.CookieConsent),
+  { ssr: false }
+);
+const ExitIntentModal = dynamic(
+  () => import("@/components/layout/ExitIntentModal").then((m) => m.ExitIntentModal),
+  { ssr: false }
+);
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://vetorestrategico.com.br"),
@@ -109,10 +120,10 @@ export default function RootLayout({
         
         {/* Google Analytics (gtag.js) */}
         <Script
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           src="https://www.googletagmanager.com/gtag/js?id=G-L9RZP0K6RM"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

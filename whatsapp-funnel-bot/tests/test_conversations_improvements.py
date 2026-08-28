@@ -135,6 +135,7 @@ def test_niche_presets_have_portfolio_and_details_responses():
         assert "on_objection_bot" in step2, f"Falta on_objection_bot no nicho {niche_key}"
 
         # Verifica conteúdo essencial da resposta de portfólio solicitada pelo usuário
+        assert step2["on_objection_portfolio"].get("media_path") == "assets/concursosagora-analytics.png"
         portfolio_msg = step2["on_objection_portfolio"]["message"]
         assert "concursosagora.com.br" in portfolio_msg
         assert "2mil" in portfolio_msg or "2 mil" in portfolio_msg or "2.000" in portfolio_msg
@@ -159,3 +160,60 @@ def test_format_message_company_and_price_variables():
     assert "Vetor Estratégico" in formatted
     assert "www.vetorestrategico.com" in formatted
     assert "R$ 147/mês" in formatted
+
+
+@pytest.mark.asyncio
+async def test_funnel_sends_proof_image_on_portfolio_request(db_session, mock_evolution, mock_classifier):
+    """Valida que o bot envia a imagem de prova do Vercel/Google Analytics quando o lead pede portfólio."""
+    from src.core.funnel_engine import FunnelEngine
+
+    campaign_data = {
+        "name": "Campanha Estética com Imagem",
+        "contacts": [
+            {
+                "name": "Dra. Cintia",
+                "phone": "5511983938258",
+                "service": "estética",
+                "city": "Ferraz de Vasconcelos"
+            }
+        ],
+        "settings": {
+            "delay_between_contacts_seconds": 0
+        }
+    }
+    engine = FunnelEngine(db_session, mock_evolution, mock_classifier)
+    campaign = await engine.create_campaign(campaign_data)
+    await engine.start_campaign(campaign.id)
+
+    # Avança para Step 2
+    mock_classifier.classify_response.return_value = "yes"
+    await engine.handle_incoming_message("5511983938258", "Trabalhamos sim!", campaign.id)
+
+    mock_evolution.reset_mock()
+
+    # Lead pede exemplos / portfólio de páginas que geraram acessos
+    await engine.handle_incoming_message(
+        "5511983938258",
+        "Antes me mande alguns Instagrans de páginas de administram",
+        campaign.id
+    )
+
+    # Verifica se chamou send_media_message com a imagem de prova e o texto explicativo
+    assert mock_evolution.send_media_message.call_count == 1
+    call_kwargs = mock_evolution.send_media_message.call_args.kwargs
+    if not call_kwargs and mock_evolution.send_media_message.call_args.args:
+        # Se passado por argumentos posicionais
+        args = mock_evolution.send_media_message.call_args.args
+        phone_arg = args[0]
+        media_arg = args[1]
+        caption_arg = mock_evolution.send_media_message.call_args.kwargs.get("caption") or (args[2] if len(args) > 2 else "")
+    else:
+        phone_arg = call_kwargs.get("phone")
+        media_arg = call_kwargs.get("media_path_or_url")
+        caption_arg = call_kwargs.get("caption")
+
+    assert phone_arg == "5511983938258"
+    assert "concursosagora-analytics.png" in media_arg
+    assert "concursosagora.com.br" in caption_arg
+    assert "2mil" in caption_arg or "2 mil" in caption_arg or "2.000" in caption_arg
+

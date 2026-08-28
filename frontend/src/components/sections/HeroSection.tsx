@@ -87,7 +87,7 @@ export const HeroSection: React.FC = () => {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           onLoadedMetadata={(e) => {
             e.currentTarget.defaultPlaybackRate = 1.6;
             e.currentTarget.playbackRate = 1.6;
@@ -150,7 +150,6 @@ export const HeroSection: React.FC = () => {
                       width={192}
                       height={192}
                       className="w-full h-full object-contain"
-                      priority
                     />
                   </div>
 
@@ -249,7 +248,6 @@ export const HeroSection: React.FC = () => {
                       width={336}
                       height={336}
                       className="w-full h-full object-contain"
-                      priority
                     />
                   </div>
 

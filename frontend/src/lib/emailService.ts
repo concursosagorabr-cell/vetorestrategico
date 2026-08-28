@@ -116,3 +116,134 @@ export async function sendLeadNotificationEmail(
     return false;
   }
 }
+
+export async function sendResumeNotificationEmail(
+  resumeData: {
+    name: string;
+    email: string;
+    phone?: string;
+    role_interest: string;
+    experience_level?: string;
+    submission_type: string;
+    linkedin_url?: string;
+    summary?: string;
+    skills?: string;
+  }
+) {
+  const commercialEmail = process.env.COMMERCIAL_EMAIL || 'contato.vetorestrategico@gmail.com';
+  const projectName = 'Vetor Estratégico';
+  const isPdf = resumeData.submission_type === 'PDF_UPLOAD';
+  const subject = `[${projectName} - Carreiras] Novo Currículo Recebido: ${resumeData.name} - ${resumeData.role_interest} (${isPdf ? 'Arquivo PDF' : 'Formulário Web'})`;
+
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body { font-family: Arial, sans-serif; background-color: #0b0f19; color: #f3f4f6; padding: 20px; }
+            .container { max-width: 600px; margin: 0 auto; background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 24px; }
+            .header { border-bottom: 2px solid #10b981; padding-bottom: 12px; margin-bottom: 20px; }
+            .header h2 { color: #10b981; margin: 0; }
+            .item { margin-bottom: 12px; }
+            .label { font-weight: bold; color: #38bdf8; }
+            .value { color: #ffffff; margin-top: 4px; }
+            .footer { margin-top: 24px; font-size: 12px; color: #9ca3af; border-top: 1px solid #374151; padding-top: 12px; }
+            .badge { display: inline-block; padding: 4px 10px; background-color: #10b981; color: #064e3b; font-weight: bold; border-radius: 6px; }
+            .badge-form { display: inline-block; padding: 4px 10px; background-color: #0ea5e9; color: #082f49; font-weight: bold; border-radius: 6px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h2>${projectName} - Banco de Talentos</h2>
+                <p style="color: #9ca3af; margin-top: 4px;">Nova candidatura recebida via Trabalhe Conosco</p>
+            </div>
+            
+            <div class="item">
+                <div class="label">Candidato:</div>
+                <div class="value">${resumeData.name}</div>
+            </div>
+            <div class="item">
+                <div class="label">Vaga / Área de Interesse:</div>
+                <div class="value">${resumeData.role_interest} ${resumeData.experience_level ? `(${resumeData.experience_level})` : ''}</div>
+            </div>
+            <div class="item">
+                <div class="label">Tipo de Submissão:</div>
+                <div class="value">
+                  <span class="${isPdf ? 'badge' : 'badge-form'}">${isPdf ? '📄 Arquivo PDF (Upload)' : '📝 Formulário Web Preenchido'}</span>
+                </div>
+            </div>
+            <div class="item">
+                <div class="label">E-mail:</div>
+                <div class="value"><a href="mailto:${resumeData.email}" style="color: #38bdf8;">${resumeData.email}</a></div>
+            </div>
+            <div class="item">
+                <div class="label">WhatsApp:</div>
+                <div class="value"><a href="https://wa.me/${String(resumeData.phone || '').replace(/\D/g, '')}" style="color: #10b981;">${resumeData.phone || 'Não informado'}</a></div>
+            </div>
+            ${
+              resumeData.linkedin_url
+                ? `
+            <div class="item">
+                <div class="label">LinkedIn / Portfólio:</div>
+                <div class="value"><a href="${resumeData.linkedin_url}" target="_blank" style="color: #38bdf8;">${resumeData.linkedin_url}</a></div>
+            </div>`
+                : ''
+            }
+            ${
+              resumeData.summary
+                ? `
+            <div class="item">
+                <div class="label">Resumo Profissional:</div>
+                <div class="value" style="white-space: pre-wrap;">${resumeData.summary}</div>
+            </div>`
+                : ''
+            }
+            ${
+              resumeData.skills
+                ? `
+            <div class="item">
+                <div class="label">Competências / Tecnologias:</div>
+                <div class="value">${resumeData.skills}</div>
+            </div>`
+                : ''
+            }
+            
+            <div class="footer">
+                Acesse o <a href="/admin/leads" style="color: #10b981; font-weight: bold;">Painel Administrativo</a> para visualizar o currículo completo, baixar o PDF ou chamar o candidato.
+            </div>
+        </div>
+    </body>
+    </html>
+  `;
+
+  if (!process.env.SMTP_HOST || !process.env.SMTP_USER) {
+    console.log(`[EMAIL MOCK] Notificação de currículo: ${resumeData.name} - ${resumeData.role_interest} (${resumeData.submission_type})`);
+    return true;
+  }
+
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT) || 587,
+      secure: process.env.SMTP_PORT === '465',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.SMTP_FROM_EMAIL || commercialEmail,
+      to: commercialEmail,
+      subject,
+      html: htmlContent,
+    });
+
+    return true;
+  } catch (error) {
+    console.error('Erro ao enviar e-mail de notificação de currículo:', error);
+    return false;
+  }
+}

@@ -33,6 +33,43 @@ export const PricingSection: React.FC = () => {
           description="Desde Landing Pages Express até projetos personalizados sob medida e consultoria contínua de IA."
         />
 
+        {/* Trust & Guarantee Banner */}
+        <div className="mb-12 p-6 rounded-3xl bg-gradient-to-r from-emerald-50 via-sky-50 to-emerald-50 border border-emerald-200/80 shadow-xs flex flex-col md:flex-row items-center justify-around gap-4 text-center md:text-left">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div className="text-left">
+              <strong className="text-xs sm:text-sm font-black text-slate-900 block">Protótipo Antes do Pagamento</strong>
+              <span className="text-[11px] text-slate-600">A criação só é cobrada caso você aprove o projeto</span>
+            </div>
+          </div>
+
+          <div className="hidden md:block w-px h-8 bg-slate-200" />
+
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-sky-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div className="text-left">
+              <strong className="text-xs sm:text-sm font-black text-slate-900 block">Acesso Direto aos Painéis</strong>
+              <span className="text-[11px] text-slate-600">Vercel &amp; Google Analytics liberados para você auditar</span>
+            </div>
+          </div>
+
+          <div className="hidden md:block w-px h-8 bg-slate-200" />
+
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <Check className="w-5 h-5 stroke-[3]" />
+            </div>
+            <div className="text-left">
+              <strong className="text-xs sm:text-sm font-black text-slate-900 block">Zero Fidelidade ou Multas</strong>
+              <span className="text-[11px] text-slate-600">Cancele o serviço a qualquer momento sem taxas</span>
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {PRICING_PLANS.slice(0, 3).map((plan, idx) => {
             const speeds = [0.04, -0.02, 0.06];

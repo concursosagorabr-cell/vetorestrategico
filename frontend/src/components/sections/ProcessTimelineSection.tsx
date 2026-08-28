@@ -46,7 +46,6 @@ export const ProcessTimelineSection: React.FC = () => {
       const p = video.play();
       if (p !== undefined) p.catch(() => {});
     };
-    attemptPlay();
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -75,26 +74,26 @@ export const ProcessTimelineSection: React.FC = () => {
     {
       number: "01",
       title: "DIAGNÓSTICO E BRIEFING",
-      desc: "Entendemos o seu negócio, os objetivos de conversão, seu público-alvo e os gargalos operacionais para desenhar o projeto ideal.",
+      desc: "Entendemos o seu negócio, os objetivos de conversão, seu público-alvo e os gargalos operacionais para planejar a arquitetura ideal.",
       badge: "Etapa Inicial",
     },
     {
       number: "02",
-      title: "ALINHAMENTO & ESCOPO",
-      desc: "Definimos arquitetura de páginas, fluxos de conversão no WhatsApp, regras de automação e cronograma transparente de entregas.",
-      badge: "Semana 1",
+      title: "PROTÓTIPO & AVALIAÇÃO (RISCO ZERO)",
+      desc: "Apresentamos o protótipo do site antes de qualquer pagamento. O valor da criação só é cobrado caso você aprove o projeto e decida fechar.",
+      badge: "Sem Custo Prévio",
     },
     {
       number: "03",
-      title: "UX/UI & DESENVOLVIMENTO",
-      desc: "Criamos o design profissional alinhado à sua marca, com carregamento ultrarrápido, copywriting persuasivo e integrações de IA.",
-      badge: "Semana 2 a 3",
+      title: "DESENVOLVIMENTO & SEO TÉCNICO",
+      desc: "Desenvolvemos o código em alta performance, design mobile-first, integrações de WhatsApp e silos de SEO estruturados para tráfego orgânico.",
+      badge: "Engenharia Web",
     },
     {
       number: "04",
-      title: "LANÇAMENTO & TREINAMENTO",
-      desc: "Publicação do site com SEO otimizado, agentes de IA ativos 24/7 e treinamento em vídeo para sua equipe gerenciar com total autonomia.",
-      badge: "Lançamento",
+      title: "LANÇAMENTO & PAINÉIS ABERTOS",
+      desc: "Publicação do site com liberação de acesso direto aos painéis da Vercel e Google Analytics para você auditar seus acessos. Zero fidelidade.",
+      badge: "Transparência Total",
     },
   ];
 
@@ -113,7 +112,7 @@ export const ProcessTimelineSection: React.FC = () => {
               muted
               loop
               playsInline
-              preload="auto"
+              preload="none"
               onLoadedMetadata={(e) => {
                 e.currentTarget.defaultPlaybackRate = 2.2;
                 e.currentTarget.playbackRate = 2.2;

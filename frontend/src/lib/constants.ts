@@ -24,7 +24,130 @@ export const NAV_LINKS = [
   { label: "Planos", href: "/planos" },
   { label: "Orçamento", href: "/orcamento" },
   { label: "Sobre Nós", href: "/sobre" },
+  { label: "Trabalhe Conosco", href: "/trabalhe-conosco", badge: "Vagas" },
   { label: "Blog", href: "/blog" },
+];
+
+export interface CareerPosition {
+  id: string;
+  title: string;
+  department: string;
+  type: string;
+  level: string;
+  badge: string;
+  shortDesc: string;
+  responsibilities: string[];
+  requirements: string[];
+  differentials: string[];
+}
+
+export const CAREER_POSITIONS: CareerPosition[] = [
+  {
+    id: "dev-frontend-nextjs",
+    title: "Desenvolvedor(a) Frontend / Fullstack Next.js",
+    department: "Engenharia Web",
+    type: "100% Remoto (PJ)",
+    level: "Pleno / Sênior",
+    badge: "Alta Demanda",
+    shortDesc: "Construção de websites, landing pages e plataformas corporativas ultravelozes com Next.js 14, Tailwind CSS, TypeScript e animações refinadas.",
+    responsibilities: [
+      "Desenvolver páginas mobile-first com carregamento sub-segundo e Lighthouse 90+",
+      "Implementar componentes acessíveis, responsivos e de alto padrão visual com Tailwind e Framer Motion",
+      "Integrar APIs REST, Server Actions e ferramentas de análise (Vercel Analytics / Google Analytics)",
+    ],
+    requirements: [
+      "Domínio avançado de React, Next.js (App Router), TypeScript e Tailwind CSS",
+      "Obsessão por performance web, Core Web Vitals e SEO técnico",
+      "Experiência com Git, deploy na Vercel e boas práticas de componentização",
+    ],
+    differentials: [
+      "Conhecimento em Serverless DBs (Neon/Postgres), animações 3D/Canvas e SEO on-page",
+    ],
+  },
+  {
+    id: "especialista-automacao-ia",
+    title: "Especialista em Automação & Agentes de IA",
+    department: "Inteligência Artificial",
+    type: "100% Remoto (PJ)",
+    level: "Pleno / Sênior",
+    badge: "Inovação",
+    shortDesc: "Desenvolvimento de fluxos inteligentes de atendimento e qualificação no WhatsApp com APIs de LLMs (Groq, OpenAI, Gemini), n8n e Webhooks.",
+    responsibilities: [
+      "Construir agentes conversacionais conectados a APIs oficiais de WhatsApp",
+      "Desenvolver fluxos de automação de processos, integração com CRMs e planilhas",
+      "Otimizar prompts de sistema e regras de negócio para triagem comercial de alta acurácia",
+    ],
+    requirements: [
+      "Experiência prática com APIs de IA, webhooks e ferramentas de automação (n8n, Make ou código Node/Python)",
+      "Familiaridade com arquiteturas de triagem de leads e integração com WhatsApp Business API",
+      "Capacidade de mapear jornadas de atendimento do cliente",
+    ],
+    differentials: [
+      "Experiência em RAG, bases vetoriais e integração direta com ERPs/CRMs de mercado",
+    ],
+  },
+  {
+    id: "copywriter-estrategista-vendas",
+    title: "Copywriter & Estrategista de Vendas B2B",
+    department: "Marketing & Growth",
+    type: "100% Remoto (PJ)",
+    level: "Júnior a Sênior",
+    badge: "Expansão",
+    shortDesc: "Criação de textos altamente persuasivos para landing pages, propostas comerciais, mensagens de prospecção ativa e campanhas institucionais.",
+    responsibilities: [
+      "Escrever copys institucionais e de alta conversão para páginas web e WhatsApp",
+      "Desenvolver roteiros de abordagem para prospecção ativa B2B",
+      "Estruturar argumentos de venda com base em dores reais de PMEs e prestadores de serviços",
+    ],
+    requirements: [
+      "Portfólio comprovado de textos persuasivos (landing pages, e-mails ou roteiros comerciais)",
+      "Excelente comunicação escrita e capacidade de sintetizar termos técnicos em benefícios claros",
+      "Mentalidade orientada a testes, métricas de conversão e taxas de resposta",
+    ],
+    differentials: [
+      "Experiência em vendas consultivas B2B ou vivência no mercado de tecnologia para empresas",
+    ],
+  },
+  {
+    id: "bdr-prospeccao-ativa",
+    title: "BDR / Especialista em Prospecção Ativa B2B",
+    department: "Comercial",
+    type: "100% Remoto (PJ)",
+    level: "Júnior a Pleno",
+    badge: "Crescimento Rápido",
+    shortDesc: "Mapeamento e abordagem ativa de empresas com alto potencial de compra para agendamento de reuniões comerciais e fechamento de contratos.",
+    responsibilities: [
+      "Identificar e qualificar decisores em empresas nos nichos-alvo (saúde, advocacia, estética, finanças, serviços)",
+      "Executar cadências de contato multicanal (WhatsApp, LinkedIn, E-mail)",
+      "Apresentar as soluções da Vetor Estratégico e conectar os leads com a liderança para fechamento",
+    ],
+    requirements: [
+      "Experiência prévia em prospecção ativa B2B (Outbound Sales / Social Selling)",
+      "Alta disciplina, comunicação empática e foco em metas de novos clientes",
+      "Familiaridade com ferramentas de CRM e gestão de pipeline",
+    ],
+    differentials: [
+      "Histórico de vendas de serviços digitais, tecnologia ou marketing para PMEs",
+    ],
+  },
+  {
+    id: "banco-de-talentos-geral",
+    title: "Banco de Talentos & Outras Especialidades",
+    department: "Geral",
+    type: "100% Remoto (PJ)",
+    level: "Todos os Níveis",
+    badge: "Banco Aberto",
+    shortDesc: "Se você é Designer UI/UX, Analista de Dados, Especialista em Tráfego Orgânico ou tem outra competência para somar à equipe, envie seu perfil!",
+    responsibilities: [
+      "Atuar em projetos sob demanda e oportunidades que surgem no ritmo do nosso crescimento",
+    ],
+    requirements: [
+      "Comprometimento profissional, ética e paixão por excelência técnica",
+    ],
+    differentials: [
+      "Portfólio sólido e vontade de crescer junto com uma empresa em rápida expansão",
+    ],
+  },
 ];
 
 export const SERVICES: ServiceItem[] = [
@@ -161,21 +284,22 @@ export const WEBSITE_PLANS: PricingPlan[] = [
     id: "presenca-essencial",
     name: "1. Presença Essencial & Captação Direta",
     tagline: "Estrutura rápida e persuasiva voltada para captação comercial e contato imediato no WhatsApp.",
-    badge: "Captação Ágil",
+    badge: "Protótipo Sem Risco",
     price: "Sob Proposta",
-    period: "Projeto Personalizado",
+    period: "Avalie o Protótipo Antes de Pagar",
     popular: false,
-    description: "Ideal para profissionais liberais, comércios locais e empresas que precisam de uma página moderna e objetiva para campanhas de anúncios ou apresentação direta de serviços.",
+    description: "Apresentamos o protótipo do site antes de qualquer pagamento. O valor da criação só é cobrado se você gostar e aprovar o projeto. Sem contratos de fidelidade ou multas.",
     deliverables: [
+      "Apresentação de protótipo navegável para avaliação antes de qualquer pagamento",
       "Landing Page focada em conversão (Apresentação, Serviços, Diferenciais, Contato)",
       "Design 100% responsivo para smartphones, tablets e computadores",
       "Botão flutuante integrado ao WhatsApp com mensagem personalizada",
-      "Formulário seguro de solicitação de orçamento direto no e-mail",
-      "Otimização de velocidade de carregamento e tags fundamentais de SEO",
-      "Publicação acompanhada no domínio e suporte pós-entrega"
+      "Acesso direto aos painéis da Vercel e Google Analytics para acompanhar métricas",
+      "Sem fidelidade: cancele a manutenção a qualquer momento sem nenhuma multa",
+      "Otimização de velocidade de carregamento e tags fundamentais de SEO"
     ],
-    idealFor: "Negócios locais, profissionais liberais e empresas iniciando campanhas no Google ou Meta Ads.",
-    ctaText: "Solicitar Proposta Essencial",
+    idealFor: "Negócios locais, profissionais liberais e empresas iniciando presença digital com risco zero.",
+    ctaText: "Solicitar Protótipo Sem Compromisso",
     ctaHref: "/orcamento"
   },
   {
@@ -184,16 +308,16 @@ export const WEBSITE_PLANS: PricingPlan[] = [
     tagline: "Portal multi-páginas, catálogo detalhado de serviços, SEO avançado e máxima autoridade.",
     badge: "Mais Procurado",
     price: "Sob Proposta",
-    period: "Projeto Corporativo",
+    period: "Protótipo Prévio Incluso",
     popular: true,
-    description: "A solução completa para empresas consolidadas que buscam autoridade no setor, páginas individuais para cada serviço, área de conteúdo e forte posicionamento no Google.",
+    description: "A solução completa para empresas consolidadas. Você avalia o projeto antes de fechar e conta com acesso aberto aos painéis de tráfego orgânico e Google Analytics, sem fidelidade.",
     deliverables: [
+      "Protótipo estrutural apresentado para validação prévia antes da contratação",
       "Estrutura multi-páginas (Início, Serviços Detalhados, Projetos, Sobre Nós, Blog, Contato)",
       "Identidade visual contemporânea alinhada ao posicionamento da sua marca",
-      "SEO técnico avançado (Schema.org, JSON-LD, Sitemap dinâmico, meta tags estruturadas)",
-      "Módulo administrativo/gerenciador para publicação de novidades e artigos",
-      "Configuração de pixels e métricas (Google Analytics, Tag Manager, Meta Pixel)",
-      "Estrutura escalável preparada para futuras integrações e expansões",
+      "SEO técnico avançado para geração de tráfego orgânico no Google (Schema.org, JSON-LD)",
+      "Acesso liberado aos painéis da Vercel e Google Analytics para auditar acessos mês a mês",
+      "Liberdade total: sem cláusulas de fidelidade ou taxas rescisórias",
       "Suporte técnico prioritário pós-lançamento"
     ],
     idealFor: "Consultorias, clínicas, escritórios de advocacia, indústrias, contabilidades e empresas em crescimento.",
@@ -206,16 +330,16 @@ export const WEBSITE_PLANS: PricingPlan[] = [
     tagline: "Site institucional completo integrado a agente de atendimento no WhatsApp para qualificação contínua.",
     badge: "Solução Integrada",
     price: "Sob Proposta",
-    period: "Projeto + Automação",
+    period: "Garantia & Painéis Abertos",
     popular: false,
-    description: "Une a autoridade de um portal corporativo moderno à agilidade de um assistente inteligente no WhatsApp para atender e qualificar clientes em qualquer dia ou horário.",
+    description: "Une a autoridade de um portal corporativo moderno à agilidade de um assistente inteligente no WhatsApp 24/7, com validação prévia de protótipo e transparência total de dados.",
     deliverables: [
-      "Todos os entregáveis da Plataforma Institucional Completa",
+      "Todos os entregáveis da Plataforma Institucional com protótipo avaliado antes de pagar",
       "Agente de atendimento configurado para o WhatsApp oficial da sua empresa",
       "Acolhimento imediato 24/7 com triagem de dúvidas frequentes e orçamentos",
-      "Agendamento de horários ou direcionamento qualificado para a equipe de vendas",
+      "Acesso completo aos painéis da Vercel e Google Analytics para auditoria de tráfego",
       "Integração do fluxo de mensagens com seu CRM ou planilhas comerciais",
-      "Treinamento do agente com as diretrizes e regras do seu negócio",
+      "Sem contrato de fidelidade: total flexibilidade operacional",
       "Treinamento prático da equipe para intervenção e acompanhamento"
     ],
     idealFor: "Operações com alto volume de contatos ou que recebem solicitações comerciais fora do horário de expediente.",
@@ -230,16 +354,17 @@ export const PRICING_PLANS: PricingPlan[] = [
     id: "acompanhamento-continuo",
     name: "4. Acompanhamento & Evolução Contínua",
     tagline: "Suporte dedicado para evolução contínua da presença web, integrações e rotinas automatizadas.",
-    badge: "Parceria Contínua",
+    badge: "Sem Fidelidade",
     price: "Sob Consulta",
-    period: "Acompanhamento Mensal",
+    period: "Mensalidade Flexível",
     popular: false,
-    description: "Para empresas que buscam aprimoramento constante de suas ferramentas digitais, novas integrações de sistemas e suporte técnico prioritário.",
+    description: "Para empresas que buscam aprimoramento constante de suas ferramentas digitais, novas integrações de sistemas e auditoria contínua de acessos sem amarras contratuais.",
     deliverables: [
       "Manutenção preventiva, monitoramento de performance e segurança do site",
       "Ajustes e refinamento contínuo dos fluxos de atendimento e automações",
       "Implementação de novas integrações entre ferramentas e sistemas internos",
-      "Relatórios periódicos de estabilidade e métricas de navegação",
+      "Acesso direto e contínuo aos relatórios da Vercel Analytics e Google Analytics",
+      "Cancelamento livre a qualquer momento, sem multa",
       "Canal direto de suporte técnico com a equipe de engenharia"
     ],
     idealFor: "Empresas com operação digital ativa que demandam suporte ágil e melhorias recorrentes.",
@@ -282,23 +407,24 @@ export const CASE_STUDIES: CaseStudy[] = [
     clientName: "Concursos Agora",
     segment: "Portal de Notícias & Educação",
     logoText: "Concursos Agora",
-    tagline: "Portal de Notícias com Arquitetura de Alto Desempenho e Silos de SEO",
+    tagline: "Portal de Notícias com +2.100 Acessos Orgânicos no 1º Mês e Painel Aberto",
     websiteUrl: "https://concursosagora.com.br/",
     metrics: [
-      { label: "Arquitetura", value: "Silos Regionais", highlight: true },
-      { label: "Performance", value: "Core Web Vitals" },
-      { label: "Indexação", value: "Schema JSON-LD" }
+      { label: "Visitantes no 1º Mês", value: "+2.105 Únicos", highlight: true },
+      { label: "Visualizações de Página", value: "+4.081 Pageviews" },
+      { label: "Origem do Tráfego", value: "100% Orgânico (R$ 0 Ads)" }
     ],
-    challenge: "Portal de notícias e editais que precisava de infraestrutura de alta velocidade para suportar grandes volumes de leitores simultâneos, navegação regional intuitiva e indexação rápida no Google Notícias.",
-    solution: "Construção de portal em tecnologia web moderna com renderização estática, organização de conteúdo por regiões e estados, estruturação semântica para mecanismos de busca e notas máximas de velocidade.",
+    challenge: "Projeto construído literalmente do zero na prática em menos de 30 dias com o objetivo de provar que uma engenharia web moderna com SEO técnico é capaz de gerar grande volume de acessos orgânicos sem depender de anúncios pagos.",
+    solution: "Construção de portal em Next.js com renderização estática, organização de conteúdo por silos de SEO, estruturação semântica Schema JSON-LD e disponibilização de acesso direto aos painéis da Vercel Analytics e Google Analytics para acompanhamento em tempo real.",
     results: [
-      "Estabilidade técnica e carregamento veloz mesmo em horários de pico de editais",
-      "Arquitetura de navegação clara dividida por regiões brasileiras e carreiras",
-      "Código otimizado para rastreamento eficiente pelos motores de busca"
+      "Mais de 2.105 visitantes únicos e 4.081 visualizações de páginas alcançados logo no primeiro mês",
+      "Tráfego 100% orgânico sem nenhum real investido em anúncios pagos",
+      "Transparência total com painéis da Vercel e Google Analytics liberados para acompanhamento direto",
+      "Arquitetura veloz e estável com pontuação máxima no Google Core Web Vitals"
     ],
-    technologies: ["Next.js", "Arquitetura Silos SEO", "SSG / ISR", "Core Web Vitals"],
+    technologies: ["Next.js", "Vercel Analytics", "Google Analytics", "Silos de SEO", "Core Web Vitals"],
     testimonial: {
-      quote: "A estrutura técnica garantiu a velocidade e a estabilidade necessárias para entregar notícias e editais com rapidez a milhares de concurseiros.",
+      quote: "Os números do painel da Vercel e do Google Analytics provam na prática o resultado: mais de 2.100 visitantes únicos no primeiro mês de forma 100% orgânica.",
       author: "Equipe Editorial",
       role: "Concursos Agora"
     }
@@ -361,6 +487,26 @@ export const CASE_STUDIES: CaseStudy[] = [
 
 export const TECHNICAL_BENEFITS = [
   {
+    icon: "ShieldCheck",
+    title: "Protótipo Antes do Pagamento (Risco Zero)",
+    description: "Apresentamos o protótipo funcional para você avaliar. O valor da criação só é cobrado se você realmente aprovar o projeto."
+  },
+  {
+    icon: "BarChart2",
+    title: "Acesso Direto aos Painéis Vercel & Analytics",
+    description: "Você audita diretamente no painel os acessos, visitantes únicos e o desempenho do seu site mês a mês, sem relatórios maquiados."
+  },
+  {
+    icon: "Lock",
+    title: "Sem Fidelidade ou Multas de Cancelamento",
+    description: "Você não fica preso a contratos longos. Pode cancelar o serviço de manutenção a qualquer momento sem taxas ou multas rescisórias."
+  },
+  {
+    icon: "TrendingUp",
+    title: "Tráfego Orgânico Comprovado na Prática",
+    description: "Engenharia web e SEO técnico construídos do zero para gerar acessos qualificados no Google sem depender exclusivamente de anúncios pagos."
+  },
+  {
     icon: "Globe",
     title: "Desenvolvimento com Foco Comercial",
     description: "Estruturas planejadas para orientar o visitante com clareza e facilitar o contato direto com a sua equipe."
@@ -374,11 +520,6 @@ export const TECHNICAL_BENEFITS = [
     icon: "Layers",
     title: "Integração aos seus Canais Atuais",
     description: "Conectamos o site e automações diretamente ao seu WhatsApp Business, CRMs e rotinas onde seu time já opera."
-  },
-  {
-    icon: "Target",
-    title: "Soluções Desenhadas para PMEs",
-    description: "Projetos dimensionados para a realidade prática de empresas em crescimento, sem complexidades desnecessárias."
   },
   {
     icon: "Zap",
@@ -401,24 +542,9 @@ export const TECHNICAL_BENEFITS = [
     description: "Infraestrutura moderna em nuvem com certificado SSL ativo e estabilidade para suportar picos de acessos."
   },
   {
-    icon: "Lock",
-    title: "Privacidade e Proteção de Dados",
-    description: "Garantia de que as informações estratégicas da sua empresa permanecem sob controle restrito e seguro."
-  },
-  {
-    icon: "BarChart2",
-    title: "Estrutura Pronta para Mensuração",
-    description: "Configuração de métricas para acompanhar de onde vêm os visitantes e quantas pessoas clicam nos botões de contato."
-  },
-  {
     icon: "GraduationCap",
     title: "Autonomia e Orientação Pós-Entrega",
     description: "Orientações práticas para que sua equipe saiba como utilizar a estrutura e atualizar conteúdos com facilidade."
-  },
-  {
-    icon: "TrendingUp",
-    title: "Otimização Contínua para o Google",
-    description: "Boas práticas de indexação e arquitetura semântica para fortalecer o posicionamento orgânico da marca."
   }
 ];
 
@@ -493,24 +619,40 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export const FAQS: FAQItem[] = [
   {
+    question: "Como funciona a garantia do protótipo antes do pagamento?",
+    answer: "Antes de qualquer cobrança ou pagamento, nós apresentamos um protótipo navegável do site para você avaliar a proposta, o design e a estrutura. O valor da criação só é cobrado se você realmente gostar do resultado e decidir fechar o projeto. Nosso objetivo é que você contrate porque viu valor prático no trabalho, com risco zero."
+  },
+  {
+    question: "Existe contrato de fidelidade ou multa se eu quiser cancelar?",
+    answer: "Não trabalhamos com contratos que prendem o cliente. Você tem total autonomia e liberdade para cancelar o serviço de manutenção a qualquer momento, sem taxas de cancelamento ou multas rescisórias."
+  },
+  {
+    question: "Como posso acompanhar os acessos e o desempenho do meu site?",
+    answer: "Disponibilizamos aos nossos clientes acesso direto aos painéis da Vercel Analytics e do Google Analytics. Você pode conferir diretamente em tempo real quantos visitantes acessaram o site, quais páginas visualizaram e a velocidade de carregamento mês a mês, auditando os resultados por conta própria."
+  },
+  {
+    question: "Vocês conseguem gerar acessos orgânicos sem depender de anúncios pagos?",
+    answer: "Sim! Construímos sites com arquitetura moderna de SEO técnico (renderização estática, silos de conteúdo, Schema JSON-LD e pontuação máxima no Core Web Vitals). Provamos isso na prática desde o primeiro mês, como no case do portal Concursos Agora, que atingiu mais de 2.100 visitantes únicos e 4.000 visualizações de forma 100% orgânica em menos de 30 dias."
+  },
+  {
     question: "Quanto custa o desenvolvimento de um site ou automação?",
-    answer: "O investimento varia de acordo com o escopo e objetivos da sua empresa: landing pages de captação partem de valores promocionais acessíveis para novos clientes (a partir de R$ 900 a R$ 1.400), enquanto plataformas institucionais multi-páginas e soluções com automação no WhatsApp possuem propostas sob medida. Você pode simular na nossa calculadora de orçamento online."
+    answer: "O investimento inicial para desenvolvimento de um site básico parte de R$ 900 para criação (com protótipo apresentado antes de pagar) + a partir de R$ 147/mês de manutenção e hospedagem em nuvem de alta velocidade com acesso aos painéis de métricas. O valor final varia conforme a complexidade e o escopo do projeto (número de páginas, integrações com CRM, automações no WhatsApp ou recursos sob medida)."
   },
   {
     question: "Quanto custa a manutenção e hospedagem para manter o site no ar?",
-    answer: "A taxa de manutenção e hospedagem básica é de apenas R$ 147/mês. Ela inclui hospedagem em servidores de alta velocidade, certificado de segurança SSL ativo, monitoramento de estabilidade e suporte técnico contínuo para manter seu site sempre funcionando perfeitamente."
+    answer: "A taxa de manutenção e hospedagem é a partir de R$ 147/mês (sem contrato de fidelidade). Ela inclui hospedagem em servidores de alta velocidade, certificado de segurança SSL ativo, monitoramento contínuo de estabilidade, acesso aos painéis analíticos e suporte técnico contínuo."
   },
   {
     question: "Qual é o prazo de entrega de um projeto?",
-    answer: "Páginas focadas em captação são entregues em poucos dias úteis após o alinhamento de conteúdo e escopo inicial. Projetos institucionais completos ou com integração de automações seguem um cronograma estruturado em etapas, sempre validado previamente na proposta comercial."
+    answer: "Páginas focadas em captação e protótipos iniciais são desenvolvidos em poucos dias úteis após o alinhamento do briefing. Projetos institucionais completos ou com integração de automações seguem um cronograma estruturado em etapas transparentes."
   },
   {
     question: "Eu preciso já ter domínio registrado e hospedagem?",
-    answer: "Não se preocupe se ainda não tiver. Orientamos você no registro oficial do domínio em nome da sua empresa (ex: suaempresa.com.br) e configuramos servidores modernos em nuvem com certificado de segurança SSL incluso."
+    answer: "Não se preocupe se ainda não tiver. Orientamos você no registro oficial do domínio em nome da sua empresa (ex: suaempresa.com.br) e cuidamos de toda a configuração da infraestrutura em nuvem com certificado de segurança SSL incluso."
   },
   {
     question: "O site funcionará com rapidez no celular?",
-    answer: "Sim, com certeza. Desenvolvemos todos os projetos com prioridade mobile (mobile-first), assegurando que o usuário que navega pelo smartphone tenha carregamento veloz, botões de contato acessíveis e leitura fluida."
+    answer: "Sim, com certeza. Desenvolvemos todos os projetos com prioridade mobile (mobile-first), assegurando que o usuário que navega pelo smartphone tenha carregamento veloz (< 1s), botões de contato acessíveis e leitura fluida."
   },
   {
     question: "Como o WhatsApp é integrado ao site?",
@@ -518,15 +660,11 @@ export const FAQS: FAQItem[] = [
   },
   {
     question: "Como funciona o atendimento automatizado ou agente no WhatsApp?",
-    answer: "O assistente inteligente é configurado estritamente com as informações oficiais da sua empresa (serviços, regras, dúvidas frequentes). Ele acolhe o visitante no WhatsApp a qualquer hora, esclarece dúvidas básicas e encaminha contatos qualificados para os seus atendentes humanos."
+    answer: "O assistente inteligente é configurado estritamente com as informações oficiais da sua empresa (serviços, regras, dúvidas frequentes). Ele acolhe o visitante no WhatsApp 24/7, esclarece dúvidas básicas e encaminha contatos qualificados para os seus atendentes humanos."
   },
   {
     question: "Os dados da minha empresa e dos meus clientes estão seguros com a LGPD?",
     answer: "Sim. Todas as soluções são construídas em conformidade com as diretrizes da Lei Geral de Proteção de Dados (LGPD), garantindo armazenamento protegido, criptografia e respeito integral à privacidade."
-  },
-  {
-    question: "Minha empresa terá autonomia para atualizar textos e informações?",
-    answer: "Sim. Estruturamos os projetos para que sua equipe possa gerenciar conteúdos com facilidade, além de disponibilizarmos suporte técnico para manutenções e novas implementações."
   }
 ];
 
@@ -1031,10 +1169,13 @@ export const SEGMENTS = [
 ];
 
 export const DELIVERABLES_CHECKLIST = [
-  "Desenvolvimento em código próprio, moderno e de alta velocidade",
+  "Apresentação de protótipo funcional para avaliação antes de qualquer cobrança",
+  "Acesso direto e transparente aos painéis da Vercel e Google Analytics",
+  "Sem contrato de fidelidade e sem multas para cancelamento do serviço",
+  "Desenvolvimento em código próprio, moderno e de alta velocidade (< 1s)",
   "Design 100% adaptado para navegação em smartphones e desktops",
   "Integração com WhatsApp comercial e formulários seguros",
-  "Otimização de SEO técnico e marcação de dados para o Google",
+  "Otimização de SEO técnico estruturado para gerar tráfego orgânico",
   "Estrutura com certificado de segurança SSL e conformidade com a LGPD",
   "Acompanhamento técnico próximo durante o planejamento e lançamento",
   "Orientações práticas para gestão e autonomia da sua equipe"

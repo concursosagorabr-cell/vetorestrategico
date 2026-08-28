@@ -21,7 +21,7 @@ export const AiChatAssistant: React.FC = () => {
     {
       role: "assistant",
       content:
-        "Olá! Sou o **Comandante Vetor**, consultor de IA da Vetor Estratégico. 🚀\n\nComo posso ajudar sua empresa hoje? Posso tirar dúvidas sobre nossos **sites de alta conversão**, **automações no WhatsApp 24/7** ou ajudar você a calcular o potencial de ganho com IA.",
+        "Olá! Sou o **Comandante Vetor**, consultor de tecnologia da Vetor Estratégico. 🚀\n\nAqui seu projeto tem **risco zero**:\n• Apresentamos o **protótipo antes de qualquer pagamento** (você só paga a criação se aprovar);\n• **Acesso direto aos painéis da Vercel e Google Analytics** para auditar seus acessos;\n• **Sem fidelidade nem multas** de cancelamento.\n\nComo posso ajudar sua empresa hoje?",
     },
   ]);
 
@@ -89,10 +89,10 @@ export const AiChatAssistant: React.FC = () => {
   };
 
   const quickPills = [
-    "Como funciona o Agente no WhatsApp 24/7?",
+    "Como funciona o protótipo antes do pagamento?",
+    "Como acompanho os acessos no Analytics e Vercel?",
+    "Existe contrato de fidelidade ou multa?",
     "Quanto custa um site ou automação?",
-    "Quero fazer o Diagnóstico de IA Grátis",
-    "Quais os prazos de entrega?",
   ];
 
   return (

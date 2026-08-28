@@ -14,6 +14,9 @@ export const metadata: Metadata = {
 };
 
 const COMPARISON_FEATURES = [
+  { name: "Protótipo Antes do Pagamento (Risco Zero)", presencaEssencial: true, plataformaInstitucional: true, plataformaAutomacao: true },
+  { name: "Acesso Direto aos Painéis Vercel & Analytics", presencaEssencial: true, plataformaInstitucional: true, plataformaAutomacao: true },
+  { name: "Sem Fidelidade ou Multas de Cancelamento", presencaEssencial: true, plataformaInstitucional: true, plataformaAutomacao: true },
   { name: "Design Responsivo (Mobile & Desktop)", presencaEssencial: true, plataformaInstitucional: true, plataformaAutomacao: true },
   { name: "Botão WhatsApp & Formulário de Contato", presencaEssencial: true, plataformaInstitucional: true, plataformaAutomacao: true },
   { name: "Otimização de Velocidade (Lighthouse 90+)", presencaEssencial: true, plataformaInstitucional: true, plataformaAutomacao: true },
@@ -29,7 +32,7 @@ const COMPARISON_FEATURES = [
 export default function PricingPage() {
   return (
     <div className="py-12 sm:py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
@@ -42,6 +45,43 @@ export default function PricingPage() {
           <p className="text-base sm:text-lg text-text-secondary leading-relaxed">
             Seja para criar uma página rápida e persuasiva voltada a campanhas ou estruturar uma plataforma corporativa completa com automações integradas.
           </p>
+        </div>
+
+        {/* Trust & Risk-Free Guarantee Banner */}
+        <div className="p-6 rounded-3xl bg-gradient-to-r from-emerald-50 via-sky-50 to-emerald-50 border border-emerald-200/80 shadow-xs flex flex-col md:flex-row items-center justify-around gap-4 text-center md:text-left">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div className="text-left">
+              <strong className="text-xs sm:text-sm font-black text-slate-900 block">Protótipo Antes do Pagamento</strong>
+              <span className="text-[11px] text-slate-600">A criação só é cobrada caso você aprove o projeto</span>
+            </div>
+          </div>
+
+          <div className="hidden md:block w-px h-8 bg-slate-200" />
+
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-sky-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div className="text-left">
+              <strong className="text-xs sm:text-sm font-black text-slate-900 block">Acesso Direto aos Painéis</strong>
+              <span className="text-[11px] text-slate-600">Vercel &amp; Google Analytics liberados para você auditar</span>
+            </div>
+          </div>
+
+          <div className="hidden md:block w-px h-8 bg-slate-200" />
+
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <Check className="w-5 h-5 stroke-[3]" />
+            </div>
+            <div className="text-left">
+              <strong className="text-xs sm:text-sm font-black text-slate-900 block">Zero Fidelidade ou Multas</strong>
+              <span className="text-[11px] text-slate-600">Cancele o serviço a qualquer momento sem taxas</span>
+            </div>
+          </div>
         </div>
 
         {/* SECTION 1: CRIAÇÃO DE SITES & PLATAFORMAS */}

@@ -223,6 +223,12 @@ section {
   contain: paint layout;
 }
 
+/* Off-screen rendering optimization for below-the-fold sections */
+.section-defer {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 700px;
+}
+
 /* ===== Parallax GPU Compositing & Accessibility ===== */
 .transform-gpu {
   transform: translate3d(0, 0, 0);

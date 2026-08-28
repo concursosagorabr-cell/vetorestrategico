@@ -7,31 +7,31 @@ import {
   ParallaxWatermark,
   StrategicVectorMesh,
 } from "@/components/ui/Parallax";
-import { Search, Cog, Rocket, ArrowRight } from "lucide-react";
+import { Search, ShieldCheck, BarChart3, ArrowRight } from "lucide-react";
 
 export const HowItWorksSection: React.FC = () => {
   const steps = [
     {
       step: "01",
       icon: Search,
-      title: "Diagnóstico da Operação",
-      description: "Identificamos os processos repetitivos e os gargalos de atendimento e vendas que mais drenam tempo e dinheiro da sua empresa.",
+      title: "Diagnóstico & Briefing",
+      description: "Mapeamos os objetivos da sua empresa, serviços prioritários e jornada de captação no WhatsApp para planejar a estrutura ideal.",
       color: "emerald",
       parallaxSpeed: 0.06,
     },
     {
       step: "02",
-      icon: Cog,
-      title: "Plano & Construção da IA",
-      description: "Desenhamos a solução sob medida conectada ao seu WhatsApp, CRM e ERP, com regras de negócio claras e sem termos difíceis.",
+      icon: ShieldCheck,
+      title: "Protótipo Prévio (Risco Zero)",
+      description: "Apresentamos o protótipo do site para você avaliar antes de qualquer pagamento. A criação só é cobrada se você gostar da proposta.",
       color: "cyan",
       parallaxSpeed: -0.04,
     },
     {
       step: "03",
-      icon: Rocket,
-      title: "Implantação & Acompanhamento",
-      description: "Colocamos o agente em produção em até 30 dias, treinamos sua equipe e fornecemos um painel de métricas para você auditar o ROI.",
+      icon: BarChart3,
+      title: "Lançamento & Painéis Abertos",
+      description: "Publicamos seu site com SEO otimizado e liberamos acesso direto aos painéis da Vercel e Analytics. Sem fidelidade nem multas.",
       color: "gold",
       parallaxSpeed: 0.08,
     },

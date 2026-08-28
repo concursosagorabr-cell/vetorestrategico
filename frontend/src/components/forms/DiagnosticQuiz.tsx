@@ -208,7 +208,7 @@ export const DiagnosticQuiz: React.FC = () => {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           onLoadedMetadata={(e) => {
             e.currentTarget.defaultPlaybackRate = 2.2;
             e.currentTarget.playbackRate = 2.2;

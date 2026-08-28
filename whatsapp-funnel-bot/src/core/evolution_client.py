@@ -134,7 +134,7 @@ class EvolutionClient:
                         "delay": 1200
                     }
                 )
-                if resp.status_code == 201:
+                if resp.status_code in [200, 201]:
                     logger.info(f"Mensagem enviada para {phone}")
                     return True
                 else:
@@ -142,4 +142,60 @@ class EvolutionClient:
                     return False
             except Exception as e:
                 logger.error(f"Erro ao enviar mensagem para {phone}: {e}")
+                return False
+
+    async def send_media_message(
+        self,
+        phone: str,
+        media_path_or_url: str,
+        caption: Optional[str] = None,
+        media_type: str = "image",
+        mimetype: str = "image/png",
+        file_name: str = "concursosagora-analytics.png"
+    ) -> bool:
+        """Envia mensagem de mídia (imagem, documento, áudio) via Evolution API com fallback de texto."""
+        if not phone.endswith("@s.whatsapp.net"):
+            number = phone.replace("+", "").replace(" ", "").replace("-", "")
+            jid = f"{number}@s.whatsapp.net"
+        else:
+            jid = phone
+
+        media_payload = media_path_or_url
+        if os.path.isfile(media_path_or_url):
+            try:
+                import base64
+                with open(media_path_or_url, "rb") as f:
+                    encoded = base64.b64encode(f.read()).decode("utf-8")
+                media_payload = f"data:{mimetype};base64,{encoded}"
+            except Exception as e:
+                logger.error(f"Erro ao converter mídia local {media_path_or_url} para base64: {e}")
+
+        async with httpx.AsyncClient(timeout=45.0) as client:
+            try:
+                payload = {
+                    "number": jid,
+                    "mediatype": media_type,
+                    "mimetype": mimetype,
+                    "caption": caption or "",
+                    "media": media_payload,
+                    "fileName": file_name,
+                    "delay": 1500
+                }
+                resp = await client.post(
+                    f"{self.base_url}/message/sendMedia/{self.instance_name}",
+                    headers=self.headers,
+                    json=payload
+                )
+                if resp.status_code in [200, 201]:
+                    logger.info(f"Mídia enviada com sucesso para {phone}")
+                    return True
+                else:
+                    logger.warning(f"Erro no envio de mídia ({resp.status_code} - {resp.text}). Executando fallback para texto.")
+                    if caption:
+                        return await self.send_text_message(phone, caption)
+                    return False
+            except Exception as e:
+                logger.error(f"Exceção ao enviar mídia para {phone}: {e}. Executando fallback para texto.")
+                if caption:
+                    return await self.send_text_message(phone, caption)
                 return False
