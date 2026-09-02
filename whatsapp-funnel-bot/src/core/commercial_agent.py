@@ -339,7 +339,18 @@ Execute as 4 etapas mentais de raciocínio, preencha o campo 'thinking' com sua 
                     "generated_reply": generated_reply
                 }
         except Exception as e:
+            error_str = str(e)
             logger.warning(f"Erro ao chamar CommercialAgent LLM ({self.provider}/{self.model}): {e}. Aplicando heurística avançada.")
+            try:
+                from src.core.alerts import add_alert
+                if "429" in error_str or "quota" in error_str.lower():
+                    add_alert("Cota de IA Atingida", "O limite de requisições da API Groq/OpenAI foi atingido (Rate Limit/Quota). O sistema ativou a heurística de contingência automaticamente para não perder leads.", "error")
+                elif "Expecting value" in error_str or "JSON" in error_str:
+                    add_alert("Alucinação de IA Detectada", "O provedor de LLM retornou um formato inválido. O sistema de proteção filtrou a resposta e acionou a contingência humana.", "warning")
+                else:
+                    add_alert("Falha de Comunicação com IA", f"Erro: {error_str[:100]}. Contingência ativada.", "warning")
+            except Exception:
+                pass
 
         # Heurística avançada com o mesmo framework mental
         return self._heuristic_fallback(

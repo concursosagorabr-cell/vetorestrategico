@@ -1118,3 +1118,26 @@ export const SEGMENTS_DATA: Record<string, SegmentPageData> = {
     },
   },
 };
+
+export function getSegmentIaData(segmentId: string): SegmentPageData | undefined {
+  return SEGMENTS_DATA[segmentId];
+}
+
+export function getSegmentSiteData(segmentId: string): SegmentPageData | undefined {
+  const base = SEGMENTS_DATA[segmentId];
+  if (!base) return undefined;
+  
+  // Clone and override for 'Site' focus
+  const siteData: SegmentPageData = JSON.parse(JSON.stringify(base));
+  
+  // Update SEO
+  siteData.seo.title = siteData.seo.title.replace("Sites e IA", "Criação de Sites");
+  
+  // Update Hero
+  siteData.hero.badge = "Criação de Sites de Alta Performance";
+  siteData.hero.titleHighlight = "Sites que Convertem";
+  siteData.hero.titlePrefix = "Transforme visitantes em clientes reais com ";
+  siteData.hero.subtitle = "Desenvolvimento de sites profissionais, rápidos e otimizados para o Google. Estrutura completa de SEO local e design premium focado em captar e converter os melhores clientes do seu nicho.";
+  
+  return siteData;
+}

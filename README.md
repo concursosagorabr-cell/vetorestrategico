@@ -157,16 +157,72 @@ docker-compose up --build
 
 ---
 
-## 🎯 Funcionalidade Especial: Quiz de Diagnóstico de IA (`/diagnostico`)
+## 🤖 Agentes de Inteligência Artificial & Como Alterar seus Cérebros
 
-O quiz interativo é um motor de geração de leads altamente qualificados:
-1. **Etapa 1:** Segmento de atuação da empresa.
-2. **Etapa 2:** Porte da equipe.
-3. **Etapa 3:** Principal gargalo operacional ou comercial.
-4. **Etapa 4:** Grau de maturidade digital atual.
-5. **Etapa 5:** Informações de contato e consentimento LGPD.
+A plataforma conta com um ecossistema de **Agentes de IA Especializados** que trabalham de forma coordenada para atendimento, qualificação de clientes e prospecção ativa. Abaixo está o guia completo de funcionamento e como customizar o cérebro, prompts e regras de cada um.
 
-O backend (`POST /api/quiz`) calcula uma pontuação de oportunidade (0 a 100), estima o volume de horas operacionais recuperáveis por mês e gera um dossiê estratégico com entregáveis recomendados, persistindo o lead automaticamente no banco de dados e notificando o time comercial.
+---
+
+### 1. Comandante Vetor (Agente de Chat do Site & Qualificação Comercial)
+
+#### 🧭 Como Funciona:
+- Atua como o consultor virtual 24/7 no site oficial (`AiChatAssistant.tsx`), acolhendo o visitante com linguagem humana, direta e empática.
+- **Detecção de Horário & Turno:** Identifica automaticamente o horário de Brasília. No período diurno (08h às 18h) atua como assistente em tempo real; no plantão noturno (18h às 08h) informa que a equipe humana responderá pela manhã.
+- **Proteção e Injeção de Contexto:** Sanitiza mensagens do visitante e injeta o histórico recente da conversa.
+- **Pilares Invioláveis:** Sempre comunica a garantia de **Risco Zero** (protótipo navegável apresentado antes de qualquer pagamento), **ausência de contratos de fidelidade ou multas**, **transparência radical com acesso direto aos painéis da Vercel/Google Analytics** e **tráfego orgânico comprovado**.
+- **Regra Rígida de Preços:** Informa que os valores iniciam *a partir de R$ 900 para criação e a partir de R$ 147/mês para manutenção*, nunca fornecendo faixas fixas fechadas e direcionando para o simulador de orçamento ou WhatsApp.
+
+#### 🧠 Onde fica o Cérebro e Instruções:
+- **Arquivo Central do Cérebro:** [`frontend/src/app/api/chat/route.ts`](file:///c:/Users/head_/3D%20Objects/vetorestrategico/frontend/src/app/api/chat/route.ts)
+- **Componente Visual & Pílulas Rápidas:** [`frontend/src/components/layout/AiChatAssistant.tsx`](file:///c:/Users/head_/3D%20Objects/vetorestrategico/frontend/src/components/layout/AiChatAssistant.tsx)
+- **Variáveis de Ambiente:** `GROQ_API_KEY` e `GROQ_MODEL` no `.env.local` do frontend.
+
+#### ✏️ Como Alterar as Instruções e o Comportamento:
+1. Abra `frontend/src/app/api/chat/route.ts`.
+2. Localize a constante `systemPrompt`:
+   - Para alterar a **persona e tom de voz**: modifique as seções `Persona` e `Objetivo principal`.
+   - Para alterar **valores, regras de negócio ou serviços**: ajuste as diretrizes sob `### Pilares Comerciais & Diferenciais Exclusivos` e `### Preços e Valores`.
+   - Para alterar o **modelo de IA**: defina a variável `GROQ_MODEL` (ex: `llama-3.3-70b-versatile`, `llama-3.1-8b-instant`, `openai/gpt-oss-120b`).
+   - Para calibrar a **criatividade/precisão**: altere os parâmetros `temperature` (recomendado `0.5` a `0.7`) e `max_tokens` na chamada `groq.chat.completions.create`.
+3. Para alterar a mensagem inicial de boas-vindas ou os botões de atalho rápido (quick pills), edite as constantes `INITIAL_MESSAGE` e `QUICK_PILLS` em `frontend/src/components/layout/AiChatAssistant.tsx`.
+
+---
+
+### 2. WhatsApp Funnel Bot (Agente Autônomo de Prospecção & Qualificação via WhatsApp)
+
+#### 🧭 Como Funciona:
+- Executa prospecção ativa e atendimento automatizado no WhatsApp conectando o **FastAPI + Evolution API (Baileys)** a um motor de raciocínio LLM.
+- Dispara sequências cadenciadas com delays de segurança anti-banimento (30 a 45s).
+- **Classificador Semântico:** Analisa as respostas do interlocutor e identifica intenções com alta acurácia (`yes`, `no`, `doubt`, `objection_social_media`, `objection_budget`, `objection_has_website`, `away`, `opt_out`).
+- **Limpeza de Nomes:** Sanitiza nomes corporativos do Google Maps para nomes humanos acolhedores (ex: *"Dra. Fabiana Oliveira - Harmonização Facial"* ➔ *"Dra. Fabiana"*).
+- Trata objeções contextualmente conforme o script do funil e gera listas de leads qualificados.
+
+#### 🧠 Onde fica o Cérebro e Instruções:
+- **Prompt Mestre & Classificador:** [`whatsapp-funnel-bot/src/core/llm_classifier.py`](file:///c:/Users/head_/3D%20Objects/vetorestrategico/whatsapp-funnel-bot/src/core/llm_classifier.py)
+- **Personas & Presets por Nicho:** [`whatsapp-funnel-bot/src/core/niche_presets.py`](file:///c:/Users/head_/3D%20Objects/vetorestrategico/whatsapp-funnel-bot/src/core/niche_presets.py)
+- **Scripts de Funil & Mensagens:** [`whatsapp-funnel-bot/exemplodejson.md`](file:///c:/Users/head_/3D%20Objects/vetorestrategico/whatsapp-funnel-bot/exemplodejson.md) e [`ex-json-whatsapp-funnel-bot.md`](file:///c:/Users/head_/3D%20Objects/vetorestrategico/ex-json-whatsapp-funnel-bot.md)
+- **Configurações de Conexão:** `whatsapp-funnel-bot/.env` (`LLM_PROVIDER`, `LLM_MODEL`, `LLM_API_KEY`).
+
+#### ✏️ Como Alterar as Instruções e o Comportamento:
+1. **Para alterar o raciocínio da IA ao classificar respostas:**
+   - Edite o método `decide_step_action` em `whatsapp-funnel-bot/src/core/llm_classifier.py`.
+   - Modifique o `system_prompt` para incluir novas regras de interpretação de mensagens ou novas categorias de objeções.
+2. **Para alterar as personas de nichos (Odonto, Estética, Jurídico, etc.):**
+   - Edite `whatsapp-funnel-bot/src/core/niche_presets.py` e configure os campos `niche_persona`, `tone` e `common_objections`.
+3. **Para alterar o script de mensagens e fluxos de conversa:**
+   - Edite o arquivo JSON da campanha na aba **Nova Campanha** do dashboard em `http://localhost:8008` (ou utilize o arquivo `exemplodejson.md` como base), alterando os textos de `{step}`, `on_yes`, `on_no`, `on_doubt` e `on_objection_*`.
+
+---
+
+### 3. Quiz & Motor de Diagnóstico Digital com IA (`/diagnostico`)
+
+#### 🧭 Como Funciona:
+- Avalia a maturidade digital de PMEs através de um formulário interativo em 5 etapas.
+- Calcula a pontuação de oportunidade (0 a 100), estima o volume de horas operacionais recuperáveis por mês e gera um dossiê com o roadmap de soluções recomendadas.
+
+#### 🧠 Onde fica o Cérebro e Instruções:
+- **Lógica de Análise & Recomendações:** [`frontend/src/app/api/quiz/route.ts`](file:///c:/Users/head_/3D%20Objects/vetorestrategico/frontend/src/app/api/quiz/route.ts) e [`backend/app/services/quiz_engine.py`](file:///c:/Users/head_/3D%20Objects/vetorestrategico/backend/app/services/quiz_engine.py).
+- **Perguntas e Pesos:** [`frontend/src/lib/constants.ts`](file:///c:/Users/head_/3D%20Objects/vetorestrategico/frontend/src/lib/constants.ts) (`DIAGNOSTIC_QUESTIONS`).
 
 ---
 

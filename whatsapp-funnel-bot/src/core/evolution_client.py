@@ -123,26 +123,29 @@ class EvolutionClient:
         else:
             jid = phone
 
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            try:
-                resp = await client.post(
-                    f"{self.base_url}/message/sendText/{self.instance_name}",
-                    headers=self.headers,
-                    json={
-                        "number": jid,
-                        "text": text,
-                        "delay": 1200
-                    }
-                )
-                if resp.status_code in [200, 201]:
-                    logger.info(f"Mensagem enviada para {phone}")
-                    return True
-                else:
-                    logger.error(f"Erro ao enviar mensagem: {resp.status_code} - {resp.text}")
-                    return False
-            except Exception as e:
-                logger.error(f"Erro ao enviar mensagem para {phone}: {e}")
-                return False
+        import asyncio
+        for attempt in range(3):
+            async with httpx.AsyncClient(timeout=30.0) as client:
+                try:
+                    resp = await client.post(
+                        f"{self.base_url}/message/sendText/{self.instance_name}",
+                        headers=self.headers,
+                        json={
+                            "number": jid,
+                            "text": text,
+                            "delay": 1200
+                        }
+                    )
+                    if resp.status_code in [200, 201]:
+                        logger.info(f"Mensagem enviada para {phone}")
+                        return True
+                    else:
+                        logger.error(f"Erro ao enviar mensagem (tentativa {attempt+1}/3): {resp.status_code} - {resp.text}")
+                        if attempt == 2: return False
+                except Exception as e:
+                    logger.error(f"Erro ao enviar mensagem para {phone} (tentativa {attempt+1}/3): {e}")
+                    if attempt == 2: return False
+            await asyncio.sleep(2 ** attempt)
 
     async def send_media_message(
         self,
@@ -170,32 +173,39 @@ class EvolutionClient:
             except Exception as e:
                 logger.error(f"Erro ao converter mídia local {media_path_or_url} para base64: {e}")
 
-        async with httpx.AsyncClient(timeout=45.0) as client:
-            try:
-                payload = {
-                    "number": jid,
-                    "mediatype": media_type,
-                    "mimetype": mimetype,
-                    "caption": caption or "",
-                    "media": media_payload,
-                    "fileName": file_name,
-                    "delay": 1500
-                }
-                resp = await client.post(
-                    f"{self.base_url}/message/sendMedia/{self.instance_name}",
-                    headers=self.headers,
-                    json=payload
-                )
-                if resp.status_code in [200, 201]:
-                    logger.info(f"Mídia enviada com sucesso para {phone}")
-                    return True
-                else:
-                    logger.warning(f"Erro no envio de mídia ({resp.status_code} - {resp.text}). Executando fallback para texto.")
-                    if caption:
-                        return await self.send_text_message(phone, caption)
-                    return False
-            except Exception as e:
-                logger.error(f"Exceção ao enviar mídia para {phone}: {e}. Executando fallback para texto.")
-                if caption:
-                    return await self.send_text_message(phone, caption)
-                return False
+        import asyncio
+        for attempt in range(3):
+            async with httpx.AsyncClient(timeout=45.0) as client:
+                try:
+                    payload = {
+                        "number": jid,
+                        "mediatype": media_type,
+                        "mimetype": mimetype,
+                        "caption": caption or "",
+                        "media": media_payload,
+                        "fileName": file_name,
+                        "delay": 1500
+                    }
+                    resp = await client.post(
+                        f"{self.base_url}/message/sendMedia/{self.instance_name}",
+                        headers=self.headers,
+                        json=payload
+                    )
+                    if resp.status_code in [200, 201]:
+                        logger.info(f"Mídia enviada com sucesso para {phone}")
+                        return True
+                    else:
+                        logger.warning(f"Erro no envio de mídia (tentativa {attempt+1}/3): {resp.status_code} - {resp.text}")
+                        if attempt == 2:
+                            logger.warning("Executando fallback para texto.")
+                            if caption:
+                                return await self.send_text_message(phone, caption)
+                            return False
+                except Exception as e:
+                    logger.error(f"Exceção ao enviar mídia para {phone} (tentativa {attempt+1}/3): {e}")
+                    if attempt == 2:
+                        logger.warning("Executando fallback para texto após exceção.")
+                        if caption:
+                            return await self.send_text_message(phone, caption)
+                        return False
+            await asyncio.sleep(2 ** attempt)

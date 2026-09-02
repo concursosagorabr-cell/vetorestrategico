@@ -86,7 +86,6 @@ export const NAV_LINKS_BASE = [
   { label: "Diretório IA", href: "/diretorio", badge: "Novo" },
   { label: "Portfólio", href: "/cases" },
   { label: "Preços", href: "/planos" },
-  { label: "Carreiras", href: "/trabalhe-conosco", badge: "Vagas" },
   { label: "Orçamento", href: "/orcamento" },
   { label: "Sobre", href: "/sobre" },
   { label: "Blog", href: "/blog" },
@@ -162,7 +161,7 @@ export const Header: React.FC = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-4 xl:gap-6">
+        <nav className="hidden 2xl:flex items-center gap-4 2xl:gap-5">
           
           {/* NICHOS INTERACTIVE DROPDOWN */}
           <div
@@ -173,7 +172,7 @@ export const Header: React.FC = () => {
             <button
               type="button"
               className={cn(
-                "inline-flex items-center gap-1.5 text-sm xl:text-base font-bold transition-colors duration-200 py-2 group cursor-pointer",
+                "inline-flex items-center gap-1.5 text-sm font-bold transition-colors duration-200 py-2 group cursor-pointer",
                 isNichesOpen || isNicheActive
                   ? "text-emerald-600 font-black"
                   : "text-slate-700 hover:text-slate-950"
@@ -260,7 +259,7 @@ export const Header: React.FC = () => {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "text-sm xl:text-base font-bold transition-colors duration-200 relative py-1 inline-flex items-center gap-1",
+                  "text-sm font-bold transition-colors duration-200 relative py-1 inline-flex items-center gap-1",
                   isActive
                     ? "text-emerald-600 font-black"
                     : "text-slate-700 hover:text-slate-950"
@@ -289,7 +288,7 @@ export const Header: React.FC = () => {
             href={COMPANY_INFO.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs xl:text-sm font-black text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-4 py-2 rounded-full transition-all duration-200 shadow-xs"
+            className="flex 2xl:hidden items-center gap-2 text-xs font-black text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-4 py-2 rounded-full transition-all duration-200 shadow-xs"
             title="Atendimento via WhatsApp"
           >
             <Phone className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -300,7 +299,7 @@ export const Header: React.FC = () => {
             href="/orcamento"
             variant="primary"
             size="md"
-            className="rounded-full px-6 py-2.5 font-black text-sm xl:text-base shadow-md shadow-emerald-600/25"
+            className="rounded-full px-6 py-2.5 font-black text-sm shadow-md shadow-emerald-600/25 whitespace-nowrap"
             rightIcon={<ArrowRight className="w-4 h-4" />}
           >
             Peça um Orçamento
@@ -308,7 +307,7 @@ export const Header: React.FC = () => {
         </div>
 
         {/* Mobile Hamburger Button */}
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="flex items-center gap-2 2xl:hidden">
           <Link
             href="/diagnostico"
             className="p-2 text-amber-700 bg-amber-50 rounded-lg border border-amber-200"
@@ -336,7 +335,7 @@ export const Header: React.FC = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-white/98 backdrop-blur-xl border-b border-slate-200 shadow-xl overflow-hidden max-h-[85vh] overflow-y-auto"
+            className="2xl:hidden bg-white/98 backdrop-blur-xl border-b border-slate-200 shadow-xl overflow-hidden max-h-[85vh] overflow-y-auto"
           >
             <div className="px-5 py-6 space-y-4">
               

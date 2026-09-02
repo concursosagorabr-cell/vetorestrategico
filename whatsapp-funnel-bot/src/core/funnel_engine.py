@@ -11,6 +11,7 @@ import httpx
 from src.database.models import Campaign, Contact, Message
 from src.database.repository import CampaignRepository, ContactRepository, MessageRepository
 from src.core.evolution_client import EvolutionClient
+from src.core.commercial_agent import CommercialAgent
 from src.core.llm_classifier import LLMClassifier, ClassificationResult
 from src.core.niche_presets import get_niche_preset, normalize_niche_key
 
@@ -41,6 +42,10 @@ DEFAULT_SALES_FUNNEL_STEPS = [
         "on_doubt": {
             "next_step": 1,
             "message": "Sou de {city} e estava pesquisando sobre {service} na região. Vocês ainda realizam esse atendimento?"
+        },
+        "on_ask_identity": {
+            "next_step": 2,
+            "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é bem direto: notei que vocês atuam com {service} aqui em {city}, mas quando potenciais clientes pesquisam no Google, vocês estão sem site no topo e perdem vendas para concorrentes.\n\nNós criamos modelos de páginas ultra-rápidas focadas em captação no WhatsApp. Posso personalizar um modelo exclusivo para a {name} sem custo nenhum para vocês avaliarem em 24h? Se aprovarem, a manutenção é apenas R$ 147/mês. Faz sentido eu te mandar o link amanhã?"
         },
         "on_other": {
             "next_step": 1,
@@ -173,6 +178,16 @@ class FunnelEngine:
 
         name = campaign_data.get("name") or campaign_data.get("campaign_name") or f"Prospecção - {datetime.now(timezone.utc).strftime('%d/%m/%Y %H:%M')}"
         
+        # Suporta contatos em várias chaves comuns
+        contacts_raw = (
+            campaign_data.get("contacts") or
+            campaign_data.get("contatos") or
+            campaign_data.get("leads") or
+            campaign_data.get("clinicas_estetica_sem_site") or
+            campaign_data.get("clientes") or
+            []
+        )
+
         # Identifica nicho e especialidade configurados
         niche_raw = (
             campaign_data.get("niche") or
@@ -182,9 +197,18 @@ class FunnelEngine:
             campaign_data.get("segmento") or
             campaign_data.get("settings", {}).get("niche") or
             campaign_data.get("settings", {}).get("specialty") or
-            campaign_data.get("settings", {}).get("segmento") or
-            "estetica"
+            campaign_data.get("settings", {}).get("segmento")
         )
+
+        if not niche_raw and contacts_raw and isinstance(contacts_raw, list) and len(contacts_raw) > 0 and isinstance(contacts_raw[0], dict):
+            first_c = contacts_raw[0]
+            first_svc = first_c.get("service") or first_c.get("servico") or first_c.get("niche") or first_c.get("name") or first_c.get("nome")
+            if first_svc:
+                niche_raw = normalize_niche_key(first_svc)
+
+        if not niche_raw:
+            niche_raw = "custom"
+
         niche_preset = get_niche_preset(niche_raw)
 
         script_config = campaign_data.get("steps") or campaign_data.get("script")
@@ -196,21 +220,11 @@ class FunnelEngine:
         settings.setdefault("delay_between_messages_seconds", 5)
         settings.setdefault("default_city", niche_preset.get("default_city", "São Paulo"))
         settings.setdefault("default_service", niche_preset.get("default_service", "seus serviços"))
-        settings.setdefault("niche", niche_preset.get("key", "estetica"))
+        settings.setdefault("niche", niche_preset.get("key", niche_raw))
         settings.setdefault("specialty", niche_preset.get("name", "Empresas e Serviços Locais"))
         settings.setdefault("niche_persona", niche_preset.get("ai_persona", ""))
         settings.setdefault("llm_provider", "groq")
         settings.setdefault("llm_model", "openai/gpt-oss-120b")
-
-        # Suporta contatos em várias chaves comuns
-        contacts_raw = (
-            campaign_data.get("contacts") or
-            campaign_data.get("contatos") or
-            campaign_data.get("leads") or
-            campaign_data.get("clinicas_estetica_sem_site") or
-            campaign_data.get("clientes") or
-            []
-        )
 
         # Filtra contatos válidos e sanitiza telefone
         valid_contacts = []
@@ -273,6 +287,11 @@ class FunnelEngine:
                 if k not in ["name", "nome", "phone", "telefone", "whatsapp", "celular", "custom_data"]:
                     custom_data[k] = v
 
+            # Detecção inteligente do nicho do contato
+            detected_niche = contact_data.get("niche") or contact_data.get("nicho") or normalize_niche_key(service_val or c_name)
+            custom_data["niche"] = detected_niche
+            custom_data["nicho"] = detected_niche
+
             valid_contacts.append({
                 "name": c_name,
                 "phone": phone_clean,
@@ -307,6 +326,10 @@ class FunnelEngine:
             logger.error(f"Campanha {campaign_id} não encontrada.")
             return
 
+        if campaign.status == "running":
+            logger.warning(f"Campanha '{campaign.name}' já está em execução. Evitando início duplicado.")
+            return
+
         await self.campaign_repo.update_status(campaign_id, "running")
         contacts = await self.contact_repo.list_by_campaign(campaign_id)
         settings = campaign.settings or {}
@@ -315,10 +338,14 @@ class FunnelEngine:
         logger.info(f"Iniciando campanha '{campaign.name}' com {len(contacts)} contatos.")
 
         for contact in contacts:
-            if contact.status != "pending":
+            fresh_contact = await self.contact_repo.get(contact.id)
+            if not fresh_contact or fresh_contact.status != "pending":
                 continue
 
-            success = await self._send_step_message(contact, campaign)
+            # Marca como em envio para evitar duplicação concorrente
+            await self.contact_repo.update(contact.id, status="sending")
+
+            success = await self._send_step_message(fresh_contact, campaign)
             if success:
                 await self.contact_repo.update(
                     contact.id,
@@ -339,7 +366,8 @@ class FunnelEngine:
 
         settings = campaign.settings or {}
         custom_data = contact.custom_data or {}
-        niche_key = custom_data.get("niche") or settings.get("niche") or "estetica"
+        raw_svc = custom_data.get("service") or custom_data.get("servico") or custom_data.get("serviço") or settings.get("default_service") or ""
+        niche_key = custom_data.get("niche") or custom_data.get("nicho") or (normalize_niche_key(raw_svc) if raw_svc else None) or settings.get("niche") or "custom"
         niche_preset = get_niche_preset(niche_key)
 
         human_name = clean_human_name(contact.name or "", incoming_message)
@@ -529,11 +557,54 @@ class FunnelEngine:
 
         bot_last_message = ""
         conv_history = []
+        outbound_messages = []
         for m in history_msgs:
             role = "assistant" if m.direction == "outbound" else "user"
             conv_history.append({"role": role, "content": m.content})
             if m.direction == "outbound":
                 bot_last_message = m.content
+                outbound_messages.append(m.content)
+
+        # 1. Compliance: Verificação de Opt-out estrito
+        msg_clean = re.sub(r"[^\w\s]", "", text.lower().strip())
+        is_opt_out = any(phrase in text.lower() for phrase in [
+            "tira da lista", "tire da lista", "remover meu numero", "remover meu contato",
+            "nao me chame mais", "não me chame mais", "para de mandar", "parar de mandar",
+            "descadastrar", "sair da lista", "spam", "bloquear", "nao autorizo"
+        ])
+        if is_opt_out:
+            await self.message_repo.create(
+                contact_id=contact.id,
+                direction="inbound",
+                content=text,
+                step_number=contact.current_step,
+                raw_response=text,
+                classification="opt_out"
+            )
+            await self.contact_repo.update(contact.id, status="completed", result="negative")
+            logger.info(f"Compliance: Lead {contact.name} ({phone}) solicitou opt-out. Contato encerrado.")
+            return
+
+        # 2. Anti-duplicação de pós-fechamento definitivo: apenas se for confirmação/agradecimento puro
+        ack_phrases = {"perfeito", "obrigado", "obrigada", "show", "beleza", "ok", "otimo", "ótimo", "combinado", "valeu", "ate", "até", "agradeco", "agradeço", "aguardo", "top", "combinadissimo"}
+        words = msg_clean.split()
+        if (contact.status == "completed" or contact.result in ["positive", "negative"]) and len(words) <= 5 and any(w in ack_phrases for w in words):
+            await self.message_repo.create(
+                contact_id=contact.id,
+                direction="inbound",
+                content=text,
+                step_number=contact.current_step,
+                raw_response=text,
+                classification="acknowledged"
+            )
+            logger.info(f"Contato {contact.name} ({phone}) enviou agradecimento/confirmação pós-fechamento '{text}'. Arquivado sem reenvio.")
+            return
+
+        # 3. Se o contato estava finalizado ou com resultado prévio mas enviou nova mensagem, reativa para negociação contínua
+        if contact.status == "completed" or contact.result is not None:
+            await self.contact_repo.update(contact.id, status="waiting_reply", result=None)
+            contact.status = "waiting_reply"
+            contact.result = None
 
         # Salva a mensagem recebida no banco
         inbound_msg = await self.message_repo.create(
@@ -563,23 +634,31 @@ class FunnelEngine:
         city = custom_data.get("city") or custom_data.get("cidade") or settings.get("default_city") or "São Paulo"
         service = custom_data.get("service") or custom_data.get("servico") or custom_data.get("serviço") or custom_data.get("product") or settings.get("default_service") or "seus serviços"
         
-        niche_key = custom_data.get("niche") or custom_data.get("nicho") or custom_data.get("specialty") or settings.get("niche") or settings.get("specialty") or "estetica"
+        # Detecção inteligente e precisa do nicho pelo serviço específico do contato
+        raw_contact_niche = custom_data.get("niche") or custom_data.get("nicho")
+        if not raw_contact_niche or raw_contact_niche == "custom" or raw_contact_niche == "estetica":
+            if service and service != "seus serviços":
+                detected = normalize_niche_key(service)
+                if detected != "custom":
+                    raw_contact_niche = detected
+
+        niche_key = raw_contact_niche or settings.get("niche") or "custom"
         niche_preset = get_niche_preset(niche_key)
-        specialty = custom_data.get("specialty") or settings.get("specialty") or niche_preset.get("name")
-        niche_persona = custom_data.get("niche_persona") or settings.get("niche_persona") or niche_preset.get("ai_persona")
+        specialty = custom_data.get("specialty") or niche_preset.get("name") or settings.get("specialty") or "Empresas Locais"
+        niche_persona = custom_data.get("niche_persona") or niche_preset.get("ai_persona") or settings.get("niche_persona") or ""
 
         contact_info = {
             "name": contact.name,
             "phone": contact.phone,
             "city": city,
             "service": service,
-            "niche": niche_preset.get("key", "estetica"),
+            "niche": niche_preset.get("key", niche_key),
             "specialty": specialty,
             "niche_persona": niche_persona,
             "custom_data": custom_data
         }
 
-        # Decisão inteligente com IA e contexto do funil
+        # Decisão inteligente com Agente Comercial IA Contextual
         decision = await self.classifier.decide_step_action(
             lead_message=text,
             bot_last_message=bot_last_message,
@@ -592,16 +671,35 @@ class FunnelEngine:
             decision["raw_message"] = text
 
         intent = decision.get("intent", "other")
-        logger.info(f"Decisão IA para {contact.name} ({phone}): Intent={intent}, Action={decision.get('action')}, Reasoning={decision.get('reasoning')}")
+        stage = decision.get("stage", "ENGAGED")
+        thinking = decision.get("thinking", "")
+        logger.info(f"Decisão CommercialAgent para {contact.name} ({phone}): Stage={stage}, Intent={intent}, Action={decision.get('action')}, Thinking={thinking}")
 
-        # Atualiza a mensagem inbound com a classificação
-        inbound_msg.classification = intent
+        # Persiste o conversation_state enriquecido no custom_data do contato
+        c_data = dict(contact.custom_data or {})
+        c_state = dict(c_data.get("conversation_state", {}))
+        c_state.update({
+            "stage": stage,
+            "intent": intent,
+            "emotion": decision.get("emotion", "neutro"),
+            "thinking": thinking,
+            "strategy": decision.get("strategy", ""),
+            "objective": decision.get("objective", ""),
+            "confidence": decision.get("confidence", 0.95),
+            "last_updated": datetime.now(timezone.utc).isoformat()
+        })
+        c_data["conversation_state"] = c_state
+        contact.custom_data = c_data
+        await self.contact_repo.update(contact.id, custom_data=c_data)
+
+        # Atualiza a mensagem inbound com a classificação / intenção
+        inbound_msg.classification = decision.get("classification") or intent
         await self.db.commit()
 
         # Executa a ação do funil baseada na decisão da IA
-        await self._process_classification(contact, campaign, current_step, decision, bot_last_message=bot_last_message)
+        await self._process_classification(contact, campaign, current_step, decision, bot_last_message=bot_last_message, history_msgs=history_msgs)
 
-    async def _process_classification(self, contact: Contact, campaign: Campaign, step: Dict[str, Any], decision: Any, bot_last_message: str = ""):
+    async def _process_classification(self, contact: Contact, campaign: Campaign, step: Dict[str, Any], decision: Any, bot_last_message: str = "", history_msgs: Optional[List[Message]] = None):
         """Processa a classificação/decisão e executa o próximo passo na árvore do funil."""
         script = campaign.script_config or []
 
@@ -611,6 +709,7 @@ class FunnelEngine:
             action = decision.get("action", "")
             next_step_hint = decision.get("suggested_next_step", decision.get("next_step"))
             raw_msg = decision.get("raw_message", "")
+            generated_reply = decision.get("generated_reply")
         else:
             intent = str(decision)
             action = ""
@@ -694,16 +793,29 @@ class FunnelEngine:
                 response_message = "Olá! Caso tenha alguma dúvida sobre o esboço sem custo da página de {service}, estou à disposição!"
                 next_step = contact.current_step + 1
 
-        # Se for SIM no Passo 1 e o próximo step for o Passo 2:
-        if intent == "yes" and not response_message and (next_step == 2 or contact.current_step == 0):
-            target_idx, target_step = self._find_step(script, 2)
-            if target_step and target_step.get("message"):
-                response_message = target_step.get("message")
-                media_path = target_step.get("media_path") or target_step.get("media_url") or target_step.get("image")
-                next_step = 2
+        # Injeção da Resposta Contextual Dinâmica do CommercialAgent
+        if generated_reply and intent != "opt_out":
+            response_message = generated_reply
 
-        # Se a ramificação tiver uma mensagem de resposta ou mídia configurada, envia para o WhatsApp
-        if response_message or media_path:
+        # Se for SIM e não houver generated_reply na decisão:
+        if intent == "yes" and not response_message:
+            # Verifica se o pitch ou modelo já foi apresentado no histórico
+            was_pitch_sent = any(
+                m.direction == "outbound" and any(marker in (m.content or "").lower() for marker in ["147", "protótipo", "prototipo", "esboço", "esboco", "google", "sem site no topo", "link do modelo"])
+                for m in (history_msgs or [])
+            ) or (contact.current_step > 0)
+
+            if was_pitch_sent or contact.current_step > 0:
+                response_message = "Perfeito, {name}! Vou estruturar a página personalizada da sua empresa com foco em agendamentos de {service}. Em até 24h te envio o link exclusivo aqui no WhatsApp para você ver funcionando no celular!"
+                next_step = "end_positive"
+            else:
+                target_idx, target_step = self._find_step(script, 2)
+                if target_step and target_step.get("message"):
+                    response_message = target_step.get("message")
+                    media_path = target_step.get("media_path") or target_step.get("media_url") or target_step.get("image")
+                    next_step = 2
+
+        if (response_message or media_path) and action != "none":
             formatted_msg = self._format_message(response_message or "", contact, campaign, incoming_message=raw_msg)
             
             # Anti-loop / Anti-repetição exata: se a mensagem for idêntica à última enviada pelo bot, varia a resposta
@@ -724,26 +836,34 @@ class FunnelEngine:
                         contact, campaign, incoming_message=raw_msg
                     )
 
-            resolved_media = self._resolve_media_path(media_path)
-            if resolved_media and (os.path.exists(resolved_media) or resolved_media.startswith("http")) and hasattr(self.evolution, "send_media_message"):
-                await self.evolution.send_media_message(
-                    phone=contact.phone,
-                    media_path_or_url=resolved_media,
-                    caption=formatted_msg,
-                    media_type="image",
-                    mimetype="image/png",
-                    file_name="concursosagora-analytics.png"
-                )
-            else:
-                await self.evolution.send_text_message(contact.phone, formatted_msg)
-
-            await self.message_repo.create(
-                contact_id=contact.id,
-                direction="outbound",
-                content=formatted_msg,
-                step_number=contact.current_step,
-                classification=intent
+            # Verificação estrita se a mensagem exata já foi enviada no histórico deste contato
+            is_already_sent = any(
+                m.direction == "outbound" and m.content and m.content.strip() == formatted_msg.strip()
+                for m in (history_msgs or [])
             )
+            if is_already_sent:
+                logger.warning(f"Anti-duplicação: Mensagem idêntica já foi enviada anteriormente para {contact.name} ({contact.phone}). Bloqueando reenvio.")
+            else:
+                resolved_media = self._resolve_media_path(media_path)
+                if resolved_media and (os.path.exists(resolved_media) or resolved_media.startswith("http")) and hasattr(self.evolution, "send_media_message"):
+                    await self.evolution.send_media_message(
+                        phone=contact.phone,
+                        media_path_or_url=resolved_media,
+                        caption=formatted_msg,
+                        media_type="image",
+                        mimetype="image/png",
+                        file_name="concursosagora-analytics.png"
+                    )
+                else:
+                    await self.evolution.send_text_message(contact.phone, formatted_msg)
+
+                await self.message_repo.create(
+                    contact_id=contact.id,
+                    direction="outbound",
+                    content=formatted_msg,
+                    step_number=contact.current_step,
+                    classification=intent
+                )
 
         # Decide a transição de estado do contato
         if next_step == "end_positive" or (intent == "yes" and contact.current_step > 0 and next_step is None):
@@ -776,54 +896,72 @@ class FunnelEngine:
             # Encontra o próximo step na árvore do funil
             target_idx, target_step = self._find_step(script, next_step)
             if target_idx is not None and target_step is not None:
+                is_wait = target_step.get("wait_for_reply", True)
                 await self.contact_repo.update(
                     contact.id,
                     current_step=target_idx,
-                    status="waiting_reply" if target_step.get("wait_for_reply", True) else "completed",
+                    status="waiting_reply" if is_wait else "completed",
+                    result=None if is_wait else contact.result,
                     last_message_at=datetime.now(timezone.utc)
                 )
 
                 # Se não enviamos uma mensagem na ramificação e o próximo step possui mensagem inicial diferente, envia
                 if not response_message and target_step.get("message") and target_idx != contact.current_step:
                     contact.current_step = target_idx
-                    await self._send_step_message(contact, campaign)
-                    await self.contact_repo.update(
-                        contact.id,
-                        status="waiting_reply" if target_step.get("wait_for_reply", True) else "completed",
-                        last_message_at=datetime.now(timezone.utc)
-                    )
+                    success = await self._send_step_message(contact, campaign)
+                    if not success:
+                        await self.contact_repo.update(contact.id, status="error")
+                    else:
+                        await self.contact_repo.update(
+                            contact.id,
+                            status="waiting_reply" if is_wait else "completed",
+                            result=None if is_wait else contact.result,
+                            last_message_at=datetime.now(timezone.utc)
+                        )
             else:
                 logger.warning(f"Próximo step '{next_step}' não encontrado no roteiro.")
-                result = "positive" if intent == "yes" else "negative" if intent == "no" else None
-                if result:
+                if intent in ["no", "rejeicao", "opt_out"]:
                     await self.contact_repo.update(
                         contact.id,
                         status="completed",
-                        result=result,
+                        result="negative",
+                        last_message_at=datetime.now(timezone.utc)
+                    )
+                elif intent in ["yes", "compra_imediata"] and contact.current_step > 0:
+                    await self.contact_repo.update(
+                        contact.id,
+                        status="completed",
+                        result="positive",
                         last_message_at=datetime.now(timezone.utc)
                     )
                 else:
                     await self.contact_repo.update(
                         contact.id,
                         status="waiting_reply",
+                        result=None,
                         last_message_at=datetime.now(timezone.utc)
                     )
         else:
-            # Sem próximo step configurado
-            if intent in ["greeting", "doubt", "other"]:
-                # Permanece aguardando o lead
-                await self.contact_repo.update(
-                    contact.id,
-                    status="waiting_reply",
-                    last_message_at=datetime.now(timezone.utc)
-                )
-            else:
-                result = "positive" if intent == "yes" else "negative"
+            # Sem próximo step configurado (continuidade de diálogo da IA)
+            if intent in ["no", "rejeicao", "opt_out"]:
                 await self.contact_repo.update(
                     contact.id,
                     status="completed",
-                    result=result,
-                    current_step=contact.current_step + 1,
+                    result="negative",
+                    last_message_at=datetime.now(timezone.utc)
+                )
+            elif intent in ["yes", "compra_imediata"] and contact.current_step > 0:
+                await self.contact_repo.update(
+                    contact.id,
+                    status="completed",
+                    result="positive",
+                    last_message_at=datetime.now(timezone.utc)
+                )
+            else:
+                await self.contact_repo.update(
+                    contact.id,
+                    status="waiting_reply",
+                    result=None,
                     last_message_at=datetime.now(timezone.utc)
                 )
 

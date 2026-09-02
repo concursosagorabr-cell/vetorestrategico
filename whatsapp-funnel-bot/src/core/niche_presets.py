@@ -57,6 +57,10 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                     "next_step": 2,
                     "message": "Maravilha, {name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, custa apenas R$ 147/mês tudo incluso. Faz sentido eu te mandar o link amanhã?"
                 },
+                "on_ask_identity": {
+                    "next_step": 2,
+                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo e perdem clientes todo dia para a concorrência.\n\nNós criamos modelos de páginas ultra-rápidas para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, custa apenas R$ 147/mês tudo incluso. Faz sentido eu te mandar o link amanhã?"
+                },
                 "on_no": {
                     "next_step": "end_negative",
                     "message": "Entendido! Muito obrigado pela atenção e sucesso nos negócios."
@@ -219,6 +223,10 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                     "next_step": 2,
                     "message": "Excelente, {name}! O motivo do contato é que notei que vocês são referência em {service} aqui em {city}, mas quando pacientes buscam por dentistas especializados no Google, o consultório de vocês não aparece com uma página moderna direto para o WhatsApp.\n\nHoje quem busca por {service} no Google quer agilidade e segurança para agendar. Nós desenvolvemos páginas odontológicas de alta velocidade que triplicam o contato de pacientes particulares.\n\nPosso personalizar um modelo exclusivo para a {name} sem custo nenhum para vocês avaliarem em 24h? Se aprovarem, a manutenção com tudo incluso é só R$ 147/mês. Faz sentido te enviar a prévia amanhã?"
                 },
+                "on_ask_identity": {
+                    "next_step": 2,
+                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é bem direto: notei que o consultório de vocês é referência em {service} aqui em {city}, mas quando pacientes buscam por dentistas especializados no Google, vocês estão sem site no topo e perdem pacientes particulares para a concorrência.\n\nNós desenvolvemos páginas odontológicas de alta velocidade para captação direta no WhatsApp. Posso personalizar um modelo exclusivo para a {name} sem custo nenhum para vocês avaliarem em 24h? Se aprovarem, a manutenção com tudo incluso é só R$ 147/mês. Faz sentido te enviar a prévia amanhã?"
+                },
                 "on_no": {
                     "next_step": "end_negative",
                     "message": "Entendido, doutor(a)! Agradeço a atenção e desejo sucesso no consultório."
@@ -379,6 +387,10 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 "on_yes": {
                     "next_step": 2,
                     "message": "Show de bola, {name}! O motivo da pergunta é simples: vi que vocês são uma oficina forte em {service} aqui em {city}, mas quando o motorista pesquisa no Google com o carro quebrado ou precisando de revisão, vocês não estão aparecendo com site rápido no topo.\n\nMotorista pesquisa no Google e quer chamar no WhatsApp na hora. Eu criei um modelo de página para oficina mecânica que triplica esses chamados de orçamento.\n\nPosso montar um esboço exclusivo para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se curtirem, a manutenção é só R$ 147/mês. Posso preparar para amanhã?"
+                },
+                "on_ask_identity": {
+                    "next_step": 2,
+                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é simples: vi que vocês são uma oficina forte em {service} aqui em {city}, mas quando o motorista pesquisa no Google com o carro quebrado ou precisando de revisão, vocês não estão aparecendo com site rápido no topo e perdem serviços para concorrentes.\n\nEu criei um modelo de página para oficina mecânica que triplica esses chamados de orçamento no WhatsApp. Posso montar um esboço exclusivo para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se curtirem, a manutenção é só R$ 147/mês. Posso preparar para amanhã?"
                 },
                 "on_no": {
                     "next_step": "end_negative",
@@ -541,6 +553,10 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                     "next_step": 2,
                     "message": "Que ótimo, {name}! O motivo do contato é que vi que vocês cuidam com muito carinho de {service} aqui em {city}, mas quando tutores pesquisam por veterinário no Google, a clínica de vocês não aparece com destaque e botão rápido para o WhatsApp.\n\nTutores que buscam no Google querem falar rápido para agendar consultas e tirar dúvidas sobre seus pets. Nós desenvolvemos páginas veterinárias de alta velocidade que facilitam esse contato.\n\nPosso preparar um esboço sem custo nenhum para a {name} avaliar em 24h? Se aprovarem, a manutenção é só R$ 147/mês. Posso te mandar amanhã?"
                 },
+                "on_ask_identity": {
+                    "next_step": 2,
+                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é que vi que vocês cuidam com muito carinho de {service} aqui em {city}, mas quando tutores pesquisam por veterinário no Google, a clínica de vocês não aparece com destaque no topo e perdem atendimentos para concorrentes.\n\nNós desenvolvemos páginas veterinárias de alta velocidade que triplicam o contato de tutores no WhatsApp. Posso preparar um esboço sem custo nenhum para a {name} avaliar em 24h? Se aprovarem, a manutenção é só R$ 147/mês. Posso te mandar amanhã?"
+                },
                 "on_no": {
                     "next_step": "end_negative",
                     "message": "Entendido! Agradeço a atenção e desejo muito sucesso para a clínica e aos pets."
@@ -701,6 +717,10 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 "on_yes": {
                     "next_step": 2,
                     "message": "Excelente, Dr(a). {name}! O motivo do contato é que notei a sólida atuação de vocês em {city}, mas quando potenciais clientes pesquisam no Google por advogados especializados em {service}, o escritório não possui uma página institucional de alta velocidade otimizada para WhatsApp.\n\nHoje clientes com demandas jurídicas urgentes buscam primeiro no Google por profissionais de confiança.\n\nNós criamos landing pages jurídicas de alta autoridade e sobriedade. Posso estruturar um modelo exclusivo para a {name} sem custo para vocês avaliarem em 24h? Se aprovarem, a manutenção com tudo incluso é de R$ 147/mês. Faz sentido eu te enviar o link amanhã?"
+                },
+                "on_ask_identity": {
+                    "next_step": 2,
+                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é que notei a sólida atuação de vocês em {service} aqui em {city}, mas quando potenciais clientes pesquisam no Google por advogados especializados, o escritório não possui uma página institucional de alta velocidade no topo e perdem clientes para a concorrência.\n\nNós criamos landing pages jurídicas de alta autoridade e sobriedade. Posso estruturar um modelo exclusivo para a {name} sem custo para vocês avaliarem em 24h? Se aprovarem, a manutenção com tudo incluso é de R$ 147/mês. Faz sentido eu te enviar o link amanhã?"
                 },
                 "on_no": {
                     "next_step": "end_negative",
@@ -863,6 +883,10 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                     "next_step": 2,
                     "message": "Maravilha, {name}! O motivo da pergunta é que notei que vocês estão sem site no Google e estão perdendo clientes por isso. Eu crio sites de alta performance para o seu segmento e topo desenhar a página da sua empresa de graça. Em 24 horas te mando o link do site funcionando.\n\nSe você gostar do resultado, fechamos apenas a manutenção de R$ 147/mês. Sem contrato de fidelidade e risco zero. Se não quiser ficar com o site, não me paga nada. Posso começar o seu esboço para te mostrar amanhã?"
                 },
+                "on_ask_identity": {
+                    "next_step": 2,
+                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é bem direto: notei que vocês atuam com {service} aqui em {city}, mas quando potenciais clientes pesquisam no Google, vocês estão sem site no topo e perdem vendas para concorrentes.\n\nNós criamos modelos de páginas ultra-rápidas focadas em captação no WhatsApp. Posso personalizar um modelo exclusivo para a {name} sem custo nenhum para vocês avaliarem em 24h? Se aprovarem, a manutenção é apenas R$ 147/mês. Faz sentido eu te mandar o link amanhã?"
+                },
                 "on_no": {
                     "next_step": "end_negative",
                     "message": "Entendido! Muito obrigado pela atenção. Se precisarem de algo no futuro, estamos à disposição. Tenha um ótimo dia!"
@@ -989,23 +1013,23 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
 def normalize_niche_key(key: Optional[str]) -> str:
     """Normaliza o identificador do nicho para as chaves suportadas."""
     if not key:
-        return "estetica"
+        return "custom"
     
     k = str(key).lower().strip()
-    if any(w in k for w in ["odonto", "dentist", "dente", "ortodon", "implante"]):
+    if any(w in k for w in ["odonto", "dentist", "dente", "ortodon", "implante", "protese", "prótese", "invisalign", "clareamento", "periodon", "endodon"]):
         return "odontologia"
-    if any(w in k for w in ["mecanic", "mecânic", "oficina", "auto", "carro", "veiculo", "veículo", "cambio", "câmbio", "suspens"]):
+    if any(w in k for w in ["mecanic", "mecânic", "oficina", "auto", "carro", "veiculo", "veículo", "cambio", "câmbio", "suspens", "funilaria", "pneu", "alinhamento", "balanceamento", "injecao", "injeção"]):
         return "mecanica"
-    if any(w in k for w in ["vet", "pet", "animal", "bicho", "cachorr", "gato"]):
+    if any(w in k for w in ["vet", "pet", "animal", "bicho", "cachorr", "gato", "canil", "banho e tosa"]):
         return "veterinaria"
-    if any(w in k for w in ["advog", "jurid", "juríd", "direito", "advocaci", "escritorio jurid"]):
+    if any(w in k for w in ["advog", "jurid", "juríd", "direito", "advocaci", "escritorio jurid", "oab", "trabalhista", "previdenciario", "previdenciário", "tributario", "tributário"]):
         return "advocacia"
-    if any(w in k for w in ["estet", "estét", "beleza", "laser", "botox", "harmoniz", "spa", "salao", "salão"]):
+    if any(w in k for w in ["estet", "estét", "beleza", "laser", "botox", "harmoniz", "spa", "salao", "salão", "depila", "depilação", "emagrec", "cabel", "sobrancelha", "unha", "massagem"]):
         return "estetica"
     if any(w in k for w in ["custom", "personaliz", "geral", "outro"]):
         return "custom"
     
-    return "estetica"
+    return "custom"
 
 
 def get_niche_preset(key: Optional[str]) -> Dict[str, Any]:

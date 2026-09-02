@@ -194,32 +194,32 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2.5 text-xs text-slate-400">
               <li>
-                <Link href="/estetica" className="hover:text-emerald-300 hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 text-emerald-400 font-semibold group">
+                <Link href="/sites-para-estetica" className="hover:text-emerald-300 hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 text-emerald-400 font-semibold group">
                   <span className="text-[10px]">✦</span> Clínicas de Estética
                 </Link>
               </li>
               <li>
-                <Link href="/odontologia" className="hover:text-sky-300 hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 text-sky-400 font-semibold group">
+                <Link href="/sites-para-odontologia" className="hover:text-sky-300 hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 text-sky-400 font-semibold group">
                   <span className="text-[10px]">✦</span> Consultórios Odonto
                 </Link>
               </li>
               <li>
-                <Link href="/clinicas" className="hover:text-teal-300 hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 text-teal-400 font-medium group">
+                <Link href="/sites-para-clinicas" className="hover:text-teal-300 hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 text-teal-400 font-medium group">
                   <span className="text-[10px]">✦</span> Clínicas &amp; Médicos
                 </Link>
               </li>
               <li>
-                <Link href="/ecommerce" className="hover:text-amber-300 hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 text-amber-400 font-medium group">
+                <Link href="/sites-para-ecommerce" className="hover:text-amber-300 hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 text-amber-400 font-medium group">
                   <span className="text-[10px]">✦</span> E-commerce &amp; Varejo
                 </Link>
               </li>
               <li>
-                <Link href="/advocacia" className="hover:text-indigo-300 hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 text-indigo-400 font-medium group">
+                <Link href="/sites-para-advocacia" className="hover:text-indigo-300 hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 text-indigo-400 font-medium group">
                   <span className="text-[10px]">✦</span> Advocacia &amp; Jurídico
                 </Link>
               </li>
               <li>
-                <Link href="/contabilidade" className="hover:text-emerald-200 hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 text-emerald-300 font-medium group">
+                <Link href="/sites-para-contabilidade" className="hover:text-emerald-200 hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 text-emerald-300 font-medium group">
                   <span className="text-[10px]">✦</span> Contabilidade &amp; Fiscal
                 </Link>
               </li>

@@ -534,4 +534,67 @@ async def test_royal_face_greeting_keeps_lead_waiting_reply_in_step1(db_session,
     contacts = await engine.contact_repo.list_by_campaign(campaign.id)
     assert contacts[0].status == "waiting_reply"
     assert contacts[0].current_step == 0
-    assert contacts[0].result is None
+    assert contacts[0].result is None
+
+
+@pytest.mark.asyncio
+async def test_dra_cintia_no_duplicate_closing_message_when_lead_confirms_or_thanks(db_session, mock_evolution, mock_classifier):
+    """
+    Testa o cenário real da Dra Cintia:
+    1. Bot envia Isca
+    2. Lead confirma atendimento -> Bot envia Pitch de 24h
+    3. Lead aceita proposta -> Bot envia mensagem de fechamento de 24h
+    4. Lead envia 'Perfeito, obrigada!' ou 'Show' -> Bot NÃO DEVE enviar a mensagem de 24h novamente
+    """
+    campaign_data = {
+        "name": "Prospecção Estética Dra Cintia",
+        "contacts": [
+            {
+                "name": "Dra Cintia Estética Avançada",
+                "phone": "5511988887777",
+                "service": "harmonização facial",
+                "city": "São Paulo"
+            }
+        ],
+        "settings": {
+            "delay_between_contacts_seconds": 0
+        }
+    }
+    engine = FunnelEngine(db_session, mock_evolution, mock_classifier)
+    campaign = await engine.create_campaign(campaign_data)
+    await engine.start_campaign(campaign.id)
+
+    # 1. Isca inicial enviada
+    assert mock_evolution.send_text_message.call_count == 1
+    mock_evolution.send_text_message.reset_mock()
+
+    # 2. Dra Cintia confirma que trabalha com harmonização
+    await engine.handle_incoming_message("5511988887777", "Olá, trabalhamos sim!", campaign.id)
+    assert mock_evolution.send_text_message.call_count == 1
+    phone, pitch_msg = mock_evolution.send_text_message.call_args[0]
+    assert "harmonização facial" in pitch_msg
+    assert "R$ 147" in pitch_msg
+    mock_evolution.send_text_message.reset_mock()
+
+    # 3. Dra Cintia aceita ver o esboço gratuito
+    await engine.handle_incoming_message("5511988887777", "Pode mandar sim, quero ver como fica", campaign.id)
+    assert mock_evolution.send_text_message.call_count == 1
+    phone, closing_msg = mock_evolution.send_text_message.call_args[0]
+    assert "24h" in closing_msg or "24 horas" in closing_msg
+    mock_evolution.send_text_message.reset_mock()
+
+    # 4. Dra Cintia responde com confirmação/agradecimento pós-fechamento: 'Perfeito, obrigada!'
+    await engine.handle_incoming_message("5511988887777", "Perfeito, obrigada Marco!", campaign.id)
+
+    # O bot NÃO pode reenviar a mensagem de fechamento de 24h!
+    assert mock_evolution.send_text_message.call_count == 0
+
+    # 5. Dra Cintia envia mais uma mensagem: 'Combinado'
+    await engine.handle_incoming_message("5511988887777", "Combinado 👍", campaign.id)
+    assert mock_evolution.send_text_message.call_count == 0
+
+    # Verifica que o contato está concluído como positivo e todas as mensagens constam no histórico
+    contacts = await engine.contact_repo.list_by_campaign(campaign.id)
+    assert contacts[0].status == "completed"
+    assert contacts[0].result == "positive"
+

@@ -328,6 +328,24 @@ async def list_niches():
 
 # ============ WEBHOOK ============
 
+# Cache de deduplicação de webhooks (ID da mensagem -> timestamp) para evitar reprocessamento concorrente
+_processed_webhook_messages: dict = {}
+
+def _is_duplicate_webhook_msg(msg_id: str) -> bool:
+    """Verifica e registra o ID da mensagem no cache com expiração de 10 minutos."""
+    if not msg_id:
+        return False
+    now = datetime.now().timestamp()
+    # Limpeza de chaves antigas (> 600 segundos)
+    expired = [k for k, ts in _processed_webhook_messages.items() if now - ts > 600]
+    for k in expired:
+        _processed_webhook_messages.pop(k, None)
+
+    if msg_id in _processed_webhook_messages:
+        return True
+    _processed_webhook_messages[msg_id] = now
+    return False
+
 @app.post("/webhook/evolution")
 async def evolution_webhook(request: Request, db: AsyncSession = Depends(get_db)):
     """Recebe webhooks do Evolution API quando chegam mensagens."""
@@ -349,6 +367,11 @@ async def evolution_webhook(request: Request, db: AsyncSession = Depends(get_db)
     key = message_data.get("key", {})
     if key.get("fromMe", True):
         return {"status": "ignored"}
+
+    msg_id = key.get("id", "")
+    if msg_id and _is_duplicate_webhook_msg(msg_id):
+        logger.info(f"Webhook duplicado ignorado para message_id: {msg_id}")
+        return {"status": "ignored", "reason": "duplicate_message_id"}
 
     phone = key.get("remoteJid", "").replace("@s.whatsapp.net", "").replace("@g.us", "")
     message_content = message_data.get("message", {})
@@ -372,9 +395,86 @@ async def evolution_webhook(request: Request, db: AsyncSession = Depends(get_db)
     classifier = LLMClassifier()
     engine = FunnelEngine(db, evo, classifier)
 
-    await engine.handle_incoming_message(phone, text)
+    try:
+        await engine.handle_incoming_message(phone, text)
+    except Exception as e:
+        logger.error(f"Erro inesperado no processamento de mensagem de {phone}: {e}", exc_info=True)
+        try:
+            from src.core.alerts import add_alert
+            add_alert("Erro no Processamento", f"Falha crítica ao processar mensagem do número {phone}. O webhook foi reiniciado. Erro: {str(e)[:100]}", "error")
+        except Exception:
+            pass
+        if msg_id:
+            _processed_webhook_messages.pop(msg_id, None)
+        return {"status": "error", "reason": "internal_error"}
 
     return {"status": "processed"}
+
+# ============ ACTIONS ============
+
+@app.post("/api/contacts/{contact_id}/send-link")
+async def send_model_link(contact_id: str, request: Request, db: AsyncSession = Depends(get_db), user: str = Depends(verify_credentials)):
+    """Envia um link de modelo de site para o cliente via atendente manual."""
+    from uuid import UUID
+    data = await request.json()
+    link = data.get("link")
+    if not link:
+        raise HTTPException(status_code=400, detail="Link não fornecido")
+
+    c_repo = ContactRepository(db)
+    m_repo = MessageRepository(db)
+
+    try:
+        cid = UUID(str(contact_id))
+    except Exception:
+        raise HTTPException(status_code=400, detail="ID de contato inválido")
+
+    contact = await c_repo.get(cid)
+    if not contact:
+        raise HTTPException(status_code=404, detail="Contato não encontrado")
+
+    evo = EvolutionClient()
+
+    from src.core.name_cleaner import clean_human_name
+    human_name = clean_human_name(contact.name or "Cliente")
+    message_text = (
+        f"Perfeito, {human_name}! Acabei de separar o link do modelo de site personalizado "
+        f"focado no seu negócio para você dar uma olhada. Acesse aqui: {link}\n\n"
+        f"O que achou da estrutura? Faz sentido para começarmos a captar mais clientes?"
+    )
+
+    # Envia a mensagem via Evolution API
+    success = await evo.send_text_message(contact.phone, message_text)
+
+    if success:
+        # Salva a mensagem no histórico
+        await m_repo.create(
+            contact_id=contact.id,
+            direction="outbound",
+            content=message_text,
+            step_number=contact.current_step,
+            classification="manual_link"
+        )
+        
+        from datetime import timezone
+        
+        # Atualiza o status do contato para negociação pós-link
+        c_data = dict(contact.custom_data or {})
+        c_data["model_link_sent"] = True
+        c_data["model_link_url"] = link
+        c_data["stage"] = "post_link_negotiation"
+
+        await c_repo.update(
+            contact.id,
+            status="waiting_reply",
+            result=None,
+            custom_data=c_data,
+            last_message_at=datetime.now(timezone.utc)
+        )
+        await db.commit()
+        return {"status": "sent", "link": link}
+    else:
+        raise HTTPException(status_code=500, detail="Falha ao enviar a mensagem no WhatsApp")
 
 # ============ STATUS ============
 
@@ -384,6 +484,15 @@ async def get_status():
     evo = EvolutionClient()
     status = await evo.get_connection_status()
     return status
+
+@app.get("/api/alerts")
+async def get_system_alerts():
+    """Retorna os alertas de sistema em tempo real."""
+    try:
+        from src.core.alerts import get_alerts
+        return get_alerts()
+    except Exception:
+        return []
 
 @app.get("/api/qrcode")
 async def get_qrcode():

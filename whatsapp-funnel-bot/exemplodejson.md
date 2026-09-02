@@ -38,7 +38,7 @@ O resultado final DEVE SER ESTRITAMENTE o JSON abaixo preenchido, sem explicaç�
       "expected_response": "Confirmação de que a empresa atende o serviço solicitado.",
       "on_yes": {
         "next_step": 2,
-        "message": "Maravilha, {name}! O motivo da pergunta é que notei que vocês estão sem site no Google e estão perdendo clientes por isso aqui em {city}. Eu crio sites de alta performance para o segmento de {service} e topo desenhar a página da sua empresa de graça. Em 24 horas te mando o link do site funcionando. Se você gostar do resultado, fechamos apenas a manutenção de R$ 97/mês. Sem contrato de fidelidade e risco zero. Se não quiser ficar com o site, não me paga nada. Posso começar o seu esboço para te mostrar amanhã?"
+        "message": "Maravilha, {name}! O motivo da pergunta é que notei que vocês estão sem site rápido posicionado no Google e estão perdendo clientes por isso aqui em {city}. Eu crio plataformas web de alta performance para o segmento de {service} e topo desenhar o protótipo da sua empresa de graça. Em 24 horas te mando o link funcionando. Se você gostar do resultado, fechamos apenas a manutenção a partir de R$ 147/mês. Sem contrato de fidelidade e risco zero. Se não quiser ficar com o site, não me paga nada. Posso começar o seu esboço para te mostrar amanhã?"
       },
       "on_no": {
         "next_step": "end_negative",
@@ -52,7 +52,7 @@ O resultado final DEVE SER ESTRITAMENTE o JSON abaixo preenchido, sem explicaç�
     {
       "step": 2,
       "name": "Pitch de 24h - Meio de Funil",
-      "message": "Maravilha, {name}! O motivo da pergunta é que notei que vocês estão sem site no Google e estão perdendo clientes por isso aqui em {city}. Eu crio sites de alta performance para o segmento de {service} e topo desenhar a página da sua empresa de graça. Em 24 horas te mando o link do site funcionando. Se você gostar do resultado, fechamos apenas a manutenção de R$ 97/mês. Sem contrato de fidelidade e risco zero. Se não quiser ficar com o site, não me paga nada. Posso começar o seu esboço para te mostrar amanhã?",
+      "message": "Maravilha, {name}! O motivo da pergunta é que notei que vocês estão sem site rápido posicionado no Google e estão perdendo clientes por isso aqui em {city}. Eu crio plataformas web de alta performance para o segmento de {service} e topo desenhar o protótipo da sua empresa de graça. Em 24 horas te mando o link funcionando. Se você gostar do resultado, fechamos apenas a manutenção a partir de R$ 147/mês. Sem contrato de fidelidade e risco zero. Se não quiser ficar com o site, não me paga nada. Posso começar o seu esboço para te mostrar amanhã?",
       "wait_for_reply": true,
       "timeout_hours": 24,
       "expected_response": "Resposta do lead: aceitar o esboço sem custo, recusar ou apresentar objeções de rede social, orçamento ou já ter site.",
@@ -70,11 +70,11 @@ O resultado final DEVE SER ESTRITAMENTE o JSON abaixo preenchido, sem explicaç�
       },
       "on_objection_budget": {
         "next_step": 4,
-        "message": "Exatamente por isso eu assumo 100% do risco. Crio o design inicial sem te cobrar um centavo. Você só paga a taxa de R$ 97/mês se realmente gostar e colocar no ar. Um único cliente novo que o Google te trouxer no mês já paga isso com folga. Posso montar o layout?"
+        "message": "Exatamente por isso eu assumo 100% do risco. Crio o design inicial sem te cobrar um centavo. Você só paga a taxa a partir de R$ 147/mês se realmente aprovar a proposta e colocar no ar. Um único cliente novo que o Google te trouxer no mês já paga isso com folga. Posso montar o layout?"
       },
       "on_objection_has_website": {
         "next_step": 5,
-        "message": "Eu dei uma olhada e notei que a página demora alguns segundos para carregar no 3G/4G. O Google pune sites lentos não recomendando a página. Eu crio uma versão muito mais rápida. A gente joga os dois no PageSpeed Insights (ferramenta oficial do Google). Se o meu não for visivelmente mais rápido e com nota maior, não fechamos negócio. Posso fazer o teste?"
+        "message": "Eu dei uma olhada e notei que a página demora alguns segundos para carregar no celular. O Google pune sites lentos não recomendando a página. Eu crio uma versão muito mais rápida. A gente joga os dois no PageSpeed Insights (ferramenta oficial do Google). Se o meu não for visivelmente mais rápido e com nota maior, não fechamos negócio. Posso fazer o teste?"
       }
     },
     {

@@ -51,6 +51,16 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      { source: '/advocacia', destination: '/sites-para-advocacia', permanent: true },
+      { source: '/clinicas', destination: '/sites-para-clinicas', permanent: true },
+      { source: '/contabilidade', destination: '/sites-para-contabilidade', permanent: true },
+      { source: '/ecommerce', destination: '/sites-para-ecommerce', permanent: true },
+      { source: '/estetica', destination: '/sites-para-estetica', permanent: true },
+      { source: '/odontologia', destination: '/sites-para-odontologia', permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

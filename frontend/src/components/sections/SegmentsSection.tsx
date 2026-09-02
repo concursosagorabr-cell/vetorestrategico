@@ -81,7 +81,7 @@ export const SegmentsSection: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             
             <Link
-              href="/estetica"
+              href="/sites-para-estetica"
               className="p-4 rounded-2xl bg-gradient-to-br from-emerald-50/80 to-white border border-emerald-200 flex items-center justify-between hover:shadow-md hover:border-emerald-300 transition-all group"
             >
               <div className="flex items-center gap-3 min-w-0">
@@ -99,7 +99,7 @@ export const SegmentsSection: React.FC = () => {
             </Link>
 
             <Link
-              href="/odontologia"
+              href="/sites-para-odontologia"
               className="p-4 rounded-2xl bg-gradient-to-br from-sky-50/80 to-white border border-sky-200 flex items-center justify-between hover:shadow-md hover:border-sky-300 transition-all group"
             >
               <div className="flex items-center gap-3 min-w-0">
@@ -117,7 +117,7 @@ export const SegmentsSection: React.FC = () => {
             </Link>
 
             <Link
-              href="/clinicas"
+              href="/sites-para-clinicas"
               className="p-4 rounded-2xl bg-gradient-to-br from-teal-50/80 to-white border border-teal-200 flex items-center justify-between hover:shadow-md hover:border-teal-300 transition-all group"
             >
               <div className="flex items-center gap-3 min-w-0">
@@ -135,7 +135,7 @@ export const SegmentsSection: React.FC = () => {
             </Link>
 
             <Link
-              href="/ecommerce"
+              href="/sites-para-ecommerce"
               className="p-4 rounded-2xl bg-gradient-to-br from-amber-50/80 to-white border border-amber-200 flex items-center justify-between hover:shadow-md hover:border-amber-300 transition-all group"
             >
               <div className="flex items-center gap-3 min-w-0">
@@ -153,7 +153,7 @@ export const SegmentsSection: React.FC = () => {
             </Link>
 
             <Link
-              href="/advocacia"
+              href="/sites-para-advocacia"
               className="p-4 rounded-2xl bg-gradient-to-br from-indigo-50/80 to-white border border-indigo-200 flex items-center justify-between hover:shadow-md hover:border-indigo-300 transition-all group"
             >
               <div className="flex items-center gap-3 min-w-0">
@@ -171,7 +171,7 @@ export const SegmentsSection: React.FC = () => {
             </Link>
 
             <Link
-              href="/contabilidade"
+              href="/sites-para-contabilidade"
               className="p-4 rounded-2xl bg-gradient-to-br from-emerald-50/80 to-white border border-emerald-300 flex items-center justify-between hover:shadow-md hover:border-emerald-400 transition-all group"
             >
               <div className="flex items-center gap-3 min-w-0">
