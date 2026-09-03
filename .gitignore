@@ -47,3 +47,9 @@ yarn-error.log*
 .idea/
 .DS_Store
 Thumbs.db
+
+# Pastas ignoradas
+landing-pages-estetica/
+prompts-criacao-sites/
+s-clientes/
+whatsapp-funnel-bot/

@@ -197,6 +197,11 @@
                             <option value="custom">⚡ Personalizado / Qualquer Nicho (Adaptável por IA)</option>
                         </select>
                     </div>
+                      <div style="flex: 1; min-width: 200px;">
+                          <label style="display: block; font-size: 11px; color: #94a3b8; margin-bottom: 4px; font-weight: bold; text-transform: uppercase;">Cidade Alvo:</label>
+                          <input type="text" id="cityInput" value="São Paulo" placeholder="Ex: São Paulo" style="width: 100%; background: #1e293b; border: 1px solid #475569; border-radius: 6px; padding: 8px; color: #f8fafc; font-weight: 500; font-size: 13px;" onchange="onNicheChange()">
+                      </div>
+
                     <div style="display: flex; gap: 8px; align-items: flex-end;">
                         <button class="btn btn-blue" onclick="loadNicheTemplate()" style="padding: 9px 16px;">🎯 Carregar Template Completo</button>
                         <button class="btn" style="background: #334155; color: #f8fafc; padding: 9px 16px;" onclick="loadMinimalContactsTemplate()">📋 Apenas Lista Simples</button>
@@ -661,6 +666,7 @@
 
         async function loadNicheTemplate() {
             const niche = document.getElementById('nicheSelector').value;
+            const city = document.getElementById("cityInput") ? document.getElementById("cityInput").value : "São Paulo";
             try {
                 const res = await api('/api/niches');
                 const preset = res && res.presets && res.presets[niche] ? res.presets[niche] : null;
@@ -672,12 +678,12 @@
                     "settings": {
                         "delay_between_contacts_seconds": 30,
                         "delay_between_messages_seconds": 5,
-                        "default_city": preset ? preset.default_city : "São Paulo",
+                        "default_city": city,
                         "default_service": preset ? preset.default_service : "seus serviços",
                         "llm_provider": "groq",
                         "llm_model": "openai/gpt-oss-120b"
                     },
-                    "contacts": NICHE_CONTACT_SAMPLES[niche] || NICHE_CONTACT_SAMPLES.estetica,
+                    "contacts": (NICHE_CONTACT_SAMPLES[niche] || NICHE_CONTACT_SAMPLES.estetica).map(c => ({...c, cidade: city})),
                     "steps": preset ? preset.steps : undefined
                 };
 
@@ -690,6 +696,7 @@
 
         function loadMinimalContactsTemplate() {
             const niche = document.getElementById('nicheSelector').value;
+            const city = document.getElementById("cityInput") ? document.getElementById("cityInput").value : "São Paulo";
             const template = {
                 "campaign_name": `Prospecção Rápida - ${niche.toUpperCase()}`,
                 "niche": niche,
@@ -697,7 +704,7 @@
                     "delay_between_contacts_seconds": 30,
                     "llm_model": "openai/gpt-oss-120b"
                 },
-                "contacts": NICHE_CONTACT_SAMPLES[niche] || NICHE_CONTACT_SAMPLES.estetica
+                "contacts": (NICHE_CONTACT_SAMPLES[niche] || NICHE_CONTACT_SAMPLES.estetica).map(c => ({...c, cidade: city}))
             };
             document.getElementById('campaignJson').value = JSON.stringify(template, null, 2);
         }

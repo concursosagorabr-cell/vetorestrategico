@@ -198,6 +198,9 @@ Identifique o tom do cliente: animado, desconfiado, ocupado, irritado, curioso, 
   * *'Super compreendo a sua cautela, {human_name}! É uma decisão importante para a empresa. O que você está pesando mais agora: algum detalhe no visual do site, os tratamentos/serviços de {service} ou o investimento de R$ 147/mês? Posso personalizar qualquer parte para vocês agora mesmo!'*
 
 - **Tratamento de Objeções Específicas:**
+  * **Dúvida de Resultado/Confiança ('como sei se vai trazer clientes?'):**
+    Valide a pergunta e explique a diferença da Intenção de Busca.
+    *'Excelente pergunta, {human_name}! A diferença é a intenção de busca. Quem pesquisa {service} no Google já quer agendar/comprar na hora, não está só olhando fotos. Nossa estrutura é desenhada justamente para converter esse clique no Google em uma mensagem no seu WhatsApp. Posso te mandar o protótipo amanhã para você ver como organizamos isso?'*
   * **Já tem site:** Elogie, mostre que isso facilita, e ofereça mostrar melhorias de conversão e velocidade (Next.js carrega em <1s) sem compromisso.
   * **Já usa Instagram:** Explique que o Instagram é vitrine, mas quem pesquisa {service} no Google já tem a urgência de contratar/agendar na hora.
   * **Sem tempo:** Responda de forma ultra-curta: *'Sem problemas! Deixo o link de 30 segundos pronto para você clicar quando tiver um intervalo.'*
@@ -214,7 +217,7 @@ Identifique o tom do cliente: animado, desconfiado, ocupado, irritado, curioso, 
 - **Linguagem do Nicho ({specialty}):** {niche_playbook.get('vocabulary', 'clientes e atendimentos')} | Dor principal: {niche_playbook.get('pain_point', 'Perda de clientes para concorrentes com site no Google')}.
 
 ## 5. 🚨 PROIBIÇÕES ABSOLUTAS (NUNCA VIOLE)
-- ❌ NUNCA faça perguntas passivas de SAC/suporte como: *'Como posso ajudar?'*, *'Em que posso ser útil?'*, *'Posso esclarecer mais alguma coisa?'*, *'Algo mais?'*. O final da mensagem deve ser SEMPRE um CTA comercial de baixo atrito. Se o modelo AINDA NÃO FOI ENVIADO, use: (*'Posso preparar o modelo para você ver no celular?'*, *'Faz sentido eu te mandar o link amanhã?'*). SE O MODELO JÁ FOI ENVIADO, pergunte sobre o feedback ou ofereça ajustes: (*'O que achou do modelo que te enviei?'*, *'Posso ajustar alguma cor ou texto para você ver como fica?'*).
+- ❌ NUNCA faça perguntas passivas de SAC/suporte como: *'Como posso ajudar?'*, *'Em que posso ser útil?'*, *'Posso esclarecer mais alguma coisa?'*, *'Algo mais?'*. O final da mensagem deve ser SEMPRE um CTA comercial de baixo atrito. Se o cliente fez uma pergunta/objeção, RESPONDA a ela primeiro. Ao final, se o modelo AINDA NÃO FOI ENVIADO, use: (*'Posso preparar o modelo para você ver no celular?'*). SE O MODELO JÁ FOI ENVIADO, conecte sua resposta com a página: (*'Dando uma olhada no modelo que te mandei, acha que essa estrutura passa mais confiança?'* ou ofereça ajustes).
 - ❌ NUNCA invente que o contato veio de 'lista de inscritos', 'banco de dados' ou 'newsletter'. Sempre afirme com orgulho que foi no Google Maps público da cidade.
 - ❌ NUNCA encerre a conversa pedindo desculpas desnecessárias se o cliente disser 'não' para uma pergunta de checagem.
 - ❌ NUNCA escreva parágrafos gigantescos ou robóticos. Use o estilo natural, fluido e direto do WhatsApp (1 a 3 frases curtas).
@@ -315,7 +318,7 @@ Execute as 4 etapas mentais de raciocínio, preencha o campo 'thinking' com sua 
                     classification = "yes"
                 elif intent in ["no", "rejeicao", "opt_out"] or stage == "LOST":
                     classification = "no"
-                elif intent in ["duvida", "indecisao", "preco", "prazo", "curiosidade"]:
+                elif intent in ["duvida", "indecisao", "preco", "prazo", "curiosidade", "confianca", "objection_trust"]:
                     classification = "doubt"
                 elif intent == "ask_identity":
                     classification = "ask_identity"
@@ -482,6 +485,24 @@ Execute as 4 etapas mentais de raciocínio, preencha o campo 'thinking' com sua 
                 "confidence": 0.95,
                 "clean_name": h_name,
                 "reasoning": "Heurística: lead solicitou atendimento humano ou questionou automação/robô."
+            }
+
+        # 3.5 Dúvida sobre Resultados / Confiança (objection_trust)
+        trust_phrases = [
+            "traz cliente mesmo", "traz clientes mesmo", "traz resultado", "dar resultado",
+            "funciona mesmo", "como vou saber", "da certo", "dá certo", "garante cliente",
+            "garantia de cliente", "vai trazer", "compensa mesmo", "vale a pena"
+        ]
+        if any(p in msg for p in trust_phrases):
+            return {
+                "classification": "objection_trust",
+                "intent": "objection_trust",
+                "action": "handle_objection",
+                "next_step": 2,
+                "suggested_next_step": 2,
+                "confidence": 0.95,
+                "clean_name": h_name,
+                "reasoning": "Heurística: lead com objeção sobre resultados/confiança na captação."
             }
 
         # 4. Solicitação de Portfólio / Casos / Instagrams de páginas administradas (objection_portfolio)

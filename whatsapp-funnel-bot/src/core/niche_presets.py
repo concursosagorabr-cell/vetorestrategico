@@ -55,11 +55,11 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_yes": {
                     "next_step": 2,
-                    "message": "Maravilha, {name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, custa apenas R$ 147/mês tudo incluso. Faz sentido eu te mandar o link amanhã?"
+                    "message": "Maravilha, {name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, cobramos uma taxa de setup de R$ 147 para colocar no ar e a manutenção é de R$ 147/mês. Faz sentido eu te mandar o link amanhã?"
                 },
                 "on_ask_identity": {
                     "next_step": 2,
-                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo e perdem clientes todo dia para a concorrência.\n\nNós criamos modelos de páginas ultra-rápidas para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, custa apenas R$ 147/mês tudo incluso. Faz sentido eu te mandar o link amanhã?"
+                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo e perdem clientes todo dia para a concorrência.\n\nNós criamos modelos de páginas ultra-rápidas para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, cobramos uma taxa de setup de R$ 147 para colocar no ar e a manutenção é de R$ 147/mês. Faz sentido eu te mandar o link amanhã?"
                 },
                 "on_no": {
                     "next_step": "end_negative",
@@ -97,7 +97,7 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_objection_budget": {
                     "next_step": 4,
-                    "message": "Te entendo perfeitamente, {name}! Justamente por isso não cobramos nada para criar e colocar no ar. Você só paga a manutenção de R$ 147/mês se gostar do resultado. Posso te enviar o link pronto para você avaliar?"
+                    "message": "Te entendo perfeitamente, {name}! Justamente por isso não cobramos nada para criar e colocar no ar. Você só paga a taxa de R$ 147 para colocar no ar e R$ 147/mês se gostar do resultado. Posso te enviar o link pronto para você avaliar?"
                 },
                 "on_objection_has_website": {
                     "next_step": 5,
@@ -134,7 +134,7 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_ask_identity": {
                     "next_step": 2,
-                    "message": "Me chamo {sender_name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, custa apenas R$ 147/mês tudo incluso. Faz sentido eu te mandar o link amanhã?"
+                    "message": "Me chamo {sender_name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, cobramos uma taxa de setup de R$ 147 para colocar no ar e a manutenção é de R$ 147/mês. Faz sentido eu te mandar o link amanhã?"
                 }
             },
             {
@@ -221,11 +221,11 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_yes": {
                     "next_step": 2,
-                    "message": "Excelente, {name}! O motivo do contato é que notei que vocês são referência em {service} aqui em {city}, mas quando pacientes buscam por dentistas especializados no Google, o consultório de vocês não aparece com uma página moderna direto para o WhatsApp.\n\nHoje quem busca por {service} no Google quer agilidade e segurança para agendar. Nós desenvolvemos páginas odontológicas de alta velocidade que triplicam o contato de pacientes particulares.\n\nPosso personalizar um modelo exclusivo para a {name} sem custo nenhum para vocês avaliarem em 24h? Se aprovarem, a manutenção com tudo incluso é só R$ 147/mês. Faz sentido te enviar a prévia amanhã?"
+                    "message": "Excelente, {name}! O motivo do contato é que notei que vocês são referência em {service} aqui em {city}, mas quando pacientes buscam por dentistas especializados no Google, o consultório de vocês não aparece com uma página moderna direto para o WhatsApp.\n\nHoje quem busca por {service} no Google quer agilidade e segurança para agendar. Nós desenvolvemos páginas odontológicas de alta velocidade que triplicam o contato de pacientes particulares.\n\nPosso personalizar um modelo exclusivo para a {name} sem custo nenhum para vocês avaliarem em 24h? Se aprovarem e quiserem colocar no ar, cobramos uma taxa de setup de R$ 147 (inclui domínio) e a manutenção é R$ 147/mês. Faz sentido te enviar a prévia amanhã?"
                 },
                 "on_ask_identity": {
                     "next_step": 2,
-                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é bem direto: notei que o consultório de vocês é referência em {service} aqui em {city}, mas quando pacientes buscam por dentistas especializados no Google, vocês estão sem site no topo e perdem pacientes particulares para a concorrência.\n\nNós desenvolvemos páginas odontológicas de alta velocidade para captação direta no WhatsApp. Posso personalizar um modelo exclusivo para a {name} sem custo nenhum para vocês avaliarem em 24h? Se aprovarem, a manutenção com tudo incluso é só R$ 147/mês. Faz sentido te enviar a prévia amanhã?"
+                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é bem direto: notei que o consultório de vocês é referência em {service} aqui em {city}, mas quando pacientes buscam por dentistas especializados no Google, vocês estão sem site no topo e perdem pacientes particulares para a concorrência.\n\nNós desenvolvemos páginas odontológicas de alta velocidade para captação direta no WhatsApp. Posso personalizar um modelo exclusivo para a {name} sem custo nenhum para vocês avaliarem em 24h? Se aprovarem e quiserem colocar no ar, cobramos uma taxa de setup de R$ 147 (inclui domínio) e a manutenção é R$ 147/mês. Faz sentido te enviar a prévia amanhã?"
                 },
                 "on_no": {
                     "next_step": "end_negative",
@@ -300,7 +300,7 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_ask_identity": {
                     "next_step": 2,
-                    "message": "Me chamo {sender_name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, custa apenas R$ 147/mês tudo incluso. Faz sentido eu te mandar o link amanhã?"
+                    "message": "Me chamo {sender_name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, cobramos uma taxa de setup de R$ 147 para colocar no ar e a manutenção é de R$ 147/mês. Faz sentido eu te mandar o link amanhã?"
                 }
             },
             {
@@ -386,11 +386,11 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_yes": {
                     "next_step": 2,
-                    "message": "Show de bola, {name}! O motivo da pergunta é simples: vi que vocês são uma oficina forte em {service} aqui em {city}, mas quando o motorista pesquisa no Google com o carro quebrado ou precisando de revisão, vocês não estão aparecendo com site rápido no topo.\n\nMotorista pesquisa no Google e quer chamar no WhatsApp na hora. Eu criei um modelo de página para oficina mecânica que triplica esses chamados de orçamento.\n\nPosso montar um esboço exclusivo para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se curtirem, a manutenção é só R$ 147/mês. Posso preparar para amanhã?"
+                    "message": "Show de bola, {name}! O motivo da pergunta é simples: vi que vocês são uma oficina forte em {service} aqui em {city}, mas quando o motorista pesquisa no Google com o carro quebrado ou precisando de revisão, vocês não estão aparecendo com site rápido no topo.\n\nMotorista pesquisa no Google e quer chamar no WhatsApp na hora. Eu criei um modelo de página para oficina mecânica que triplica esses chamados de orçamento.\n\nPosso montar um esboço exclusivo para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se curtirem e quiserem colocar no ar, cobramos uma taxa de setup de R$ 147 (inclui domínio) e a manutenção é R$ 147/mês. Posso preparar para amanhã?"
                 },
                 "on_ask_identity": {
                     "next_step": 2,
-                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é simples: vi que vocês são uma oficina forte em {service} aqui em {city}, mas quando o motorista pesquisa no Google com o carro quebrado ou precisando de revisão, vocês não estão aparecendo com site rápido no topo e perdem serviços para concorrentes.\n\nEu criei um modelo de página para oficina mecânica que triplica esses chamados de orçamento no WhatsApp. Posso montar um esboço exclusivo para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se curtirem, a manutenção é só R$ 147/mês. Posso preparar para amanhã?"
+                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é simples: vi que vocês são uma oficina forte em {service} aqui em {city}, mas quando o motorista pesquisa no Google com o carro quebrado ou precisando de revisão, vocês não estão aparecendo com site rápido no topo e perdem serviços para concorrentes.\n\nEu criei um modelo de página para oficina mecânica que triplica esses chamados de orçamento no WhatsApp. Posso montar um esboço exclusivo para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se curtirem e quiserem colocar no ar, cobramos uma taxa de setup de R$ 147 (inclui domínio) e a manutenção é R$ 147/mês. Posso preparar para amanhã?"
                 },
                 "on_no": {
                     "next_step": "end_negative",
@@ -465,7 +465,7 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_ask_identity": {
                     "next_step": 2,
-                    "message": "Me chamo {sender_name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, custa apenas R$ 147/mês tudo incluso. Faz sentido eu te mandar o link amanhã?"
+                    "message": "Me chamo {sender_name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, cobramos uma taxa de setup de R$ 147 para colocar no ar e a manutenção é de R$ 147/mês. Faz sentido eu te mandar o link amanhã?"
                 }
             },
             {
@@ -551,11 +551,11 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_yes": {
                     "next_step": 2,
-                    "message": "Que ótimo, {name}! O motivo do contato é que vi que vocês cuidam com muito carinho de {service} aqui em {city}, mas quando tutores pesquisam por veterinário no Google, a clínica de vocês não aparece com destaque e botão rápido para o WhatsApp.\n\nTutores que buscam no Google querem falar rápido para agendar consultas e tirar dúvidas sobre seus pets. Nós desenvolvemos páginas veterinárias de alta velocidade que facilitam esse contato.\n\nPosso preparar um esboço sem custo nenhum para a {name} avaliar em 24h? Se aprovarem, a manutenção é só R$ 147/mês. Posso te mandar amanhã?"
+                    "message": "Que ótimo, {name}! O motivo do contato é que vi que vocês cuidam com muito carinho de {service} aqui em {city}, mas quando tutores pesquisam por veterinário no Google, a clínica de vocês não aparece com destaque e botão rápido para o WhatsApp.\n\nTutores que buscam no Google querem falar rápido para agendar consultas e tirar dúvidas sobre seus pets. Nós desenvolvemos páginas veterinárias de alta velocidade que facilitam esse contato.\n\nPosso preparar um esboço sem custo nenhum para a {name} avaliar em 24h? Se aprovarem e quiserem colocar no ar, cobramos uma taxa de setup de R$ 147 (inclui domínio) e a manutenção é R$ 147/mês. Posso te mandar amanhã?"
                 },
                 "on_ask_identity": {
                     "next_step": 2,
-                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é que vi que vocês cuidam com muito carinho de {service} aqui em {city}, mas quando tutores pesquisam por veterinário no Google, a clínica de vocês não aparece com destaque no topo e perdem atendimentos para concorrentes.\n\nNós desenvolvemos páginas veterinárias de alta velocidade que triplicam o contato de tutores no WhatsApp. Posso preparar um esboço sem custo nenhum para a {name} avaliar em 24h? Se aprovarem, a manutenção é só R$ 147/mês. Posso te mandar amanhã?"
+                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é que vi que vocês cuidam com muito carinho de {service} aqui em {city}, mas quando tutores pesquisam por veterinário no Google, a clínica de vocês não aparece com destaque no topo e perdem atendimentos para concorrentes.\n\nNós desenvolvemos páginas veterinárias de alta velocidade que triplicam o contato de tutores no WhatsApp. Posso preparar um esboço sem custo nenhum para a {name} avaliar em 24h? Se aprovarem e quiserem colocar no ar, cobramos uma taxa de setup de R$ 147 (inclui domínio) e a manutenção é R$ 147/mês. Posso te mandar amanhã?"
                 },
                 "on_no": {
                     "next_step": "end_negative",
@@ -630,7 +630,7 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_ask_identity": {
                     "next_step": 2,
-                    "message": "Me chamo {sender_name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, custa apenas R$ 147/mês tudo incluso. Faz sentido eu te mandar o link amanhã?"
+                    "message": "Me chamo {sender_name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, cobramos uma taxa de setup de R$ 147 para colocar no ar e a manutenção é de R$ 147/mês. Faz sentido eu te mandar o link amanhã?"
                 }
             },
             {
@@ -650,7 +650,7 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
             {
                 "step": 4,
                 "name": "Objeção: Orçamento Vet",
-                "message": "Criação sem custo. Você só investe R$ 147/mês se gostar da página pronta. Posso preparar?",
+                "message": "Criação sem custo. Você só investe a taxa de R$ 147 para colocar no ar e R$ 147/mês se gostar da página pronta. Posso preparar?",
                 "wait_for_reply": True,
                 "on_yes": {
                     "next_step": "end_positive",
@@ -716,11 +716,11 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_yes": {
                     "next_step": 2,
-                    "message": "Excelente, Dr(a). {name}! O motivo do contato é que notei a sólida atuação de vocês em {city}, mas quando potenciais clientes pesquisam no Google por advogados especializados em {service}, o escritório não possui uma página institucional de alta velocidade otimizada para WhatsApp.\n\nHoje clientes com demandas jurídicas urgentes buscam primeiro no Google por profissionais de confiança.\n\nNós criamos landing pages jurídicas de alta autoridade e sobriedade. Posso estruturar um modelo exclusivo para a {name} sem custo para vocês avaliarem em 24h? Se aprovarem, a manutenção com tudo incluso é de R$ 147/mês. Faz sentido eu te enviar o link amanhã?"
+                    "message": "Excelente, Dr(a). {name}! O motivo do contato é que notei a sólida atuação de vocês em {city}, mas quando potenciais clientes pesquisam no Google por advogados especializados em {service}, o escritório não possui uma página institucional de alta velocidade otimizada para WhatsApp.\n\nHoje clientes com demandas jurídicas urgentes buscam primeiro no Google por profissionais de confiança.\n\nNós criamos landing pages jurídicas de alta autoridade e sobriedade. Posso estruturar um modelo exclusivo para a {name} sem custo para vocês avaliarem em 24h? Se aprovarem e quiserem colocar no ar, cobramos uma taxa de setup de R$ 147 (inclui domínio) e a manutenção é R$ 147/mês. Faz sentido eu te enviar o link amanhã?"
                 },
                 "on_ask_identity": {
                     "next_step": 2,
-                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é que notei a sólida atuação de vocês em {service} aqui em {city}, mas quando potenciais clientes pesquisam no Google por advogados especializados, o escritório não possui uma página institucional de alta velocidade no topo e perdem clientes para a concorrência.\n\nNós criamos landing pages jurídicas de alta autoridade e sobriedade. Posso estruturar um modelo exclusivo para a {name} sem custo para vocês avaliarem em 24h? Se aprovarem, a manutenção com tudo incluso é de R$ 147/mês. Faz sentido eu te enviar o link amanhã?"
+                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é que notei a sólida atuação de vocês em {service} aqui em {city}, mas quando potenciais clientes pesquisam no Google por advogados especializados, o escritório não possui uma página institucional de alta velocidade no topo e perdem clientes para a concorrência.\n\nNós criamos landing pages jurídicas de alta autoridade e sobriedade. Posso estruturar um modelo exclusivo para a {name} sem custo para vocês avaliarem em 24h? Se aprovarem e quiserem colocar no ar, cobramos uma taxa de setup de R$ 147 (inclui domínio) e a manutenção é R$ 147/mês. Faz sentido eu te enviar o link amanhã?"
                 },
                 "on_no": {
                     "next_step": "end_negative",
@@ -738,7 +738,7 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_doubt": {
                     "next_step": 2,
-                    "message": "Sem adiantamentos, Dr(a). {name}! Nós preparamos a estrutura completa. Se aprovar a qualidade e autoridade transmitida, o plano é de apenas R$ 147/mês com hospedagem rápida e suporte inclusos. Topa avaliar a prévia?"
+                    "message": "Sem adiantamentos, Dr(a). {name}! Nós preparamos a estrutura completa. Se aprovar a qualidade e autoridade transmitida, o plano possui uma taxa de adesão de R$ 147 e mensalidade de R$ 147/mês com hospedagem rápida e suporte inclusos. Topa avaliar a prévia?"
                 },
                 "on_yes": {
                     "next_step": "end_positive",
@@ -795,7 +795,7 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_ask_identity": {
                     "next_step": 2,
-                    "message": "Me chamo {sender_name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, custa apenas R$ 147/mês tudo incluso. Faz sentido eu te mandar o link amanhã?"
+                    "message": "Me chamo {sender_name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, cobramos uma taxa de setup de R$ 147 para colocar no ar e a manutenção é de R$ 147/mês. Faz sentido eu te mandar o link amanhã?"
                 }
             },
             {
@@ -881,11 +881,11 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_yes": {
                     "next_step": 2,
-                    "message": "Maravilha, {name}! O motivo da pergunta é que notei que vocês estão sem site no Google e estão perdendo clientes por isso. Eu crio sites de alta performance para o seu segmento e topo desenhar a página da sua empresa de graça. Em 24 horas te mando o link do site funcionando.\n\nSe você gostar do resultado, fechamos apenas a manutenção de R$ 147/mês. Sem contrato de fidelidade e risco zero. Se não quiser ficar com o site, não me paga nada. Posso começar o seu esboço para te mostrar amanhã?"
+                    "message": "Maravilha, {name}! O motivo da pergunta é que notei que vocês estão sem site no Google e estão perdendo clientes por isso. Eu crio sites de alta performance para o seu segmento e topo desenhar a página da sua empresa de graça. Em 24 horas te mando o link do site funcionando.\n\nSe você gostar do resultado, cobramos a taxa de R$ 147 para colocar no ar e a manutenção de R$ 147/mês. Sem contrato de fidelidade e risco zero. Se não quiser ficar com o site, não me paga nada. Posso começar o seu esboço para te mostrar amanhã?"
                 },
                 "on_ask_identity": {
                     "next_step": 2,
-                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é bem direto: notei que vocês atuam com {service} aqui em {city}, mas quando potenciais clientes pesquisam no Google, vocês estão sem site no topo e perdem vendas para concorrentes.\n\nNós criamos modelos de páginas ultra-rápidas focadas em captação no WhatsApp. Posso personalizar um modelo exclusivo para a {name} sem custo nenhum para vocês avaliarem em 24h? Se aprovarem, a manutenção é apenas R$ 147/mês. Faz sentido eu te mandar o link amanhã?"
+                    "message": "Me chamo {sender_name} da Vetor Estratégico! O motivo do contato é bem direto: notei que vocês atuam com {service} aqui em {city}, mas quando potenciais clientes pesquisam no Google, vocês estão sem site no topo e perdem vendas para concorrentes.\n\nNós criamos modelos de páginas ultra-rápidas focadas em captação no WhatsApp. Posso personalizar um modelo exclusivo para a {name} sem custo nenhum para vocês avaliarem em 24h? Se aprovarem, a taxa para colocar no ar é R$ 147 e a manutenção é R$ 147/mês. Faz sentido eu te mandar o link amanhã?"
                 },
                 "on_no": {
                     "next_step": "end_negative",
@@ -960,7 +960,7 @@ NICHE_PRESETS: Dict[str, Dict[str, Any]] = {
                 },
                 "on_ask_identity": {
                     "next_step": 2,
-                    "message": "Me chamo {sender_name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, custa apenas R$ 147/mês tudo incluso. Faz sentido eu te mandar o link amanhã?"
+                    "message": "Me chamo {sender_name}! O motivo da pergunta é bem direto: notei que vocês são referência em {service} aqui em {city}, mas quando alguém pesquisa no Google, vocês estão sem site no topo. Como o Google é onde as pessoas buscam prontas para agendar, vocês perdem clientes todo dia para a concorrência.\n\nEu criei um modelo de site profissional de alta conversão para o segmento de vocês. Posso personalizar esse esboço para a {name} sem custo nenhum para vocês verem funcionando em 24h? Se não gostarem, vida que segue. Se gostarem, cobramos uma taxa de setup de R$ 147 para colocar no ar e a manutenção é de R$ 147/mês. Faz sentido eu te mandar o link amanhã?"
                 }
             },
             {

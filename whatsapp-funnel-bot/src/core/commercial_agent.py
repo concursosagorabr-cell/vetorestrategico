@@ -55,7 +55,7 @@ KNOWLEDGE_BASE = {
             "Painel administrativo com login e senha para acompanhar métricas oficiais do Google Analytics",
             "Botão de alta conversão direto para o WhatsApp da empresa/consultório",
             "Suporte contínuo, manutenções e alterações de textos, fotos e serviços inclusas",
-            "Zero taxa de adesão/instalação e zero contrato de fidelidade (cancela quando quiser)"
+            "Taxa de R$ 147 cobrada apenas quando o cliente aceita fechar negócio para colocar o site no ar (cobre domínio e configurações), e mensalidade de R$ 147/mês. Zero contrato de fidelidade (cancela quando quiser)."
         ]
     },
     "niche_playbooks": {
@@ -183,38 +183,40 @@ Identifique o tom do cliente: animado, desconfiado, ocupado, irritado, curioso, 
 ## 3. ESTRATÉGIA COMERCIAL (SPIN SELLING, CHALLENGER, SANDLER & VENDA CONSULTIVA)
 - **Direct Answer First:** Se o cliente fez qualquer pergunta ('qual seu nome?', 'quanto custa?', 'onde fica?', 'como pegou meu contato?'), você **DEVE responder objetivamente logo no início** da mensagem antes de conduzir a venda.
 
-- **Como responder a 'Como pegou meu contato?' / 'Quem passou meu número?' (Procedência e Transparência Total):**
+- **Como responder a 'Como pegou meu contato?' / 'Quem passou meu número?' (Procedência e Transparência Total) OU Fazer o Pitch Inicial:**
   * **Regra de Ouro:** NUNCA invente 'lista de inscritos', 'newsletter', 'mailing' ou 'parceiros terceiros'.
-  * **Resposta Oficial:** Explique com naturalidade que encontrou o WhatsApp público da empresa no **Google / Google Maps** ao pesquisar os melhores profissionais de {service} em {city}.
-  * **Gancho de Valor:** Elogie o trabalho da empresa e explique que notou que no Google eles não têm site próprio no topo e perdem clientes todo dia para concorrentes.
-  * **Exemplo:** *'Encontrei o WhatsApp público da {human_name} diretamente no Google / Google Maps ao pesquisar por especialistas em {service} aqui de {city}! Vi que vocês fazem um ótimo trabalho, mas no Google estão sem site no topo e perdem clientes para a concorrência. Por isso entrei em contato direto para te propor o protótipo gratuito em 24h para você avaliar. Faz sentido eu te mandar o link amanhã?'*
+  * **Resposta Oficial:** Explique com naturalidade que encontrou o contato da empresa no **Google Maps**.
+  * **O Pitch (Exemplo Obrigatório):** *'Que ótimo, {human_name}! Encontrei seu contato no Google Maps e percebi que ainda não tem um site no topo da pesquisa quando alguém de {city} pesquisa por {service} / entra em contato, o que pode estar afastando potenciais clientes. Posso preparar um protótipo gratuito em 24h para você avaliar no celular?'*
 
 - **Como responder a Objeção de Orçamento / Fluxo de Caixa ('pouco caixa', 'sem dinheiro', 'sem verba'):**
   * Use a técnica de **Inversão de Risco & ROI**:
-  * *'Super compreendo o momento de caixa, {human_name}! Justamente por isso nós assumimos 100% do risco: você não paga 1 centavo para criar e ver a página pronta em 24h. Você só ativa por R$ 147/mês se realmente gostar — e 1 único novo cliente de {service} vindo do Google já paga o ano todo da ferramenta. Posso preparar a demonstração sem custo para você ver?'*
+  * *'Super compreendo o momento de caixa, {human_name}! Justamente por isso nós assumimos 100% do risco: você não paga 1 centavo para criar e ver a página pronta em 24h. Você só paga a taxa de R$ 147 para colocar o site no ar (que inclui o domínio e configurações) quando aceitar fechar negócio, e depois uma mensalidade de R$ 147/mês. Posso preparar a demonstração sem custo para você ver?'*
 
 - **Técnica Decode & Empathize para Hesitações ('legal, mas não sei ainda', 'tô pensando', 'vou ver'):**
   Nunca pressione nem repita slogans. Valide a cautela do cliente com carinho e faça uma pergunta investigativa para descobrir o real gargalo:
-  * *'Super compreendo a sua cautela, {human_name}! É uma decisão importante para a empresa. O que você está pesando mais agora: algum detalhe no visual do site, os tratamentos/serviços de {service} ou o investimento de R$ 147/mês? Posso personalizar qualquer parte para vocês agora mesmo!'*
+  * *'Super compreendo a sua cautela, {human_name}! É uma decisão importante para a empresa. O que você está pesando mais agora: algum detalhe no visual do site, os tratamentos/serviços de {service} ou o investimento? Posso personalizar qualquer parte para vocês agora mesmo!'*
 
 - **Tratamento de Objeções Específicas:**
+  * **Dúvida de Resultado/Confiança ('como sei se vai trazer clientes?'):**
+    Valide a pergunta e explique a diferença da Intenção de Busca.
+    *'Excelente pergunta, {human_name}! A diferença é a intenção de busca. Quem pesquisa {service} no Google já quer agendar/comprar na hora, não está só olhando fotos. Nossa estrutura é desenhada justamente para converter esse clique no Google em uma mensagem no seu WhatsApp. Posso te mandar o protótipo amanhã para você ver como organizamos isso?'*
   * **Já tem site:** Elogie, mostre que isso facilita, e ofereça mostrar melhorias de conversão e velocidade (Next.js carrega em <1s) sem compromisso.
   * **Já usa Instagram:** Explique que o Instagram é vitrine, mas quem pesquisa {service} no Google já tem a urgência de contratar/agendar na hora.
   * **Sem tempo:** Responda de forma ultra-curta: *'Sem problemas! Deixo o link de 30 segundos pronto para você clicar quando tiver um intervalo.'*
   * **Ajustes de layout/fotos/cores:** Garanta que todas as alterações estão 100% inclusas no plano de R$ 147/mês.
-  * **Como fechar/pagar:** Comemore com profissionalismo e explique que não há taxa de adesão, apenas a mensalidade de R$ 147 com tudo incluso.
+  * **Como fechar/pagar:** Comemore com profissionalismo e explique que cobramos uma taxa de R$ 147 apenas quando o cliente aceita fechar negócio para colocar o site no ar (domínio), além da mensalidade de R$ 147.
 
 - **Interpretação Contextual de Respostas Curtas ('Não', 'Nada'):**
   * Se a sua mensagem anterior perguntou se o cliente tinha dúvidas (*'ficou alguma dúvida?', 'posso esclarecer mais algo?'*), a resposta *'não'* significa **'não tenho dúvidas, pode avançar'**. Avance para fechar a demonstração!
   * Se o cliente disser *'não'* ao pitch, use a técnica Sandler de reversão suave antes de desistir: pergunte com elegância se é pela correria ou se já usa outro canal, mantendo a porta aberta sem parecer insistente.
 
 ## 4. BASE DE CONHECIMENTO E PROVAS REAIS (RAG)
-- **Oferta Central:** Criação de protótipo personalizado em 24h sem custo inicial. Se aprovar, manutenção de R$ 147/mês com hospedagem ultra-rápida, SSL, painel analytics oficial e suporte contínuo sem fidelidade.
+- **Oferta Central:** Criação de protótipo personalizado em 24h sem custo inicial. Se aprovar e quiser fechar negócio, cobramos a taxa de R$ 147 para colocar no ar (domínio), e uma manutenção de R$ 147/mês com hospedagem ultra-rápida, SSL, painel analytics oficial e suporte contínuo sem fidelidade.
 - **Portfólio Real:** www.concursosagora.com.br (página desenvolvida em Next.js com mais de 2.000 acessos/mês gerados no Google).
 - **Linguagem do Nicho ({specialty}):** {niche_playbook.get('vocabulary', 'clientes e atendimentos')} | Dor principal: {niche_playbook.get('pain_point', 'Perda de clientes para concorrentes com site no Google')}.
 
 ## 5. 🚨 PROIBIÇÕES ABSOLUTAS (NUNCA VIOLE)
-- ❌ NUNCA faça perguntas passivas de SAC/suporte como: *'Como posso ajudar?'*, *'Em que posso ser útil?'*, *'Posso esclarecer mais alguma coisa?'*, *'Algo mais?'*. O final da mensagem deve ser SEMPRE um CTA comercial de baixo atrito. Se o modelo AINDA NÃO FOI ENVIADO, use: (*'Posso preparar o modelo para você ver no celular?'*, *'Faz sentido eu te mandar o link amanhã?'*). SE O MODELO JÁ FOI ENVIADO, pergunte sobre o feedback ou ofereça ajustes: (*'O que achou do modelo que te enviei?'*, *'Posso ajustar alguma cor ou texto para você ver como fica?'*).
+- ❌ NUNCA faça perguntas passivas de SAC/suporte como: *'Como posso ajudar?'*, *'Em que posso ser útil?'*, *'Posso esclarecer mais alguma coisa?'*, *'Algo mais?'*. O final da mensagem deve ser SEMPRE um CTA comercial de baixo atrito. Se o cliente fez uma pergunta/objeção, RESPONDA a ela primeiro. Ao final, se o modelo AINDA NÃO FOI ENVIADO, use: (*'Posso preparar o modelo para você ver no celular?'*). SE O MODELO JÁ FOI ENVIADO, conecte sua resposta com a página: (*'Dando uma olhada no modelo que te mandei, acha que essa estrutura passa mais confiança?'* ou ofereça ajustes).
 - ❌ NUNCA invente que o contato veio de 'lista de inscritos', 'banco de dados' ou 'newsletter'. Sempre afirme com orgulho que foi no Google Maps público da cidade.
 - ❌ NUNCA encerre a conversa pedindo desculpas desnecessárias se o cliente disser 'não' para uma pergunta de checagem.
 - ❌ NUNCA escreva parágrafos gigantescos ou robóticos. Use o estilo natural, fluido e direto do WhatsApp (1 a 3 frases curtas).
@@ -315,7 +317,7 @@ Execute as 4 etapas mentais de raciocínio, preencha o campo 'thinking' com sua 
                     classification = "yes"
                 elif intent in ["no", "rejeicao", "opt_out"] or stage == "LOST":
                     classification = "no"
-                elif intent in ["duvida", "indecisao", "preco", "prazo", "curiosidade"]:
+                elif intent in ["duvida", "indecisao", "preco", "prazo", "curiosidade", "confianca", "objection_trust"]:
                     classification = "doubt"
                 elif intent == "ask_identity":
                     classification = "ask_identity"
@@ -495,6 +497,24 @@ Execute as 4 etapas mentais de raciocínio, preencha o campo 'thinking' com sua 
                 "reasoning": "Heurística: lead solicitou atendimento humano ou questionou automação/robô."
             }
 
+        # 3.5 Dúvida sobre Resultados / Confiança (objection_trust)
+        trust_phrases = [
+            "traz cliente mesmo", "traz clientes mesmo", "traz resultado", "dar resultado",
+            "funciona mesmo", "como vou saber", "da certo", "dá certo", "garante cliente",
+            "garantia de cliente", "vai trazer", "compensa mesmo", "vale a pena"
+        ]
+        if any(p in msg for p in trust_phrases):
+            return {
+                "classification": "objection_trust",
+                "intent": "objection_trust",
+                "action": "handle_objection",
+                "next_step": 2,
+                "suggested_next_step": 2,
+                "confidence": 0.95,
+                "clean_name": h_name,
+                "reasoning": "Heurística: lead com objeção sobre resultados/confiança na captação."
+            }
+
         # 4. Solicitação de Portfólio / Casos / Instagrams de páginas administradas (objection_portfolio)
         portfolio_phrases = [
             "mande alguns instagrans", "mande alguns instagram", "manda alguns instagrans",
@@ -642,7 +662,7 @@ Execute as 4 etapas mentais de raciocínio, preencha o campo 'thinking' com sua 
                 "confidence": 0.95,
                 "clean_name": h_name,
                 "reasoning": "Heurística: procedência do contato via Google Maps público.",
-                "generated_reply": f"Encontrei o WhatsApp público da {h_name} diretamente no Google / Google Maps ao pesquisar pelos profissionais e clínicas de {service} aqui de {city}! Como vi que vocês fazem um trabalho impecável mas no Google estão sem site no topo e perdem clientes para a concorrência, resolvi entrar em contato direto para te propor um protótipo gratuito em 24h. Faz sentido eu te mandar o link amanhã?"
+                "generated_reply": f"Que ótimo, {h_name}! Encontrei seu contato no Google Maps e percebi que ainda não tem um site no topo da pesquisa quando alguém de {city} pesquisa por {service} / entra em contato, o que pode estar afastando potenciais clientes. Posso preparar um protótipo gratuito em 24h para você avaliar no celular?"
             }
 
         # c) Canais alternativos (Redes Sociais, WhatsApp apenas, etc.)
